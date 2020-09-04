@@ -1,0 +1,188 @@
+### Common
+
+server:
+  port: 8100
+
+spring:
+  application:
+    name: Dokanee-Backend-Monolithic
+  profiles:
+    active: pgsql
+  jpa:
+    generate-ddl: false
+    hibernate:
+      ddl-auto: update
+  liquibase:
+    change-log: "classpath:/db.changelog/db.changelog-master.yml"
+    enabled: true
+#  cloud:
+#    gateway:
+#      filter:
+#        secure-headers:
+#          disable: "content-security-policy"
+#          strict-transport-security: max-age=31536000; includeSubDomains
+#          frame-options: SAMEORIGIN
+#      discovery:
+#        locator:
+#          lowerCaseServiceId: true
+#          enabled: true
+#          predicates:
+#            - name: Path
+#              args:
+#                pattern: "'/api/'+serviceId.toLowerCase()+'/**'"
+#          filters:
+#            - name: RewritePath
+#              args:
+#                regexp: "'/api/' + serviceId.toLowerCase() + '/(?<remaining>.*)'"
+#                replacement: "'/${remaining}'"
+
+
+
+logging:
+  level:
+    root: INFO
+
+
+---
+
+### Dev profile
+
+#spring:
+#  profiles: dev
+#  h2:
+#    console:
+#      enabled: true
+#      path: /h2
+#  datasource:
+#    url: ${DB_URL:jdbc:h2:mem:springSecurity;DB_CLOSE_ON_EXIT=FALSE;MODE=MYSQL}
+#    username: sa
+#    password:
+#    driver-class: org.h2.Driver
+#    jpa:
+#      show-sql: true
+
+#eureka:
+#  client:
+#    enabled: false
+
+logging:
+  level:
+    com.chumbok: DEBUG
+    org.springframework.security: DEBUG
+
+
+---
+
+### Prod profile
+
+#spring:
+#  profiles: prod
+#  datasource:
+#    url: ${DB_URL:jdbc:mysql://localhost:3306/studentportalproject2}
+#    username: ${DB_USERNAME:root}
+#    password: ${DB_PASSWORD:}
+#  jpa:
+#    hibernate:
+#      ddl-auto: validate
+
+
+#eureka:
+#  client:
+#    registerWithEureka: true
+#    fetchRegistry: true
+#    serviceUrl:
+#      defaultZone: http://localhost:4444/eureka/
+#    refresh:
+#      enable: true
+#  instance:
+#    hostname: localhost
+
+
+logging:
+  level:
+    com.chumbok: DEBUG
+
+---
+
+### Integration test profile
+
+#spring:
+#  profiles: it
+#  h2:
+#    console:
+#      enabled: true
+#      path: /h2
+#  datasource:
+#    url: ${DB_URL:jdbc:h2:mem:springSecurity;DB_CLOSE_ON_EXIT=TRUE;MODE=MYSQL}
+#    username: sa
+#    password:
+#    driver-class: org.h2.Driver
+#    jpa:
+#      show-sql: true
+
+
+---
+
+### Docker profile
+
+#spring:
+#  profiles: docker
+
+#eureka:
+#  client:
+#    serviceUrl:
+#      defaultZone: http://service-registry:33001/eureka/
+
+
+---
+
+
+### PgSQL profile
+
+spring:
+  profiles: pgsql
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/Dokanee-backend-Monolithic}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:12211221}
+
+---
+
+
+#spring:
+#  profiles: pgsql
+#  datasource:
+#    url: ${DB_URL:jdbc:postgresql://127.0.0.1:5432/toletapp}
+#    username: ${DB_USERNAME:postgres}
+#    password: ${DB_PASSWORD:12211221}
+
+---
+
+### Debug profile
+
+spring:
+  profiles: debug
+
+logging:
+  level:
+    org.hibernate:
+      SQL: DEBUG
+      type.descriptor.sql.BasicBinder: TRACE
+
+---
+
+
+### Enable Eureka profile
+
+#eureka:
+#  client:
+#    registerWithEureka: true
+#    fetchRegistry: true
+#    serviceUrl:
+#      defaultZone: http://localhost:9001/eureka/
+#    refresh:
+#      enable: true
+#  instance:
+#    hostname: localhost
+#    leaseRenewalIntervalInSeconds: 1
+#    leaseExpirationDurationInSeconds: 2
