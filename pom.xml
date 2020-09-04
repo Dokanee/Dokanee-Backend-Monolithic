@@ -14,10 +14,10 @@
 	<name>Dokanee-Backend-Monolithic</name>
 	<description>Demo project for Spring Boot</description>
 
-	<properties>
-		<java.version>11</java.version>
-		<spring-cloud.version>Hoxton.SR6</spring-cloud.version>
-	</properties>
+	<!--	<properties>-->
+	<!--		<java.version>11</java.version>-->
+	<!--		<spring-cloud.version>Hoxton.SR6</spring-cloud.version>-->
+	<!--	</properties>-->
 
 	<dependencies>
 		<dependency>
