@@ -1,19 +1,22 @@
 package com.dokanne.DokaneeBackend.jwt.controller;
 
 
-import com.dokanne.DokaneeBackend.jwt.dto.request.*;
+import com.dokanne.DokaneeBackend.jwt.dto.request.GenerateOTPRequest;
+import com.dokanne.DokaneeBackend.jwt.dto.request.GenerateOTPRequest2;
+import com.dokanne.DokaneeBackend.jwt.dto.request.LoginForm;
+import com.dokanne.DokaneeBackend.jwt.dto.request.SignUpForm;
 import com.dokanne.DokaneeBackend.jwt.dto.response.TestResponse;
+import com.dokanne.DokaneeBackend.jwt.services.ForgetPasswordService;
 import com.dokanne.DokaneeBackend.jwt.services.SignUpAndSignInService;
-
 import javassist.bytecode.DuplicateMemberException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-
+import javax.mail.MessagingException;
 import javax.validation.Valid;
+import java.io.IOException;
 
 @AllArgsConstructor
 @Slf4j
@@ -23,7 +26,7 @@ import javax.validation.Valid;
 public class AuthController {
 
     private SignUpAndSignInService signUpAndSignInService;
-//    private final ForgetPasswordService forgetPasswordService;
+    private final ForgetPasswordService forgetPasswordService;
 
 
     @PostMapping("/signin")
@@ -42,20 +45,21 @@ public class AuthController {
         return signUpAndSignInService.getLoggedAuthUser();
     }
 
-//    @PostMapping("/generateOTP")
-//    public String generateOTP(@RequestBody GenerateOTPRequest generateOTPRequest) throws IOException {
-//        return forgetPasswordService.generateOTP(generateOTPRequest);
-//    }
-//
+    @PostMapping("/generateOTP")
+    public String generateOTP(@RequestBody GenerateOTPRequest generateOTPRequest) throws IOException, MessagingException {
+        return forgetPasswordService.generateOTP(generateOTPRequest);
+    }
+
+    //
 //    @PostMapping("/verifyOTP")
 //    public String verifyOTP(@RequestBody GenerateOTPRequest1 generateOTPRequest) {
 //        return forgetPasswordService.verifyOTP(generateOTPRequest);
 //    }
 //
-//    @PostMapping("/forgetPassChange")
-//    public String forgetPassChange(@RequestBody GenerateOTPRequest2 generateOTPRequest) throws IOException{
-//        return forgetPasswordService.forgetPassChange(generateOTPRequest);
-//    }
+    @PostMapping("/forgetPassChange")
+    public String forgetPassChange(@RequestBody GenerateOTPRequest2 generateOTPRequest) throws IOException, MessagingException {
+        return forgetPasswordService.forgetPassChange(generateOTPRequest);
+    }
 //
 //
 //    @DeleteMapping("/user/delete/")

@@ -10,10 +10,10 @@ import com.dokanne.DokaneeBackend.jwt.model.User;
 import com.dokanne.DokaneeBackend.jwt.repository.RoleRepository;
 import com.dokanne.DokaneeBackend.jwt.repository.UserRepository;
 import com.dokanne.DokaneeBackend.jwt.security.jwt.JwtProvider;
+import com.dokanne.DokaneeBackend.model.OwnerProfile;
+import com.dokanne.DokaneeBackend.repository.OwnerProfileRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -23,7 +23,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.validation.ValidationException;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
+import java.util.UUID;
 
 @AllArgsConstructor
 @Service
@@ -40,13 +43,16 @@ public class SignUpAndSignInService {
     @Autowired
     private RoleRepository roleRepository;
 
+    private final OwnerProfileRepository ownerProfileRepository;
+
 //    private final AreaNameRepository areaNameRepository;
 
     public Object signUp(SignUpForm signUpRequest) {
 
 
         if (userRepository.existsByEmail(signUpRequest.getEmail())) {
-            return true;
+            //return true;
+            return new JwtResponse("Email Already Exists");
         }
 
 
@@ -54,13 +60,19 @@ public class SignUpAndSignInService {
         UUID id = UUID.randomUUID();
         String uuid = id.toString();
         user.setId(uuid);
-        user.setName(signUpRequest.getName());
+        user.setFirstName(signUpRequest.getFirstName());
+        user.setLastName(signUpRequest.getLastName());
         user.setUsername(signUpRequest.getEmail() + signUpRequest.getPhoneNo());
         user.setEmail(signUpRequest.getEmail());
         user.setPhoneNo(signUpRequest.getPhoneNo());
         user.setPassword(encoder.encode(signUpRequest.getPassword()));
         user.setRoles(getRolesOrThrow(signUpRequest.getRole()));
         userRepository.saveAndFlush(user);
+
+        UUID newId = UUID.randomUUID();
+        System.out.println("1");
+        OwnerProfile ownerProfile = new OwnerProfile(newId.toString(), signUpRequest.getFirstName(), signUpRequest.getLastName(), signUpRequest.getEmail(), signUpRequest.getPhoneNo(), signUpRequest.getDob(), signUpRequest.getNid(), signUpRequest.getAddress());
+        ownerProfileRepository.save(ownerProfile);
 
 
         Authentication authentication = authenticationManager.authenticate(
@@ -73,7 +85,7 @@ public class SignUpAndSignInService {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtProvider.generateJwtToken(authentication);
 
-        return new JwtResponse(jwt, signUpRequest.getRole());
+        return new JwtResponse("OK", jwt, signUpRequest.getRole());
     }
 
 
@@ -98,7 +110,7 @@ public class SignUpAndSignInService {
 
         String jwt = jwtProvider.generateJwtToken(authentication);
 
-        return new JwtResponse(jwt, getRolesToString(userOptional.get().getRoles()));
+        return new JwtResponse("OK", jwt, getRolesToString(userOptional.get().getRoles()));
     }
 
     public TestResponse getLoggedAuthUser() {
@@ -113,7 +125,8 @@ public class SignUpAndSignInService {
             loggedInAuthUserId = userRepository.findAuthUsersById(username);
             response.setUsername(userRepository.findByUsername(username).get().getUsername());
             response.setEmail(userRepository.findByUsername(username).get().getEmail());
-            response.setName(userRepository.findByUsername(username).get().getName());
+            response.setFirstName(userRepository.findByUsername(username).get().getFirstName());
+            response.setLastName(userRepository.findByUsername(username).get().getLastName());
             response.setPhoneNo(userRepository.findByUsername(username).get().getPhoneNo());
             response.setRole(getRolesToString(userRepository.findByUsername(username).get().getRoles()));
             System.out.println(username + " username");
@@ -145,7 +158,8 @@ public class SignUpAndSignInService {
             String username = ((UserDetails) authUser).getUsername();
             loggedInAuthUserId = userRepository.findAuthUsersById(username);
             response.setUsername(userRepository.findByUsername(username).get().getUsername());
-            response.setName(userRepository.findByUsername(username).get().getName());
+            response.setFirstName(userRepository.findByUsername(username).get().getFirstName());
+            response.setLastName(userRepository.findByUsername(username).get().getLastName());
             return response.getUsername();
 
         } else if (authUser instanceof UserDetails == false) {
