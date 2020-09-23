@@ -71,7 +71,7 @@ public class SignUpAndSignInService {
 
         UUID newId = UUID.randomUUID();
         System.out.println("1");
-        OwnerProfile ownerProfile = new OwnerProfile(newId.toString(), signUpRequest.getFirstName(), signUpRequest.getLastName(), signUpRequest.getEmail(), signUpRequest.getPhoneNo(), signUpRequest.getDob(), signUpRequest.getNid(), signUpRequest.getAddress());
+        OwnerProfile ownerProfile = new OwnerProfile(newId.toString(), signUpRequest.getFirstName(), signUpRequest.getLastName(), signUpRequest.getEmail(), signUpRequest.getPhoneNo(), signUpRequest.getDob(), signUpRequest.getNid(), signUpRequest.getAddress(), (signUpRequest.getEmail() + signUpRequest.getPhoneNo()));
         ownerProfileRepository.save(ownerProfile);
 
 
@@ -304,4 +304,6 @@ public class SignUpAndSignInService {
 //        loggedUserDetailsResponse.setIsAuthenticated(authentication.isAuthenticated());
 //        return loggedUserDetailsResponse;
 //    }
+
+
 }

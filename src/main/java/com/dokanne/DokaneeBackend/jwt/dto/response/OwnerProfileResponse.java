@@ -1,52 +1,33 @@
-package com.dokanne.DokaneeBackend.model;
+package com.dokanne.DokaneeBackend.jwt.dto.response;
 
+import com.dokanne.DokaneeBackend.model.StoreIds;
 import lombok.*;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.OneToMany;
 import java.util.List;
 
-@Getter
-@Setter
 @RequiredArgsConstructor
 @NoArgsConstructor
+@Setter
+@Getter
 
-@Entity
-@Table
-public class OwnerProfile {
-
+public class OwnerProfileResponse {
     @NonNull
-    @Id
+    String massage;
+    @NonNull
     String ownerId;
-
     @NonNull
     String firstName;
-
     @NonNull
     String lastName;
-
     @NonNull
     String email;
-
     @NonNull
     String phone;
-
-    @NonNull
-    String dob;
-
-    @NonNull
-    String nid;
-
     @NonNull
     String address;
-
     @NonNull
-    String userName;
-
-    String photoLink;
-
-    boolean isVerified;
-
     @OneToMany(cascade = CascadeType.ALL)
     List<StoreIds> storeIds;
-
 }

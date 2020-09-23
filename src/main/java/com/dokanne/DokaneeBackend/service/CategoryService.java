@@ -24,14 +24,18 @@ public class CategoryService {
     private final SubCategoryRepository subCategoryRepository;
 
     public ResponseEntity addCategory(CategoryRequest categoryRequest) {
-        CategoryModel categoryModel = new CategoryModel(UUID.randomUUID().toString(), categoryRequest.getStoreId(), categoryRequest.getCategoryName(), categoryRequest.getSlug());
+        CategoryModel categoryModel = new CategoryModel(UUID.randomUUID().toString(),
+                categoryRequest.getStoreId(), categoryRequest.getCategoryName(), categoryRequest.getSlug());
         categoryRepository.save(categoryModel);
 
         return new ResponseEntity("Created " + categoryRequest.getCategoryName(), HttpStatus.CREATED);
     }
 
     public ResponseEntity addSubCategory(SubCategoryRequest subCategoryRequest) {
-        SubCategoryModel subCategoryModel = new SubCategoryModel(UUID.randomUUID().toString(), subCategoryRequest.getCategoryId(), subCategoryRequest.getStoreId(), subCategoryRequest.getSubCategoryName(), subCategoryRequest.getSlug());
+        SubCategoryModel subCategoryModel = new SubCategoryModel(UUID.randomUUID().toString(),
+                subCategoryRequest.getCategoryId(), subCategoryRequest.getStoreId(),
+                subCategoryRequest.getSubCategoryName(), subCategoryRequest.getSlug());
+
         subCategoryRepository.save(subCategoryModel);
 
         return new ResponseEntity("Created " + subCategoryRequest.getSubCategoryName(), HttpStatus.CREATED);
