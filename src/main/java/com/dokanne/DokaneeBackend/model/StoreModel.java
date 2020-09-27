@@ -2,6 +2,7 @@ package com.dokanne.DokaneeBackend.model;
 
 import lombok.*;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -23,7 +24,15 @@ public class StoreModel {
     @NonNull
     private String storeName;
 
+    @NonNull
+    private String storeInfo;
+
+    @NonNull
+    private String ownerName;
+
+    @Column(unique = true)
     private String domainName;
+    @Column(unique = true)
     @NonNull
     private String subDomainName;
     @NonNull

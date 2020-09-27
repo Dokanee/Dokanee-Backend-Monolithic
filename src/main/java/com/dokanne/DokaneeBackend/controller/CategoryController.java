@@ -21,8 +21,13 @@ public class CategoryController {
     }
 
     @GetMapping("/category/")
-    public ResponseEntity<Object> getCategory() {
-        return categoryService.getCategory();
+    public ResponseEntity<Object> getCategory(@RequestParam String storeId) {
+        return categoryService.getCategory(storeId);
+    }
+
+    @GetMapping("/category/all")
+    public ResponseEntity getAllCategory(@RequestParam String storeId) {
+        return categoryService.getAllCategory(storeId);
     }
 
     @PostMapping("/subCategory/add")

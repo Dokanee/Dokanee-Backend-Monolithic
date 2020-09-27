@@ -20,10 +20,6 @@ public class SubCategoryModel {
     @Id
     String SubCategoryId;
 
-    String categoryId;
-
-    String storeId;
-
     String SubCategoryName;
 
     String slug;

@@ -1,6 +1,7 @@
 package com.dokanne.DokaneeBackend.service;
 
 import com.dokanne.DokaneeBackend.dto.request.StoreRequest;
+import com.dokanne.DokaneeBackend.dto.response.StoreInfoResponse;
 import com.dokanne.DokaneeBackend.jwt.dto.response.OwnerProfileResponse;
 import com.dokanne.DokaneeBackend.jwt.model.Role;
 import com.dokanne.DokaneeBackend.model.OwnerProfile;
@@ -9,14 +10,13 @@ import com.dokanne.DokaneeBackend.model.StoreModel;
 import com.dokanne.DokaneeBackend.repository.OwnerProfileRepository;
 import com.dokanne.DokaneeBackend.repository.StoreRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @AllArgsConstructor
 @Service
@@ -70,7 +70,7 @@ public class StoreService {
 
         String id = UUID.randomUUID().toString();
         StoreModel storeModel = new StoreModel(id, getAuthUserInfo().getOwnerId(), storeRequest.getStoreName(),
-                storeRequest.getSubDomainName(), storeRequest.getStoreCategory(), storeRequest.getAddress(),
+                storeRequest.getStoreInfo(), (getAuthUserInfo().getFirstName() + " " + getAuthUserInfo().getLastName()), storeRequest.getSubDomainName(), storeRequest.getStoreCategory(), storeRequest.getAddress(),
                 storeRequest.getUpzila(), storeRequest.getZila(), storeRequest.getDivision());
         storeModel.setHavePhysicalStore(storeRequest.isHavePhysicalStore());
 
@@ -90,5 +90,46 @@ public class StoreService {
     }
 
 
+    public ResponseEntity<StoreInfoResponse> getStoreInfo() {
+        List<StoreModel> storeModelListOptional = storeRepository.findAllByOwnerId(getAuthUserInfo().getOwnerId());
+        if (storeModelListOptional.isEmpty()) {
+            return new ResponseEntity(storeModelListOptional, HttpStatus.NO_CONTENT);
+        }
+
+        List<StoreInfoResponse> storeInfoResponseList = new ArrayList<>();
+
+        for (StoreModel storeModel : storeModelListOptional) {
+            StoreInfoResponse storeInfoResponse = new StoreInfoResponse(storeModel.getStoreId(), storeModel.getStoreName(), storeModel.getStoreInfo(),
+                    storeModel.getOwnerName(), storeModel.getDomainName(), storeModel.getSubDomainName(),
+                    storeModel.getStoreCategory(), storeModel.isHavePhysicalStore(), storeModel.getAddress(),
+                    storeModel.getUpzila(), storeModel.getZila(), storeModel.getDivision());
+
+            storeInfoResponseList.add(storeInfoResponse);
+
+        }
+
+        return new ResponseEntity(storeInfoResponseList, HttpStatus.OK);
+
+    }
+
+    public ResponseEntity<Boolean> checkSubDomain(String subDomain) {
+        Optional<StoreModel> storeModelOptional = storeRepository.findBySubDomainName(subDomain);
+
+        if (storeModelOptional.isPresent()) {
+            return new ResponseEntity(false, HttpStatus.CONFLICT);
+        } else {
+            return new ResponseEntity(true, HttpStatus.FOUND);
+        }
+    }
+
+    public ResponseEntity<Boolean> checkDomain(String domain) {
+        Optional<StoreModel> storeModelOptional = storeRepository.findByDomainName(domain);
+
+        if (storeModelOptional.isPresent()) {
+            return new ResponseEntity(false, HttpStatus.CONFLICT);
+        } else {
+            return new ResponseEntity(true, HttpStatus.FOUND);
+        }
+    }
 }
 

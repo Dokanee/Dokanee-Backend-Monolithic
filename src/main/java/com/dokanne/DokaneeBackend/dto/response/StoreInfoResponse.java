@@ -1,22 +1,24 @@
-package com.dokanne.DokaneeBackend.dto.request;
+package com.dokanne.DokaneeBackend.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
 @AllArgsConstructor
-@NoArgsConstructor
 
-public class StoreRequest {
+
+public class StoreInfoResponse {
+    private String storeId;
 
     private String storeName;
 
     private String storeInfo;
 
     private String ownerName;
+
+    private String domainName;
 
     private String subDomainName;
 
