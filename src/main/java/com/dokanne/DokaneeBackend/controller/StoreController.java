@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 
 @RestController
-@RequestMapping("/store")
+@RequestMapping("/dashboard/store")
 public class StoreController {
 
     private final StoreService storeService;
