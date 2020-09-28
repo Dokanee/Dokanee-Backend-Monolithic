@@ -119,8 +119,3 @@ public class CategoryService {
     }
 
 }
-
-//6cb7222c-58d6-4e66-869a-3ca28a6e3d5d
-
-
-//Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJoamhhYmliMjRAZ21haWwuY29tMDE1MTUyMTI2ODciLCJzY29wZXMiOiJPV05FUiIsImlhdCI6MTYwMTIzOTU4NywiZXhwIjoxNjAzMzM5NTg3fQ.zlsEqDWlo4TR0ibrO363X8hDJFB_20urjmEnrS6g0meDXV48WcIHQC6fLMPhQI6xqN6T151S0oidticUFKO2jQ

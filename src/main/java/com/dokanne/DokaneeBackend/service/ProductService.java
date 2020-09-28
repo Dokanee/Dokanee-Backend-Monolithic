@@ -26,8 +26,7 @@ public class ProductService {
 
     public ResponseEntity addProduct(ProductAddRequest proAddReq) {
         try {
-            //boolean storeIdAuth = UserUtils.isStoreIdAuth(proAddReq.getStoreId());
-            boolean storeIdAuth = true;
+            boolean storeIdAuth = userUtils.isStoreIdAuth(proAddReq.getStoreId());
 
             if (storeIdAuth) {
 
@@ -42,11 +41,12 @@ public class ProductService {
 
                 productRepository.save(productModel);
 
-                return new ResponseEntity(productModel.getProductName() + " is saved Successful with id " + productModel.getProductId(), HttpStatus.CREATED);
+                MassageResponse massageResponse = new MassageResponse(productModel.getProductName() + " is saved Successful with id " + productModel.getProductId());
+                return new ResponseEntity(massageResponse, HttpStatus.CREATED);
 
             } else {
-                ErrorMassage errorMassage = new ErrorMassage("StoreId Not Authenticated");
-                return new ResponseEntity(errorMassage, HttpStatus.UNAUTHORIZED);
+                MassageResponse massageResponse = new MassageResponse("StoreId Not Authenticated");
+                return new ResponseEntity(massageResponse, HttpStatus.UNAUTHORIZED);
 
             }
 
@@ -83,4 +83,3 @@ public class ProductService {
 
 
 }
-//Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJoamhhYmliMjRAZ21haWwuY29tMDE1MTUyMTI2ODciLCJzY29wZXMiOiJPV05FUiIsImlhdCI6MTYwMTMyNjU4NCwiZXhwIjoxNjAzNDI2NTg0fQ.aEcg3ZuAjVEI2EIUUYhdriKtp_YtVQDdigFSO3BnQqND4jVXH0ihThEK_OXAsS9wUztJ3CSPRRd_tda3Ike-EQ
