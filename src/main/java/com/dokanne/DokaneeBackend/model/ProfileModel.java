@@ -12,7 +12,7 @@ import java.util.List;
 
 @Entity
 @Table
-public class OwnerProfile {
+public class ProfileModel {
 
     @NonNull
     @Id

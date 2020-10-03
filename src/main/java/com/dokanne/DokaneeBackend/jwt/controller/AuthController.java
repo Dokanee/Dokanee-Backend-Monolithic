@@ -5,7 +5,7 @@ import com.dokanne.DokaneeBackend.jwt.dto.request.GenerateOTPRequest;
 import com.dokanne.DokaneeBackend.jwt.dto.request.GenerateOTPRequest2;
 import com.dokanne.DokaneeBackend.jwt.dto.request.LoginForm;
 import com.dokanne.DokaneeBackend.jwt.dto.request.SignUpForm;
-import com.dokanne.DokaneeBackend.jwt.dto.response.TestResponse;
+import com.dokanne.DokaneeBackend.jwt.dto.response.UserResponse;
 import com.dokanne.DokaneeBackend.jwt.services.ForgetPasswordService;
 import com.dokanne.DokaneeBackend.jwt.services.SignUpAndSignInService;
 import javassist.bytecode.DuplicateMemberException;
@@ -41,7 +41,7 @@ public class AuthController {
     }
 
     @GetMapping("/users")
-    public TestResponse getLoggedAuthId() {
+    public ResponseEntity<UserResponse> getLoggedAuthId() {
         return signUpAndSignInService.getLoggedAuthUser();
     }
 

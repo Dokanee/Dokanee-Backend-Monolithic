@@ -3,17 +3,20 @@ package com.dokanne.DokaneeBackend.jwt.services;
 import com.dokanne.DokaneeBackend.jwt.dto.request.LoginForm;
 import com.dokanne.DokaneeBackend.jwt.dto.request.SignUpForm;
 import com.dokanne.DokaneeBackend.jwt.dto.response.JwtResponse;
-import com.dokanne.DokaneeBackend.jwt.dto.response.TestResponse;
+import com.dokanne.DokaneeBackend.jwt.dto.response.UserResponse;
 import com.dokanne.DokaneeBackend.jwt.model.Role;
 import com.dokanne.DokaneeBackend.jwt.model.RoleName;
 import com.dokanne.DokaneeBackend.jwt.model.User;
 import com.dokanne.DokaneeBackend.jwt.repository.RoleRepository;
 import com.dokanne.DokaneeBackend.jwt.repository.UserRepository;
 import com.dokanne.DokaneeBackend.jwt.security.jwt.JwtProvider;
-import com.dokanne.DokaneeBackend.model.OwnerProfile;
-import com.dokanne.DokaneeBackend.repository.OwnerProfileRepository;
+import com.dokanne.DokaneeBackend.model.ProfileModel;
+import com.dokanne.DokaneeBackend.repository.ProfileRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -43,7 +46,7 @@ public class SignUpAndSignInService {
     @Autowired
     private RoleRepository roleRepository;
 
-    private final OwnerProfileRepository ownerProfileRepository;
+    private final ProfileRepository profileRepository;
 
 //    private final AreaNameRepository areaNameRepository;
 
@@ -66,13 +69,13 @@ public class SignUpAndSignInService {
         user.setEmail(signUpRequest.getEmail());
         user.setPhoneNo(signUpRequest.getPhoneNo());
         user.setPassword(encoder.encode(signUpRequest.getPassword()));
-        user.setRoles(getRolesOrThrow(signUpRequest.getRole()));
+        user.setRoles(getRolesFromStringToRole(signUpRequest.getRole()));
         userRepository.saveAndFlush(user);
 
         UUID newId = UUID.randomUUID();
         System.out.println("1");
-        OwnerProfile ownerProfile = new OwnerProfile(newId.toString(), signUpRequest.getFirstName(), signUpRequest.getLastName(), signUpRequest.getEmail(), signUpRequest.getPhoneNo(), signUpRequest.getDob(), signUpRequest.getNid(), signUpRequest.getAddress(), (signUpRequest.getEmail() + signUpRequest.getPhoneNo()));
-        ownerProfileRepository.save(ownerProfile);
+        ProfileModel profileModel = new ProfileModel(newId.toString(), signUpRequest.getFirstName(), signUpRequest.getLastName(), signUpRequest.getEmail(), signUpRequest.getPhoneNo(), signUpRequest.getDob(), signUpRequest.getNid(), signUpRequest.getAddress(), (signUpRequest.getEmail() + signUpRequest.getPhoneNo()));
+        profileRepository.save(profileModel);
 
 
         Authentication authentication = authenticationManager.authenticate(
@@ -110,96 +113,45 @@ public class SignUpAndSignInService {
 
         String jwt = jwtProvider.generateJwtToken(authentication);
 
-        return new JwtResponse("OK", jwt, getRolesToString(userOptional.get().getRoles()));
+        return new JwtResponse("OK", jwt, getRolesStringFromRole(userOptional.get().getRoles()));
     }
 
-    public TestResponse getLoggedAuthUser() {
+    public ResponseEntity<UserResponse> getLoggedAuthUser() {
 
         Object authUser = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Optional<String> loggedInAuthUserId = null;
 
-        TestResponse response = new TestResponse();
         if (authUser instanceof UserDetails) {
-
             String username = ((UserDetails) authUser).getUsername();
-            loggedInAuthUserId = userRepository.findAuthUsersById(username);
-            response.setUsername(userRepository.findByUsername(username).get().getUsername());
-            response.setEmail(userRepository.findByUsername(username).get().getEmail());
-            response.setFirstName(userRepository.findByUsername(username).get().getFirstName());
-            response.setLastName(userRepository.findByUsername(username).get().getLastName());
-            response.setPhoneNo(userRepository.findByUsername(username).get().getPhoneNo());
-            response.setRole(getRolesToString(userRepository.findByUsername(username).get().getRoles()));
-            System.out.println(username + " username");
-            System.out.println(authUser);
-            return response;
 
-        } else if (authUser instanceof UserDetails == false) {
-            System.out.println(response.getEmail()+ " Email");
-            System.out.println(authUser);
-            throw new RuntimeException("LoggedIn user does not  account.");
+            Optional<User> userOptional = userRepository.findByUsername(username);
+
+            if (userOptional.isPresent()) {
+                User user = userOptional.get();
+
+                UserResponse userResponse = new UserResponse(user.getUsername(), user.getEmail(), user.getFirstName(),
+                        user.getLastName(), user.getPhoneNo(), getRolesStringFromRole(user.getRoles()));
+
+                HttpHeaders httpHeaders = new HttpHeaders();
+                httpHeaders.add("massage", "OK");
+                return new ResponseEntity(userResponse, httpHeaders, HttpStatus.OK);
+
+
+            } else {
+                HttpHeaders httpHeaders = new HttpHeaders();
+                httpHeaders.add("massage", "No User Found");
+                return new ResponseEntity(new UserResponse(), httpHeaders, HttpStatus.NO_CONTENT);
+            }
 
         } else {
-            String username = authUser.toString();
-
-            System.out.println(username);
-            return null;
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.add("massage", "Unauthenticated");
+            return new ResponseEntity(new UserResponse(), httpHeaders, HttpStatus.UNAUTHORIZED);
         }
 
     }
 
-    public String getLoggedAuthUserName() {
 
-        Object authUser = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Optional<String> loggedInAuthUserId = null;
-
-        TestResponse response = new TestResponse();
-        if (authUser instanceof UserDetails) {
-
-            String username = ((UserDetails) authUser).getUsername();
-            loggedInAuthUserId = userRepository.findAuthUsersById(username);
-            response.setUsername(userRepository.findByUsername(username).get().getUsername());
-            response.setFirstName(userRepository.findByUsername(username).get().getFirstName());
-            response.setLastName(userRepository.findByUsername(username).get().getLastName());
-            return response.getUsername();
-
-        } else if (authUser instanceof UserDetails == false) {
-            throw new RuntimeException("LoggedIn user does not  account.");
-
-        } else {
-            String username = authUser.toString();
-
-            System.out.println(username);
-        }
-        return loggedInAuthUserId.get();
-
-    }
-
-    public String getLoggedAuthUserId() {
-
-        Object authUser = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Optional<String> loggedInAuthUserId = null;
-
-        TestResponse response = new TestResponse();
-        if (authUser instanceof UserDetails) {
-
-            String username = ((UserDetails) authUser).getUsername();
-            loggedInAuthUserId = userRepository.findAuthUsersById(username);
-            response.setUsername(userRepository.findByUsername(username).get().getUsername());
-            return response.getUsername();
-
-        } else if (authUser instanceof UserDetails == false) {
-            throw new RuntimeException("LoggedIn user does not  account.");
-
-        } else {
-            String username = authUser.toString();
-
-            System.out.println(username);
-        }
-        return loggedInAuthUserId.get();
-
-    }
-
-    private Set<Role> getRolesOrThrow(Set<String> roles2) {
+    private Set<Role> getRolesFromStringToRole(Set<String> roles2) {
         Set<Role> roles = new HashSet<>();
         for (String role : roles2) {
             Optional<Role> roleOptional = roleRepository.findByName(RoleName.valueOf(role));
@@ -212,7 +164,7 @@ public class SignUpAndSignInService {
         return roles;
     }
 
-    private Set<String> getRolesToString(Set<Role> roles2) {
+    private Set<String> getRolesStringFromRole(Set<Role> roles2) {
         Set<String> roles = new HashSet<>();
         for (Role role : roles2) {
 

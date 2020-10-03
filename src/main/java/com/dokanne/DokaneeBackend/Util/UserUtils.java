@@ -3,10 +3,10 @@ package com.dokanne.DokaneeBackend.Util;
 import com.dokanne.DokaneeBackend.jwt.dto.response.OwnerProfileResponse;
 import com.dokanne.DokaneeBackend.jwt.model.Role;
 import com.dokanne.DokaneeBackend.model.CategoryModel;
-import com.dokanne.DokaneeBackend.model.OwnerProfile;
+import com.dokanne.DokaneeBackend.model.ProfileModel;
 import com.dokanne.DokaneeBackend.model.StoreIds;
 import com.dokanne.DokaneeBackend.repository.CategoryRepository;
-import com.dokanne.DokaneeBackend.repository.OwnerProfileRepository;
+import com.dokanne.DokaneeBackend.repository.ProfileRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,7 +19,7 @@ import java.util.*;
 @Service
 public class UserUtils {
 
-    private final OwnerProfileRepository opRepo;
+    private final ProfileRepository opRepo;
     private final CategoryRepository categoryRepository;
 
     public boolean isStoreIdAuth(String storeId) {
@@ -48,7 +48,7 @@ public class UserUtils {
         OwnerProfileResponse response;
         if (authUser instanceof UserDetails) {
             String username = ((UserDetails) authUser).getUsername();
-            OwnerProfile data = opRepo.findByUserName(username);
+            ProfileModel data = opRepo.findByUserName(username);
             response = new OwnerProfileResponse("OK", data.getOwnerId(), data.getFirstName(), data.getLastName(), data.getEmail(), data.getPhone(), data.getAddress(), data.getStoreIds());
 
             return response;

@@ -1,15 +1,17 @@
 package com.dokanne.DokaneeBackend.jwt.dto.response;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Set;
 
 @Getter
 @Setter
-public class TestResponse {
-    String massage;
-
+@AllArgsConstructor
+@NoArgsConstructor
+public class UserResponse {
     String username;
     String email;
     String firstName;

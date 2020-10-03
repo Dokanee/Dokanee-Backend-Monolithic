@@ -1,13 +1,14 @@
 package com.dokanne.DokaneeBackend.service;
 
 import com.dokanne.DokaneeBackend.dto.request.StoreRequest;
+import com.dokanne.DokaneeBackend.dto.response.MassageResponse;
 import com.dokanne.DokaneeBackend.dto.response.StoreInfoResponse;
 import com.dokanne.DokaneeBackend.jwt.dto.response.OwnerProfileResponse;
 import com.dokanne.DokaneeBackend.jwt.model.Role;
-import com.dokanne.DokaneeBackend.model.OwnerProfile;
+import com.dokanne.DokaneeBackend.model.ProfileModel;
 import com.dokanne.DokaneeBackend.model.StoreIds;
 import com.dokanne.DokaneeBackend.model.StoreModel;
-import com.dokanne.DokaneeBackend.repository.OwnerProfileRepository;
+import com.dokanne.DokaneeBackend.repository.ProfileRepository;
 import com.dokanne.DokaneeBackend.repository.StoreRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,9 +24,9 @@ import java.util.*;
 public class StoreService {
 
 
-    private final OwnerProfileRepository ownerProfileRepository;
+    private final ProfileRepository profileRepository;
     private final StoreRepository storeRepository;
-    private final OwnerProfileRepository opRepo;
+    private final ProfileRepository opRepo;
 
     public OwnerProfileResponse getAuthUserInfo() {
 
@@ -35,7 +36,7 @@ public class StoreService {
         if (authUser instanceof UserDetails) {
 
             String username = ((UserDetails) authUser).getUsername();
-            OwnerProfile data = opRepo.findByUserName(username);
+            ProfileModel data = opRepo.findByUserName(username);
 
             response = new OwnerProfileResponse("OK", data.getOwnerId(), data.getFirstName(), data.getLastName(), data.getEmail(), data.getPhone(), data.getAddress(), data.getStoreIds());
 
@@ -76,15 +77,15 @@ public class StoreService {
 
         storeRepository.save(storeModel);
 
-        OwnerProfile ownerProfile = ownerProfileRepository.findById(getAuthUserInfo().getOwnerId()).get();
+        ProfileModel profileModel = profileRepository.findById(getAuthUserInfo().getOwnerId()).get();
 
-        List<StoreIds> storeIdsList = ownerProfile.getStoreIds();
+        List<StoreIds> storeIdsList = profileModel.getStoreIds();
         StoreIds storeIds = new StoreIds();
         storeIds.setStoreId(id);
         storeIdsList.add(storeIds);
-        ownerProfile.setStoreIds(storeIdsList);
+        profileModel.setStoreIds(storeIdsList);
 
-        ownerProfileRepository.save(ownerProfile);
+        profileRepository.save(profileModel);
 
         return id;
     }
@@ -129,6 +130,30 @@ public class StoreService {
             return new ResponseEntity(false, HttpStatus.CONFLICT);
         } else {
             return new ResponseEntity(true, HttpStatus.FOUND);
+        }
+    }
+
+    public ResponseEntity editStore(String storeId, StoreRequest storeRequest) {
+        Optional<StoreModel> storeModelOptional = storeRepository.findById(storeId);
+
+        if (storeModelOptional.isPresent()) {
+            StoreModel storeModel = storeModelOptional.get();
+
+            storeModel.setStoreName(storeRequest.getStoreName());
+            storeModel.setStoreInfo(storeRequest.getStoreInfo());
+            storeModel.setStoreCategory(storeRequest.getStoreCategory());
+            storeModel.setAddress(storeRequest.getAddress());
+            storeModel.setUpzila(storeRequest.getUpzila());
+            storeModel.setZila(storeRequest.getZila());
+            storeModel.setDivision(storeRequest.getDivision());
+            storeModel.setHavePhysicalStore(storeRequest.isHavePhysicalStore());
+
+            storeRepository.save(storeModel);
+
+            return new ResponseEntity(new MassageResponse("Info Saved Successfully", storeModel, 200), HttpStatus.OK);
+
+        } else {
+            return new ResponseEntity(new MassageResponse("No store found on that ID", 406), HttpStatus.NOT_ACCEPTABLE);
         }
     }
 }

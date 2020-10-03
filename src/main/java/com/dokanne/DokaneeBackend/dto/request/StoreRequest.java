@@ -16,8 +16,6 @@ public class StoreRequest {
 
     private String storeInfo;
 
-    private String ownerName;
-
     private String subDomainName;
 
     private String storeCategory;

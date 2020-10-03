@@ -36,4 +36,9 @@ public class StoreController {
         return new ResponseEntity(true, HttpStatus.NO_CONTENT);
     }
 
+    @PutMapping("/edit")
+    public ResponseEntity editStoreInfo(@RequestParam String storeId, @RequestBody StoreRequest storeRequest) {
+        return storeService.editStore(storeId, storeRequest);
+    }
+
 }

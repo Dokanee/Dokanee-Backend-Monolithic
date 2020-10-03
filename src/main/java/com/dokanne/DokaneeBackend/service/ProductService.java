@@ -41,11 +41,11 @@ public class ProductService {
 
                 productRepository.save(productModel);
 
-                MassageResponse massageResponse = new MassageResponse(productModel.getProductName() + " is saved Successful with id " + productModel.getProductId());
+                MassageResponse massageResponse = new MassageResponse(productModel.getProductName() + " is saved Successful with id " + productModel.getProductId(), 201);
                 return new ResponseEntity(massageResponse, HttpStatus.CREATED);
 
             } else {
-                MassageResponse massageResponse = new MassageResponse("StoreId Not Authenticated");
+                MassageResponse massageResponse = new MassageResponse("StoreId Not Authenticated", 401);
                 return new ResponseEntity(massageResponse, HttpStatus.UNAUTHORIZED);
 
             }
@@ -70,12 +70,12 @@ public class ProductService {
 
                 return new ResponseEntity(productModelList, HttpStatus.OK);
             } else {
-                MassageResponse massageResponse = new MassageResponse("Products not found");
+                MassageResponse massageResponse = new MassageResponse("Products not found", 201);
                 return new ResponseEntity(massageResponse, HttpStatus.NO_CONTENT);
             }
 
         } else {
-            MassageResponse massageResponse = new MassageResponse("StoreId and CategoryId is not matched");
+            MassageResponse massageResponse = new MassageResponse("StoreId and CategoryId is not matched", 401);
             return new ResponseEntity(massageResponse, HttpStatus.UNAUTHORIZED);
         }
 
