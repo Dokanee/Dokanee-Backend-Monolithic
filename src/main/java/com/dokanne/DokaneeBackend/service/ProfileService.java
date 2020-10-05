@@ -1,5 +1,7 @@
 package com.dokanne.DokaneeBackend.service;
 
+import com.dokanne.DokaneeBackend.dto.request.ProfileRequest;
+import com.dokanne.DokaneeBackend.dto.response.MassageResponse;
 import com.dokanne.DokaneeBackend.dto.response.ProfileResponse;
 import com.dokanne.DokaneeBackend.jwt.dto.response.UserResponse;
 import com.dokanne.DokaneeBackend.jwt.services.SignUpAndSignInService;
@@ -30,14 +32,9 @@ public class ProfileService {
             System.out.println(userResEntity.getBody().getUsername());
             ProfileModel profileModel = profileRepository.findByUserName(userResEntity.getBody().getUsername());
 
-            if (profileModel != null) {
-                System.out.println(profileModel.getEmail());
-                System.out.println(2);
-            }
-            System.out.println(3);
             HttpHeaders httpHeaders = new HttpHeaders();
             httpHeaders.add("massage", "OK");
-            return new ResponseEntity(ProfileResponse.builder()
+            return new ResponseEntity(new MassageResponse("Ok", ProfileResponse.builder()
                     .firstName(profileModel.getFirstName())
                     .lastName(profileModel.getLastName())
                     .email(profileModel.getEmail())
@@ -49,6 +46,7 @@ public class ProfileService {
                     .photoLink(profileModel.getPhotoLink())
                     .storeIds(getStoreIdStringFromStoreId(profileModel.getStoreIds()))
                     .build(),
+                    200),
                     httpHeaders,
                     HttpStatus.OK
             );
@@ -56,9 +54,9 @@ public class ProfileService {
         } else if (userResEntity.getStatusCodeValue() == 401) {
             HttpHeaders httpHeaders = new HttpHeaders();
             httpHeaders.add("massage", "UnAuthorized");
-            return new ResponseEntity(new ProfileResponse(), httpHeaders, HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity(new MassageResponse("UnAuthorized", 401), httpHeaders, HttpStatus.UNAUTHORIZED);
         } else {
-            return new ResponseEntity(new ProfileResponse(), userResEntity.getHeaders(), userResEntity.getStatusCode());
+            return new ResponseEntity(new MassageResponse("UnAuthorized", userResEntity.getStatusCodeValue()), userResEntity.getHeaders(), userResEntity.getStatusCode());
         }
 
     }
@@ -71,4 +69,30 @@ public class ProfileService {
         return list;
     }
 
+    public ResponseEntity editUserInfo(ProfileRequest profileRequest) {
+        ResponseEntity<UserResponse> userResEntity = signUpAndSignInService.getLoggedAuthUser();
+
+        if (userResEntity.getStatusCodeValue() == 200) {
+            ProfileModel profileModel = profileRepository.findByUserName(userResEntity.getBody().getUsername());
+
+            profileModel.setFirstName(profileRequest.getFirstName());
+            profileModel.setLastName(profileRequest.getLastName());
+            profileModel.setDob(profileRequest.getDob());
+            profileModel.setAddress(profileRequest.getAddress());
+
+            profileRepository.save(profileModel);
+
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.add("Massage", "Everything is ok");
+            return new ResponseEntity(new MassageResponse("OK", 200), httpHeaders, HttpStatus.OK);
+
+        } else if (userResEntity.getStatusCodeValue() == 401) {
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.add("massage", "UnAuthorized");
+            return new ResponseEntity(new ProfileResponse(), httpHeaders, HttpStatus.UNAUTHORIZED);
+        } else {
+            return new ResponseEntity(new ProfileResponse(), userResEntity.getHeaders(), userResEntity.getStatusCode());
+        }
+
+    }
 }

@@ -1,12 +1,11 @@
 package com.dokanne.DokaneeBackend.controller;
 
+import com.dokanne.DokaneeBackend.dto.request.ProfileRequest;
 import com.dokanne.DokaneeBackend.repository.ProfileRepository;
 import com.dokanne.DokaneeBackend.service.ProfileService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @AllArgsConstructor
 
@@ -19,6 +18,11 @@ public class ProfileController {
     @GetMapping("/")
     public ResponseEntity getUserInfo() {
         return profileService.getUserProfile();
+    }
+
+    @PutMapping("/")
+    public ResponseEntity editUserInfo(@RequestBody ProfileRequest profileRequest) {
+        return profileService.editUserInfo(profileRequest);
     }
 
 }
