@@ -1,13 +1,13 @@
 package com.dokanne.DokaneeBackend.dto.response;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @RequiredArgsConstructor
+
+@Getter
+@Setter
 
 public class MassageResponse {
     @NonNull

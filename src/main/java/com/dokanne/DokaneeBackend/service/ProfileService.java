@@ -1,5 +1,7 @@
 package com.dokanne.DokaneeBackend.service;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import com.dokanne.DokaneeBackend.dto.request.ProfileRequest;
 import com.dokanne.DokaneeBackend.dto.response.MassageResponse;
 import com.dokanne.DokaneeBackend.dto.response.ProfileResponse;
@@ -9,13 +11,18 @@ import com.dokanne.DokaneeBackend.model.ProfileModel;
 import com.dokanne.DokaneeBackend.model.StoreIds;
 import com.dokanne.DokaneeBackend.repository.ProfileRepository;
 import lombok.AllArgsConstructor;
+import org.cloudinary.json.JSONObject;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @AllArgsConstructor
@@ -94,5 +101,36 @@ public class ProfileService {
             return new ResponseEntity(new ProfileResponse(), userResEntity.getHeaders(), userResEntity.getStatusCode());
         }
 
+    }
+
+    public ResponseEntity uploadImage(MultipartFile aFile) {
+        Cloudinary c = new Cloudinary(ObjectUtils.asMap(
+                "cloud_name", "to-let-app",
+                "api_key", "111257839862595",
+                "api_secret", "7H1QY2G1W6FVQQ3envantRuJz4c"));
+
+        try {
+            ProfileModel profileModel = profileRepository.findByUserName(signUpAndSignInService.getLoggedAuthUser().getBody().getUsername());
+
+            System.out.println(1);
+            File f = Files.createTempFile("temp", aFile.getOriginalFilename()).toFile();
+            System.out.println(2);
+            aFile.transferTo(f);
+            System.out.println(3);
+            Map response = c.uploader().upload(f, ObjectUtils.emptyMap());
+            System.out.println(4);
+            JSONObject json = new JSONObject(response);
+            System.out.println(5);
+            String url = json.getString("url");
+            System.out.println(6);
+            profileModel.setPhotoLink(url);
+
+            profileRepository.save(profileModel);
+
+            return new ResponseEntity("{\"status\":\"OK\"}", HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println(e);
+            return new ResponseEntity<String>("Wrong", HttpStatus.BAD_REQUEST);
+        }
     }
 }

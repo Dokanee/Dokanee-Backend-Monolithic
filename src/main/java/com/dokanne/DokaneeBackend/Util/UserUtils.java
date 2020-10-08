@@ -2,10 +2,12 @@ package com.dokanne.DokaneeBackend.Util;
 
 import com.dokanne.DokaneeBackend.jwt.dto.response.OwnerProfileResponse;
 import com.dokanne.DokaneeBackend.jwt.model.Role;
+import com.dokanne.DokaneeBackend.jwt.services.SignUpAndSignInService;
 import com.dokanne.DokaneeBackend.model.CategoryModel;
 import com.dokanne.DokaneeBackend.model.ProfileModel;
 import com.dokanne.DokaneeBackend.model.StoreIds;
 import com.dokanne.DokaneeBackend.repository.CategoryRepository;
+import com.dokanne.DokaneeBackend.repository.ProductRepository;
 import com.dokanne.DokaneeBackend.repository.ProfileRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,16 +23,15 @@ public class UserUtils {
 
     private final ProfileRepository opRepo;
     private final CategoryRepository categoryRepository;
+    private final ProductRepository productRepository;
 
     public boolean isStoreIdAuth(String storeId) {
         List<String> storeList = getStoreStringIds(getAuthUserInfo().getStoreIds());
-
         return storeList.contains(storeId);
     }
 
     public boolean isCategoryIdAndStoreIdAuth(String storeId, String categoryId) {
         Optional<CategoryModel> categoryModelOptional = categoryRepository.findByStoreIdAndCategoryId(storeId, categoryId);
-
         return categoryModelOptional.isPresent();
     }
 
@@ -50,7 +51,6 @@ public class UserUtils {
             String username = ((UserDetails) authUser).getUsername();
             ProfileModel data = opRepo.findByUserName(username);
             response = new OwnerProfileResponse("OK", data.getOwnerId(), data.getFirstName(), data.getLastName(), data.getEmail(), data.getPhone(), data.getAddress(), data.getStoreIds());
-
             return response;
 
         } else if (authUser instanceof UserDetails == false) {
@@ -78,4 +78,14 @@ public class UserUtils {
         return roles;
     }
 
+    public boolean authProduct(String id, String productId) {
+        List<String> storeList = getStoreStringIds(getAuthUserInfo().getStoreIds());
+        if(storeList.contains(id)) {
+            return productRepository.findByStoreIdAndProductId(id, productId).isPresent();
+        }
+        else {
+            return false;
+        }
+
+    }
 }

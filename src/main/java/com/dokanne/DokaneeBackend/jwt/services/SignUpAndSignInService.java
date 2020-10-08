@@ -1,6 +1,8 @@
 package com.dokanne.DokaneeBackend.jwt.services;
 
+import com.dokanne.DokaneeBackend.dto.response.MassageResponse;
 import com.dokanne.DokaneeBackend.jwt.dto.request.LoginForm;
+import com.dokanne.DokaneeBackend.jwt.dto.request.PassChangeRequest;
 import com.dokanne.DokaneeBackend.jwt.dto.request.SignUpForm;
 import com.dokanne.DokaneeBackend.jwt.dto.response.JwtResponse;
 import com.dokanne.DokaneeBackend.jwt.dto.response.UserResponse;
@@ -171,6 +173,31 @@ public class SignUpAndSignInService {
             roles.add(role.getName().toString());
         }
         return roles;
+    }
+
+    public ResponseEntity changePass(PassChangeRequest passChangeRequest) {
+
+        Optional<User> userOptional = userRepository.findByUsername(getLoggedAuthUser().getBody().getUsername());
+
+        if(userOptional.isPresent()){
+            User user = userOptional.get();
+            if(encoder.matches(passChangeRequest.getOldPass(), user.getPassword())){
+                user.setPassword(encoder.encode(passChangeRequest.getNewPass()));
+
+                userRepository.save(user);
+
+                MassageResponse massageResponse = new MassageResponse("Pass Changed Successful",200);
+                return new ResponseEntity(massageResponse,HttpStatus.OK);
+            }
+            else {
+                MassageResponse massageResponse = new MassageResponse("Old Pass Not Matched",400);
+                return new ResponseEntity(massageResponse,HttpStatus.BAD_REQUEST);
+            }
+        }
+        else {
+            MassageResponse massageResponse = new MassageResponse("No User Found",204);
+            return new ResponseEntity(massageResponse,HttpStatus.NO_CONTENT);
+        }
     }
 
 //    public String deleteUser(String email) {
