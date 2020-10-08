@@ -1,7 +1,10 @@
 package com.dokanne.DokaneeBackend.jwt.controller;
 
 
-import com.dokanne.DokaneeBackend.jwt.dto.request.*;
+import com.dokanne.DokaneeBackend.jwt.dto.request.GenerateOTPRequest;
+import com.dokanne.DokaneeBackend.jwt.dto.request.GenerateOTPRequest2;
+import com.dokanne.DokaneeBackend.jwt.dto.request.LoginForm;
+import com.dokanne.DokaneeBackend.jwt.dto.request.SignUpForm;
 import com.dokanne.DokaneeBackend.jwt.dto.response.UserResponse;
 import com.dokanne.DokaneeBackend.jwt.services.ForgetPasswordService;
 import com.dokanne.DokaneeBackend.jwt.services.SignUpAndSignInService;
@@ -17,7 +20,7 @@ import java.io.IOException;
 
 @AllArgsConstructor
 @Slf4j
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
