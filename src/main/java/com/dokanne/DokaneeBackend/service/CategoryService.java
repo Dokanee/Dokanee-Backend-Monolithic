@@ -77,7 +77,7 @@ public class CategoryService {
         boolean storeIdAuth = storeList.contains(storeId);
 
         if (storeIdAuth) {
-            List<CategoryModel> categoryModelList = categoryRepository.findAll();
+            List<CategoryModel> categoryModelList = categoryRepository.findAllByStoreId(storeId);
 
             return new ResponseEntity(categoryModelList, HttpStatus.OK);
         } else {
