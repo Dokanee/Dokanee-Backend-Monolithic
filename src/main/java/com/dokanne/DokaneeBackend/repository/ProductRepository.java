@@ -14,4 +14,5 @@ public interface ProductRepository extends JpaRepository<ProductModel, String> {
 
     Optional<ProductModel> findByStoreIdAndProductId(String storeId, String productId);
 
+
 }

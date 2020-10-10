@@ -2,7 +2,6 @@ package com.dokanne.DokaneeBackend.Util;
 
 import com.dokanne.DokaneeBackend.jwt.dto.response.OwnerProfileResponse;
 import com.dokanne.DokaneeBackend.jwt.model.Role;
-import com.dokanne.DokaneeBackend.jwt.services.SignUpAndSignInService;
 import com.dokanne.DokaneeBackend.model.CategoryModel;
 import com.dokanne.DokaneeBackend.model.ProfileModel;
 import com.dokanne.DokaneeBackend.model.StoreIds;
@@ -37,6 +36,7 @@ public class UserUtils {
 
     List<String> getStoreStringIds(List<StoreIds> storeIdsList) {
         List<String> storeIdsString = new ArrayList();
+        System.out.println(storeIdsList.isEmpty());
         for (StoreIds storeIds : storeIdsList) {
             storeIdsString.add(storeIds.getStoreId());
         }

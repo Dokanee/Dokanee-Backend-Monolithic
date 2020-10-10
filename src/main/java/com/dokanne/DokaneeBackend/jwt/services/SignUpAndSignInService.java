@@ -153,7 +153,7 @@ public class SignUpAndSignInService {
     }
 
 
-    private Set<Role> getRolesFromStringToRole(Set<String> roles2) {
+    public Set<Role> getRolesFromStringToRole(Set<String> roles2) {
         Set<Role> roles = new HashSet<>();
         for (String role : roles2) {
             Optional<Role> roleOptional = roleRepository.findByName(RoleName.valueOf(role));
