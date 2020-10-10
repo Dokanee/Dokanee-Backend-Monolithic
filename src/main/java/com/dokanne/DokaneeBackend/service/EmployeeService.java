@@ -281,7 +281,7 @@ public class EmployeeService {
                     "</table><!-- /HEADER -->\n" +
                     "\n" +
                     "<!-- BODY -->\n" +
-                    "<table style=\"padding:5px\" class=\"body-wrap\">\n" +
+                    "<table style=\"padding:5px\" class=\"body-wrap\" bgcolor=\"#efefef\">\n" +
                     "\t<tr>\n" +
                     "\t\t<td></td>\n" +
                     "\t\t<td style=\"border-top:3px solid #25AA94;\" class=\"container\" bgcolor=\"#FFFFFF\">\n" +
@@ -302,7 +302,7 @@ public class EmployeeService {
                     "\t\t\t\t\t\t<p align=\"center\" class=\"lead\" >Now, Setting up your profile.It takes just a couple of minutes, and you only have to do it once.</p>\n" +
                     "\n" +
                     "\t\t\t\t\t\t<table width=\"100%\">\n" +
-                    "\t\t\t\t\t\t\t\t\t<td align=\"center\"><a href=\"https://dokanee.com.bd/user/profile\" class=\"btn\" ><b>Go to my profile</b></a></td>\n" +
+                    "\t\t\t\t\t\t\t\t\t<td align=\"center\"><a style=\"color:#fff\" href=\"https://dokanee.com.bd/user/profile\" class=\"btn\" ><b>Go to my profile</b></a></td>\n" +
                     "\t\t\t\t\t\t\t\t\t<span class=\"clear\"></span>\n" +
                     "\t\t\t\t\t\t</table>\n" +
                     "\t\t\t\t\t</td>\n" +
@@ -316,7 +316,7 @@ public class EmployeeService {
                     "</table><!-- /BODY -->\n" +
                     "\n" +
                     "<!-- FOOTER -->\n" +
-                    "<table class=\"footer-wrap\">\n" +
+                    "<table class=\"footer-wrap\" bgcolor=\"#efefef\">\n" +
                     "\t<tr>\n" +
                     "\t\t<td></td>\n" +
                     "\t\t<td class=\"container\">\n" +

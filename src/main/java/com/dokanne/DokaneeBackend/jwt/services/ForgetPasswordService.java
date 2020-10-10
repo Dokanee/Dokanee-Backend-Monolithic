@@ -232,7 +232,7 @@ public class ForgetPasswordService {
                     "</table><!-- /HEADER -->\n" +
                     "\n" +
                     "<!-- BODY -->\n" +
-                    "<table style=\"padding:5px\" class=\"body-wrap\">\n" +
+                    "<table style=\"padding:5px\" class=\"body-wrap\" bgcolor=\"#efefef\">\n" +
                     "\t<tr>\n" +
                     "\t\t<td></td>\n" +
                     "\t\t<td style=\"border-top:3px solid #25AA94;\" class=\"container\" bgcolor=\"#FFFFFF\">\n" +
@@ -260,7 +260,7 @@ public class ForgetPasswordService {
                     "</table><!-- /BODY -->\n" +
                     "\n" +
                     "<!-- FOOTER -->\n" +
-                    "<table class=\"footer-wrap\">\n" +
+                    "<table class=\"footer-wrap\" bgcolor=\"#efefef\">\n" +
                     "\t<tr>\n" +
                     "\t\t<td></td>\n" +
                     "\t\t<td class=\"container\">\n" +
