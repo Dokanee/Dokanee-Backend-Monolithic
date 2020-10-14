@@ -14,7 +14,7 @@ spring:
       ddl-auto: update
   liquibase:
     change-log: "classpath:/db.changelog/db.changelog-master.yml"
-    enabled: true
+    enabled: false
 #  cloud:
 #    gateway:
 #      filter:
