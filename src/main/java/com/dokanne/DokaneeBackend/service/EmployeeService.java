@@ -92,18 +92,129 @@ public class EmployeeService {
 
             String body = "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n" +
                     "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n" +
+                    "\n" +
                     "<head>\n" +
-                    "\n" +
                     "<meta name=\"viewport\" content=\"width=device-width\" />\n" +
-                    "\n" +
                     "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />\n" +
                     "<title>The Dokanee Team</title>\n" +
-                    "\n" +
-                    "<link rel=\"stylesheet\" type=\"text/css\" href=\"stylesheets/email.css\" />\n" +
-                    "\n" +
                     "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n" +
-                    "<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css\">\n" +
+                    "\n" +
                     "<style>\n" +
+                    "\n" +
+                    "/* main style */\n" +
+                    "* { \n" +
+                    "\tmargin:0;\n" +
+                    "\tpadding:0;\n" +
+                    "}\n" +
+                    "* { font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif; }\n" +
+                    "\n" +
+                    "img { \n" +
+                    "\tmax-width: 100%; \n" +
+                    "}\n" +
+                    ".collapse {\n" +
+                    "\tmargin:0;\n" +
+                    "\tpadding:0;\n" +
+                    "}\n" +
+                    "body {\n" +
+                    "\t-webkit-font-smoothing:antialiased; \n" +
+                    "\t-webkit-text-size-adjust:none; \n" +
+                    "\twidth: 100%!important; \n" +
+                    "\theight: 100%;\n" +
+                    "}\n" +
+                    "\n" +
+                    "/* Elements Style */\n" +
+                    "\n" +
+                    "a { color: #2BA6CB;}\n" +
+                    "\n" +
+                    ".btn {\n" +
+                    "\ttext-decoration:none;\n" +
+                    "\tcolor: #FFF;\n" +
+                    "\tbackground-color: #25AA94;\n" +
+                    "\tpadding:15px 16px;\n" +
+                    "    font-weight:bold;\n" +
+                    "    border:1px;\n" +
+                    "    border-radius:5px;\n" +
+                    "    font-size:15px;\n" +
+                    "\ttext-align:center;\n" +
+                    "\tcursor:pointer;\n" +
+                    "\tdisplay: inline-block;\n" +
+                    "}\n" +
+                    "\n" +
+                    "p.callout {\n" +
+                    "\tpadding:15px;\n" +
+                    "\tbackground-color:#ECF8FF;\n" +
+                    "\tmargin-bottom: 15px;\n" +
+                    "}\n" +
+                    ".callout a {\n" +
+                    "\tfont-weight:bold;\n" +
+                    "\tcolor: #2BA6CB;\n" +
+                    "}\n" +
+                    "\n" +
+                    "/* header */\n" +
+                    "\n" +
+                    "table.head-wrap { width: 100%;}\n" +
+                    "\n" +
+                    ".header.container table td.logo { padding: 15px; }\n" +
+                    ".header.container table td.label { padding: 15px; padding-left:0px;}\n" +
+                    "\n" +
+                    "\n" +
+                    "/* body style */\n" +
+                    "\n" +
+                    "table.body-wrap { width: 100%;}\n" +
+                    "\n" +
+                    ".container {\n" +
+                    "\tdisplay:block!important;\n" +
+                    "\tmax-width:600px!important;\n" +
+                    "\tmargin:0 auto!important; /* makes it centered */\n" +
+                    "\tclear:both!important;\n" +
+                    "}\n" +
+                    "\n" +
+                    ".content {\n" +
+                    "\tpadding:15px;\n" +
+                    "\tmax-width:600px;\n" +
+                    "\tmargin:0 auto;\n" +
+                    "\tdisplay:block; \n" +
+                    "}\n" +
+                    "\n" +
+                    ".content table { width: 100%; }\n" +
+                    "\n" +
+                    "/* Footer Style */\n" +
+                    "\n" +
+                    "table.footer-wrap { width: 100%;\tclear:both!important;\n" +
+                    "}\n" +
+                    ".footer-wrap .container td.content  p { border-top: 1px solid rgb(215,215,215); padding-top:15px;}\n" +
+                    ".footer-wrap .container td.content p {\n" +
+                    "\tfont-size:10px;\n" +
+                    "\tfont-weight: bold;\n" +
+                    "\t\n" +
+                    "}\n" +
+                    "\n" +
+                    "/* Text Style */\n" +
+                    "\n" +
+                    "h1,h2,h3,h4,h5,h6 {\n" +
+                    "font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif; line-height: 1.1; margin-bottom:15px; color:#000;\n" +
+                    "}\n" +
+                    "h1 small, h2 small, h3 small, h4 small, h5 small, h6 small { font-size: 60%; color: #6f6f6f; line-height: 0; text-transform: none; }\n" +
+                    "\n" +
+                    "h1 { font-weight:200; font-size: 44px;}\n" +
+                    "h2 { font-weight:200; font-size: 37px;}\n" +
+                    "h3 { font-weight:500; font-size: 27px;}\n" +
+                    "h4 { font-weight:500; font-size: 23px;}\n" +
+                    "h5 { font-weight:900; font-size: 17px;}\n" +
+                    "h6 { font-weight:900; font-size: 14px; text-transform: uppercase; color:#444;}\n" +
+                    "\n" +
+                    ".collapse { margin:0!important;}\n" +
+                    "\n" +
+                    "p, ul { \n" +
+                    "\tmargin-bottom: 10px; \n" +
+                    "\tfont-weight: normal; \n" +
+                    "\tfont-size:14px; \n" +
+                    "\tline-height:1.6;\n" +
+                    "}\n" +
+                    "p.lead { font-size:17px; }\n" +
+                    "p.last { margin-bottom:0px;}\n" +
+                    "\n" +
+                    "/* Socila Style */\n" +
                     ".fa {\n" +
                     "  padding: 10px;\n" +
                     "  font-size: 15px;\n" +
@@ -170,7 +281,7 @@ public class EmployeeService {
                     "</table><!-- /HEADER -->\n" +
                     "\n" +
                     "<!-- BODY -->\n" +
-                    "<table style=\"padding:5px\" class=\"body-wrap\">\n" +
+                    "<table style=\"padding:5px\" class=\"body-wrap\" bgcolor=\"#efefef\">\n" +
                     "\t<tr>\n" +
                     "\t\t<td></td>\n" +
                     "\t\t<td style=\"border-top:3px solid #25AA94;\" class=\"container\" bgcolor=\"#FFFFFF\">\n" +
@@ -181,12 +292,17 @@ public class EmployeeService {
                     "\t\t\t\t\t<td>\n" +
                     "\t\t\t\t\t\t<h4 style=\"color:#4b4b4b\">Hi, " + profileModel.getFirstName() + " " + profileModel.getLastName() + "</h4>\n" +
                     "\t\t\t\t\t\t<p class=\"lead\">We will be very glad to inform you that Someone Select you as a employee of <b>" + storeModel.getStoreName() + "</b> on Dokanee.com.bd</p>\n" +
+                    "\t\t\t\t\t\t<p>Your login info is given below.</p>\n" +
                     "\n" +
+                    "\t\t\t\t\t\t<p class=\"callout\">\n" +
+                    "\t\t\t\t\t\t\tEmail: " + profileModel.getEmail() + " <br/>\n" +
+                    "\t\t\t\t\t\t\tPassword: emp6787466\n" +
+                    "\t\t\t\t\t\t</p>\n" +
                     "\t\t\t\t\t\t<br/>\n" +
                     "\t\t\t\t\t\t<p align=\"center\" class=\"lead\" >Now, Setting up your profile.It takes just a couple of minutes, and you only have to do it once.</p>\n" +
                     "\n" +
                     "\t\t\t\t\t\t<table width=\"100%\">\n" +
-                    "\t\t\t\t\t\t\t\t\t<td align=\"center\"><button style=\"background-color:#25AA94; padding: 18px 5px 18px 5px;width : 45%;border:1px;border-radius:5px;color:white;font-size:15px;cursor:pointer;\"><b>Go to my profile</b></button></td>\n" +
+                    "\t\t\t\t\t\t\t\t\t<td align=\"center\"><a style=\"color:#fff\" href=\"https://dokanee.com.bd/user/profile\" class=\"btn\" ><b>Go to my profile</b></a></td>\n" +
                     "\t\t\t\t\t\t\t\t\t<span class=\"clear\"></span>\n" +
                     "\t\t\t\t\t\t</table>\n" +
                     "\t\t\t\t\t</td>\n" +
@@ -200,7 +316,7 @@ public class EmployeeService {
                     "</table><!-- /BODY -->\n" +
                     "\n" +
                     "<!-- FOOTER -->\n" +
-                    "<table class=\"footer-wrap\">\n" +
+                    "<table class=\"footer-wrap\" bgcolor=\"#efefef\">\n" +
                     "\t<tr>\n" +
                     "\t\t<td></td>\n" +
                     "\t\t<td class=\"container\">\n" +
@@ -212,18 +328,17 @@ public class EmployeeService {
                     "\t\t\t\t\t<a style=\"color:#2196F3;font-size:20px; text-decoration:solid;\" href=\"mailto:dokaneeteam@gmail.com?subject = Feedback & body = Message\">The Dokanee Team</a>\n" +
                     "\t\t\t\t\t\t<br><br><br>\n" +
                     "\t\t\t\t\t\t<p>\n" +
-                    "\t\t\t\t\t\t\t<a href=\"https://dokanee.com.bd\" class=\"fa fa-link\"></a>\n" +
-                    "\t\t\t\t\t\t\t<a href=\"https://facebook.com/dokanee.com.bd\" class=\"fa fa-facebook\"></a>\n" +
-                    "\t\t\t\t\t\t\t<a href=\"#\" class=\"fa fa-twitter\"></a>\n" +
-                    "\t\t\t\t\t\t\t<a href=\"#\" class=\"fa fa-linkedin\"></a>\n" +
-                    "\t\t\t\t\t\t\t<a href=\"#\" class=\"fa fa-youtube\"></a>\n" +
+                    "\t\t\t\t\t\t\t<a href=\"https://dokanee.com.bd\"><img class=\"fa fa-link\" src=\"https://i.ibb.co/MhdH7pD/link.png\" alt=\"link\"></a>\n" +
+                    "\t\t\t\t\t\t\t<a href=\"https://facebook.com/dokanee.com.bd\"><img class=\"fa fa-facebook\" src=\"https://i.ibb.co/CW4MG1R/facebook.png\" alt=\"facebook\"></a>\n" +
+                    "\t\t\t\t\t\t\t<a href=\"#\"><img class=\"fa fa-twitter\" src=\"https://i.ibb.co/s38X67B/twitter.png\" alt=\"twitter\"></a>\n" +
+                    "\t\t\t\t\t\t\t<a href=\"#\"><img class=\"fa fa-linkedin\" src=\"https://i.ibb.co/JjpsYn7/linkedin.png\" alt=\"linkedin\"></a>\n" +
+                    "\t\t\t\t\t\t\t<a href=\"#\"><img class=\"fa fa-youtube\" src=\"https://i.ibb.co/Mk5xPyS/youtube.png\" alt=\"youtube\"></a>\n" +
                     "\t\t\t\t\t\t</p>\n" +
                     "\t\t\t\t\t\t<p>Copyright © 2020 Dokanee.com.bd , All rights reserved.</p>\n" +
                     "\t\t\t\t\t</td>\n" +
                     "\t\t\t\t</tr>\n" +
                     "\t\t\t</table>\n" +
-                    "\t\t\t\t</div>\n" +
-                    "\n" +
+                    "\t\t\t</div>\n" +
                     "\t\t</td>\n" +
                     "\t\t<td></td>\n" +
                     "\t</tr>\n" +
