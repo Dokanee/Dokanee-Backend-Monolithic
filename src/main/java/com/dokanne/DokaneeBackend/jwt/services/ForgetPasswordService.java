@@ -242,7 +242,7 @@ public class ForgetPasswordService {
                     "\t\t\t\t\t<tr>\n" +
                     "\t\t\t\t\t\t<td>\n" +
                     "\t\t\t\t\t\t\t<h4 align=\"center\" style=\"color:#4b4b4b;text-decoration:bold\">Password Reset</h4>\n" +
-                    "\t\t\t\t\t\t\t<br><br> <p align=\"center\" class=\"lead\"><b>Hi, " + userOptional.get().getFirstName() + "</b> <br> If you've lost your password or wish to reset it, use this OTP code below to get started.</p>\n" +
+                    "\t\t\t\t\t\t\t<br><br> <p align=\"center\" class=\"lead\"><b>Hi, " + userOptional.get().getFirstName() + " " + userOptional.get().getLastName() + "</b> <br> If you've lost your password or wish to reset it, use this OTP code below to get started.</p>\n" +
                     "\t\n" +
                     "\t\t\t\t\t\t\t<p style=\"font-size:25px;\" align=\"center\" class=\"callout\">\n" +
                     "\t\t\t\t\t\t\t\t" + random_int + "\n" +
