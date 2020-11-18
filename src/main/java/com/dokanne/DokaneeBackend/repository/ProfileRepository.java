@@ -11,4 +11,6 @@ public interface ProfileRepository extends JpaRepository<ProfileModel, String> {
 //    Optional< List<ProfileModel> > findByStoreIds(List<StoreIds> storeIds);
 
     Optional<ProfileModel> findByEmail(String email);
+
+    //Optional<ProfileModel> findAllByStoreIdsIn
 }

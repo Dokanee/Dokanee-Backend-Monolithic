@@ -67,7 +67,7 @@ public class StoreService {
         return roles;
     }
 
-    public String createStore(StoreRequest storeRequest) {
+    public ResponseEntity<String> createStore(StoreRequest storeRequest) {
 
         String id = UUID.randomUUID().toString();
         StoreModel storeModel = new StoreModel(id, getAuthUserInfo().getOwnerId(), storeRequest.getStoreName(),
@@ -87,14 +87,14 @@ public class StoreService {
 
         profileRepository.save(profileModel);
 
-        return id;
+        return new ResponseEntity<String>("Store Created", HttpStatus.CREATED);
     }
 
 
-    public ResponseEntity<StoreInfoResponse> getStoreInfo() {
+    public ResponseEntity<Object> getStoreInfo() {
         List<StoreModel> storeModelListOptional = storeRepository.findAllByOwnerId(getAuthUserInfo().getOwnerId());
         if (storeModelListOptional.isEmpty()) {
-            return new ResponseEntity(storeModelListOptional, HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>("No Data", HttpStatus.BAD_REQUEST);
         }
 
         List<StoreInfoResponse> storeInfoResponseList = new ArrayList<>();
@@ -109,7 +109,7 @@ public class StoreService {
 
         }
 
-        return new ResponseEntity(storeInfoResponseList, HttpStatus.OK);
+        return new ResponseEntity<>(storeInfoResponseList, HttpStatus.OK);
 
     }
 
@@ -117,9 +117,9 @@ public class StoreService {
         Optional<StoreModel> storeModelOptional = storeRepository.findBySubDomainName(subDomain);
 
         if (storeModelOptional.isPresent()) {
-            return new ResponseEntity(false, HttpStatus.CONFLICT);
+            return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
         } else {
-            return new ResponseEntity(true, HttpStatus.FOUND);
+            return new ResponseEntity<>(true, HttpStatus.OK);
         }
     }
 
@@ -127,13 +127,13 @@ public class StoreService {
         Optional<StoreModel> storeModelOptional = storeRepository.findByDomainName(domain);
 
         if (storeModelOptional.isPresent()) {
-            return new ResponseEntity(false, HttpStatus.CONFLICT);
+            return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
         } else {
-            return new ResponseEntity(true, HttpStatus.FOUND);
+            return new ResponseEntity<>(true, HttpStatus.OK);
         }
     }
 
-    public ResponseEntity editStore(String storeId, StoreRequest storeRequest) {
+    public ResponseEntity<MassageResponse> editStore(String storeId, StoreRequest storeRequest) {
         Optional<StoreModel> storeModelOptional = storeRepository.findById(storeId);
 
         if (storeModelOptional.isPresent()) {
@@ -150,10 +150,10 @@ public class StoreService {
 
             storeRepository.save(storeModel);
 
-            return new ResponseEntity(new MassageResponse("Info Saved Successfully", storeModel, 200), HttpStatus.OK);
+            return new ResponseEntity<>(new MassageResponse("Info Saved Successfully", storeModel, 200), HttpStatus.OK);
 
         } else {
-            return new ResponseEntity(new MassageResponse("No store found on that ID", 406), HttpStatus.NOT_ACCEPTABLE);
+            return new ResponseEntity<>(new MassageResponse("No store found on that ID", 406), HttpStatus.NOT_ACCEPTABLE);
         }
     }
 }

@@ -45,7 +45,7 @@ public class AuthController {
         return signUpAndSignInService.getLoggedAuthUser();
     }
 
-    @PostMapping("/generateOTP")
+    @PostMapping("/forgetPass/otp")
     public String generateOTP(@RequestBody GenerateOTPRequest generateOTPRequest) throws IOException, MessagingException {
         return forgetPasswordService.generateOTP(generateOTPRequest);
     }
@@ -56,7 +56,7 @@ public class AuthController {
 //        return forgetPasswordService.verifyOTP(generateOTPRequest);
 //    }
 //
-    @PostMapping("/forgetPassChange")
+    @PostMapping("/forgetPass")
     public String forgetPassChange(@RequestBody GenerateOTPRequest2 generateOTPRequest) throws IOException, MessagingException {
         return forgetPasswordService.forgetPassChange(generateOTPRequest);
     }

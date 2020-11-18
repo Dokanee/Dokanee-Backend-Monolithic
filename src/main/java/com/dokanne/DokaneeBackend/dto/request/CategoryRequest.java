@@ -9,6 +9,5 @@ import lombok.Setter;
 @AllArgsConstructor
 public class CategoryRequest {
     String categoryName;
-    String storeId;
     String slug;
 }

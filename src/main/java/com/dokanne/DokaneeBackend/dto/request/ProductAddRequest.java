@@ -12,8 +12,6 @@ import lombok.Setter;
 
 public class ProductAddRequest {
 
-    private String storeId;
-
     private String categoryId;
 
     private String subCategoryId;

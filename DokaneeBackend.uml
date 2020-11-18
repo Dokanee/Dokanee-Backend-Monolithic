@@ -1,0 +1,891 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>com.dokanne.DokaneeBackend</OriginalElement>
+  <nodes>
+    <node x="8596.15625" y="5367.0">com.dokanne.DokaneeBackend.jwt.services.SignUpAndSignInService</node>
+    <node x="2335.0545205674" y="7294.0">com.dokanne.DokaneeBackend.controller.EmployeeController</node>
+    <node x="307.0" y="7567.0">com.dokanne.DokaneeBackend.dto.response.CategoryResponse</node>
+    <node x="3469.2539849806244" y="3782.0">com.dokanne.DokaneeBackend.repository.StoreRepository</node>
+    <node x="7166.7539849806235" y="5400.0">com.dokanne.DokaneeBackend.dto.request.CategoryRequest</node>
+    <node x="11159.2107705674" y="2333.0">com.dokanne.DokaneeBackend.jwt.security.uti.JwtUtil</node>
+    <node x="6585.154024232087" y="6774.0">com.dokanne.DokaneeBackend.service.CategoryService</node>
+    <node x="0.0" y="7823.0">com.dokanne.DokaneeBackend.jwt.dto.response.IdentityResponse.IdentityResponseBuilder</node>
+    <node x="1724.0" y="7567.0">com.dokanne.DokaneeBackend.DokaneeBackendApplicationTests</node>
+    <node x="1113.25" y="5455.0">com.dokanne.DokaneeBackend.dto.response.ErrorMassage</node>
+    <node x="2190.2539849806244" y="3509.0">com.dokanne.DokaneeBackend.jwt.dto.response.OwnerProfileResponse</node>
+    <node x="9528.307713050799" y="3718.0">com.dokanne.DokaneeBackend.jwt.dto.request.PassChangeRequest</node>
+    <node x="11400.185907173458" y="5498.0">com.dokanne.DokaneeBackend.jwt.security.services.UserDetailsServiceImpl</node>
+    <node x="9473.376644736842" y="5356.0">com.dokanne.DokaneeBackend.dto.request.ProfileRequest</node>
+    <node x="10536.751644736843" y="3760.0">com.dokanne.DokaneeBackend.jwt.repository.UserRepository</node>
+    <node x="11659.7107705674" y="7282.0">com.dokanne.DokaneeBackend.jwt.security.WebSecurityConfig</node>
+    <node x="2718.2539849806244" y="5466.0">com.dokanne.DokaneeBackend.service.EmailService</node>
+    <node x="1511.0" y="7567.0">com.dokanne.DokaneeBackend.SpringFoxConfig</node>
+    <node x="9143.307713050799" y="3575.0">com.dokanne.DokaneeBackend.jwt.dto.response.UserResponse</node>
+    <node x="26.5" y="7567.0">com.dokanne.DokaneeBackend.jwt.dto.response.IdentityResponse</node>
+    <node x="1855.2539849806244" y="5367.0">com.dokanne.DokaneeBackend.dto.request.NewEmployeeRequest</node>
+    <node x="994.0" y="3793.0">com.dokanne.DokaneeBackend.repository.ProductRepository</node>
+    <node x="11170.7107705674" y="3728.0">com.dokanne.DokaneeBackend.jwt.security.jwt.JwtProvider</node>
+    <node x="8808.4607705674" y="7272.0">com.dokanne.DokaneeBackend.controller.ProfileController</node>
+    <node x="11978.685907173458" y="6828.0">com.dokanne.DokaneeBackend.jwt.security.jwt.JwtAuthTokenFilter</node>
+    <node x="11976.7107705674" y="3740.0">com.dokanne.DokaneeBackend.jwt.dto.request.GenerateOTPRequest</node>
+    <node x="5749.48735756542" y="6807.0">com.dokanne.DokaneeBackend.controller.StoreController</node>
+    <node x="11447.7107705674" y="3707.0">com.dokanne.DokaneeBackend.jwt.dto.request.GenerateOTPRequest1</node>
+    <node x="6207.2539849806235" y="3793.0">com.dokanne.DokaneeBackend.repository.ProfileRepository</node>
+    <node x="4327.2539849806235" y="2148.0">com.dokanne.DokaneeBackend.model.CategoryModel</node>
+    <node x="6497.2539849806235" y="3663.0">com.dokanne.DokaneeBackend.dto.response.MassageResponse</node>
+    <node x="11705.7107705674" y="3674.0">com.dokanne.DokaneeBackend.jwt.dto.request.GenerateOTPRequest2</node>
+    <node x="10257.307713050799" y="3707.0">com.dokanne.DokaneeBackend.jwt.dto.request.LoginForm</node>
+    <node x="7776.337318313957" y="5070.0">com.dokanne.DokaneeBackend.dto.response.ProfileResponse</node>
+    <node x="2623.9295205674007" y="6730.0">com.dokanne.DokaneeBackend.service.EmployeeService</node>
+    <node x="11823.2107705674" y="2082.0">com.dokanne.DokaneeBackend.jwt.security.services.UserPrinciple</node>
+    <node x="5736.2539849806235" y="3476.0">com.dokanne.DokaneeBackend.dto.request.StoreRequest</node>
+    <node x="8371.9607705674" y="917.0">com.dokanne.DokaneeBackend.jwt.repository.RoleRepository</node>
+    <node x="5127.2539849806235" y="3388.0">com.dokanne.DokaneeBackend.dto.response.StoreInfoResponse</node>
+    <node x="7832.416666666666" y="6598.0">com.dokanne.DokaneeBackend.dto.response.ProfileResponse.ProfileResponseBuilder</node>
+    <node x="7220.86235756542" y="7294.0">com.dokanne.DokaneeBackend.controller.CategoryController</node>
+    <node x="4456.0232705674" y="5389.0">com.dokanne.DokaneeBackend.service.StoreService</node>
+    <node x="1298.0" y="7567.0">com.dokanne.DokaneeBackend.jwt.dto.response.RoleResponse</node>
+    <node x="8627.9607705674" y="556.0">com.dokanne.DokaneeBackend.jwt.model.User</node>
+    <node x="8541.995213050799" y="3641.0">com.dokanne.DokaneeBackend.jwt.dto.response.JwtResponse</node>
+    <node x="0.0" y="4696.0">com.dokanne.DokaneeBackend.dto.request.ProductAddRequest</node>
+    <node x="1437.2539849806244" y="5400.0">com.dokanne.DokaneeBackend.Util.UserUtils</node>
+    <node x="670.0" y="7567.0">com.dokanne.DokaneeBackend.jwt.dto.request.EditProfile</node>
+    <node x="955.0" y="7567.0">com.dokanne.DokaneeBackend.jwt.dto.response.LoggedUserDetailsResponse</node>
+    <node x="8721.799065068195" y="236.0">com.dokanne.DokaneeBackend.jwt.model.Role</node>
+    <node x="8276.1795205674" y="6796.0">com.dokanne.DokaneeBackend.service.ProfileService</node>
+    <node x="6680.7539849806235" y="787.0">com.dokanne.DokaneeBackend.model.SubCategoryModel</node>
+    <node x="3802.2539849806244" y="1741.0">com.dokanne.DokaneeBackend.model.StoreModel</node>
+    <node x="3029.2539849806244" y="3793.0">com.dokanne.DokaneeBackend.repository.CategoryRepository</node>
+    <node x="10227.5857705674" y="6763.0">com.dokanne.DokaneeBackend.jwt.controller.AuthController</node>
+    <node x="1063.3956516472908" y="6796.0">com.dokanne.DokaneeBackend.service.ProductService</node>
+    <node x="4669.2539849806235" y="1906.0">com.dokanne.DokaneeBackend.model.ProfileModel</node>
+    <node x="3562.2661703313543" y="820.0">com.dokanne.DokaneeBackend.model.StoreIds</node>
+    <node x="11477.685907173458" y="6861.0">com.dokanne.DokaneeBackend.jwt.security.jwt.JwtAuthEntryPoint</node>
+    <node x="2102.0" y="7567.0">com.dokanne.DokaneeBackend.DokaneeBackendApplication</node>
+    <node x="9769.307713050799" y="3487.0">com.dokanne.DokaneeBackend.jwt.dto.request.SignUpForm</node>
+    <node x="524.3789849806244" y="1444.0">com.dokanne.DokaneeBackend.model.ProductModel</node>
+    <node x="7426.7539849806235" y="5367.0">com.dokanne.DokaneeBackend.dto.request.SubCategoryRequest</node>
+    <node x="8727.299065068195" y="0.0">com.dokanne.DokaneeBackend.jwt.model.RoleName</node>
+    <node x="10768.185907173458" y="5422.0">com.dokanne.DokaneeBackend.jwt.services.ForgetPasswordService</node>
+    <node x="6783.2539849806235" y="2334.0">com.dokanne.DokaneeBackend.repository.SubCategoryRepository</node>
+    <node x="6922.7539849806235" y="5422.0">com.dokanne.DokaneeBackend.dto.response.AllCategoryResponse</node>
+    <node x="644.1956516472901" y="7305.0">com.dokanne.DokaneeBackend.controller.ProductController</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="com.dokanne.DokaneeBackend.jwt.model.User" target="com.dokanne.DokaneeBackend.jwt.model.Role">
+      <point x="0.0" y="-389.0" />
+      <point x="8852.4607705674" y="536.0" />
+      <point x="8806.299065068195" y="536.0" />
+      <point x="0.0" y="125.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.jwt.services.SignUpAndSignInService" target="com.dokanne.DokaneeBackend.jwt.repository.RoleRepository">
+      <point x="-151.78947368420995" y="-180.0" />
+      <point x="8804.86677631579" y="4336.0" />
+      <point x="8489.9607705674" y="4336.0" />
+      <point x="0.0" y="28.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.service.EmployeeService" target="com.dokanne.DokaneeBackend.repository.StoreRepository">
+      <point x="185.5" y="-180.0" />
+      <point x="3180.4295205674007" y="6508.0" />
+      <point x="3547.2539849806244" y="6508.0" />
+      <point x="-78.0" y="50.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.Util.UserUtils" target="com.dokanne.DokaneeBackend.model.ProfileModel">
+      <point x="0.0" y="-147.0" />
+      <point x="1630.2539849806244" y="4666.0" />
+      <point x="1582.4206516472905" y="4666.0" />
+      <point x="1582.4206516472905" y="3348.0" />
+      <point x="4696.5664849806235" y="3348.0" />
+      <point x="-191.1875" y="455.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.jwt.services.SignUpAndSignInService" target="com.dokanne.DokaneeBackend.jwt.model.RoleName">
+      <point x="75.89473684210498" y="-180.0" />
+      <point x="9032.550986842105" y="4516.0" />
+      <point x="9128.9920205674" y="4516.0" />
+      <point x="9128.9920205674" y="211.0" />
+      <point x="8858.965731734861" y="211.0" />
+      <point x="52.66666666666606" y="93.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.service.ProfileService" target="com.dokanne.DokaneeBackend.repository.ProfileRepository">
+      <point x="-74.66666666666606" y="-114.0" />
+      <point x="8369.512853900735" y="6538.0" />
+      <point x="8359.837318313957" y="6538.0" />
+      <point x="8359.837318313957" y="4406.0" />
+      <point x="6409.0039849806235" y="4406.0" />
+      <point x="67.25" y="39.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.service.EmployeeService" target="com.dokanne.DokaneeBackend.service.EmailService">
+      <point x="-26.5" y="-180.0" />
+      <point x="2968.4295205674007" y="6418.0" />
+      <point x="2863.2539849806244" y="6418.0" />
+      <point x="0.0" y="81.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.jwt.security.jwt.JwtProvider" target="com.dokanne.DokaneeBackend.jwt.security.services.UserPrinciple">
+      <point x="64.0" y="-104.0" />
+      <point x="11362.7107705674" y="3368.0" />
+      <point x="11966.7107705674" y="3368.0" />
+      <point x="-143.5" y="279.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.jwt.services.SignUpAndSignInService" target="com.dokanne.DokaneeBackend.jwt.dto.request.SignUpForm">
+      <point x="227.68421052631493" y="-180.0" />
+      <point x="9184.340460526315" y="4556.0" />
+      <point x="9886.307713050799" y="4556.0" />
+      <point x="-117.0" y="345.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.Util.UserUtils" target="com.dokanne.DokaneeBackend.repository.CategoryRepository">
+      <point x="128.66666666666674" y="-147.0" />
+      <point x="1758.9206516472914" y="4506.0" />
+      <point x="3131.2539849806244" y="4506.0" />
+      <point x="-102.0" y="39.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.service.ProductService" target="com.dokanne.DokaneeBackend.dto.response.MassageResponse">
+      <point x="120.39999999999964" y="-114.0" />
+      <point x="1355.7956516472905" y="6498.0" />
+      <point x="1844.7539849806244" y="6498.0" />
+      <point x="1844.7539849806244" y="4556.0" />
+      <point x="6555.2539849806235" y="4556.0" />
+      <point x="-58.0" y="169.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.jwt.security.WebSecurityConfig" target="com.dokanne.DokaneeBackend.jwt.security.services.UserDetailsServiceImpl">
+      <point x="-114.75" y="-115.0" />
+      <point x="11697.9607705674" y="7252.0" />
+      <point x="11467.185907173458" y="7252.0" />
+      <point x="-67.0" y="49.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.jwt.repository.RoleRepository" target="com.dokanne.DokaneeBackend.jwt.model.Role">
+      <point x="59.0" y="-28.0" />
+      <point x="8548.9607705674" y="536.0" />
+      <point x="8782.156207925338" y="536.0" />
+      <point x="-24.142857142856883" y="125.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.jwt.security.services.UserDetailsServiceImpl" target="com.dokanne.DokaneeBackend.jwt.security.services.UserPrinciple">
+      <point x="0.0" y="-49.0" />
+      <point x="11534.185907173458" y="4666.0" />
+      <point x="12253.7107705674" y="4666.0" />
+      <point x="143.5" y="279.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.repository.CategoryRepository" target="com.dokanne.DokaneeBackend.model.CategoryModel">
+      <point x="0.0" y="-39.0" />
+      <point x="3233.2539849806244" y="3338.0" />
+      <point x="4448.0039849806235" y="3338.0" />
+      <point x="-40.25" y="213.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.service.EmployeeService" target="com.dokanne.DokaneeBackend.model.ProfileModel">
+      <point x="132.5" y="-180.0" />
+      <point x="3127.4295205674007" y="6498.0" />
+      <point x="3458.7539849806244" y="6498.0" />
+      <point x="3458.7539849806244" y="3368.0" />
+      <point x="4805.8164849806235" y="3368.0" />
+      <point x="-81.9375" y="455.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.jwt.dto.response.IdentityResponse.IdentityResponseBuilder" target="com.dokanne.DokaneeBackend.jwt.dto.response.IdentityResponse">
+      <point x="0.0" y="-92.0" />
+      <point x="0.0" y="103.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.controller.ProfileController" target="com.dokanne.DokaneeBackend.jwt.dto.request.PassChangeRequest">
+      <point x="170.39999999999964" y="-125.0" />
+      <point x="9191.8607705674" y="7252.0" />
+      <point x="9785.501644736842" y="7252.0" />
+      <point x="9785.501644736842" y="4546.0" />
+      <point x="9694.057713050799" y="4546.0" />
+      <point x="55.25" y="114.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.service.ProductService" target="com.dokanne.DokaneeBackend.model.ProductModel">
+      <point x="-120.39999999999964" y="-114.0" />
+      <point x="1114.9956516472912" y="6568.0" />
+      <point x="972.5" y="6568.0" />
+      <point x="972.5" y="3368.0" />
+      <point x="685.5456516472914" y="3368.0" />
+      <point x="-322.33333333333303" y="917.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.jwt.services.SignUpAndSignInService" target="com.dokanne.DokaneeBackend.jwt.model.Role">
+      <point x="37.9473684210534" y="-180.0" />
+      <point x="8994.603618421053" y="4506.0" />
+      <point x="9088.06344913883" y="4506.0" />
+      <point x="9088.06344913883" y="526.0" />
+      <point x="8830.441922211052" y="526.0" />
+      <point x="24.142857142856883" y="125.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.jwt.services.SignUpAndSignInService" target="com.dokanne.DokaneeBackend.model.ProfileModel">
+      <point x="-189.73684210526335" y="-180.0" />
+      <point x="8766.919407894737" y="4346.0" />
+      <point x="8478.9607705674" y="4346.0" />
+      <point x="8478.9607705674" y="3298.0" />
+      <point x="5078.9414849806235" y="3298.0" />
+      <point x="191.1875" y="455.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.jwt.security.services.UserDetailsServiceImpl" target="com.dokanne.DokaneeBackend.jwt.repository.UserRepository">
+      <point x="-89.33333333333394" y="-49.0" />
+      <point x="11444.852573840126" y="4576.0" />
+      <point x="10757.251644736843" y="4576.0" />
+      <point x="94.5" y="72.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.service.EmployeeService" target="com.dokanne.DokaneeBackend.model.StoreModel">
+      <point x="26.5" y="-180.0" />
+      <point x="3021.4295205674007" y="6508.0" />
+      <point x="3018.7539849806244" y="6508.0" />
+      <point x="3018.7539849806244" y="3308.0" />
+      <point x="3865.2539849806244" y="3308.0" />
+      <point x="-189.0" y="620.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.jwt.controller.AuthController" target="com.dokanne.DokaneeBackend.jwt.dto.request.GenerateOTPRequest2">
+      <point x="107.42857142857065" y="-147.0" />
+      <point x="10523.014341995971" y="6568.0" />
+      <point x="11257.310907173458" y="6568.0" />
+      <point x="11257.310907173458" y="4636.0" />
+      <point x="11893.9607705674" y="4636.0" />
+      <point x="62.75" y="158.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.service.CategoryService" target="com.dokanne.DokaneeBackend.repository.CategoryRepository">
+      <point x="-160.125" y="-136.0" />
+      <point x="6638.529024232087" y="6498.0" />
+      <point x="6413.820690898754" y="6498.0" />
+      <point x="6413.820690898754" y="4426.0" />
+      <point x="3335.2539849806244" y="4426.0" />
+      <point x="102.0" y="39.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.service.CategoryService" target="com.dokanne.DokaneeBackend.service.StoreService">
+      <point x="-195.70833333333394" y="-136.0" />
+      <point x="6602.945690898753" y="6508.0" />
+      <point x="4766.856603900733" y="6508.0" />
+      <point x="124.33333333333303" y="158.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.controller.CategoryController" target="com.dokanne.DokaneeBackend.dto.request.SubCategoryRequest">
+      <point x="107.66666666666697" y="-103.0" />
+      <point x="7490.029024232088" y="7252.0" />
+      <point x="7649.5039849806235" y="7252.0" />
+      <point x="74.25" y="180.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.model.CategoryModel" target="com.dokanne.DokaneeBackend.model.SubCategoryModel">
+      <point x="0.0" y="-213.0" />
+      <point x="4488.2539849806235" y="1394.0" />
+      <point x="6712.0039849806235" y="1394.0" />
+      <point x="-93.75" y="158.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.jwt.services.ForgetPasswordService" target="com.dokanne.DokaneeBackend.jwt.dto.request.GenerateOTPRequest">
+      <point x="170.79999999999927" y="-125.0" />
+      <point x="11152.485907173457" y="4646.0" />
+      <point x="12033.7107705674" y="4646.0" />
+      <point x="-57.0" y="92.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.jwt.controller.AuthController" target="com.dokanne.DokaneeBackend.jwt.dto.request.LoginForm">
+      <point x="0.0" y="-147.0" />
+      <point x="10415.5857705674" y="6548.0" />
+      <point x="10474.751644736842" y="6548.0" />
+      <point x="10474.751644736842" y="4566.0" />
+      <point x="10383.307713050799" y="4566.0" />
+      <point x="42.0" y="125.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.controller.ProductController" target="com.dokanne.DokaneeBackend.dto.request.ProductAddRequest">
+      <point x="-82.5" y="-92.0" />
+      <point x="726.6956516472901" y="7252.0" />
+      <point x="240.5" y="7252.0" />
+      <point x="-240.5" y="851.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.controller.StoreController" target="com.dokanne.DokaneeBackend.service.StoreService">
+      <point x="-115.0" y="-103.0" />
+      <point x="5806.98735756542" y="6518.0" />
+      <point x="4642.5232705674" y="6518.0" />
+      <point x="0.0" y="158.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.service.ProductService" target="com.dokanne.DokaneeBackend.service.StoreService">
+      <point x="154.79999999999995" y="-114.0" />
+      <point x="1390.195651647291" y="6518.0" />
+      <point x="4518.189937234067" y="6518.0" />
+      <point x="-124.33333333333303" y="158.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.jwt.security.jwt.JwtProvider" target="com.dokanne.DokaneeBackend.jwt.security.uti.JwtUtil">
+      <point x="-64.0" y="-104.0" />
+      <point x="0.0" y="28.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.jwt.security.services.UserPrinciple" target="com.dokanne.DokaneeBackend.jwt.model.User">
+      <point x="-191.33333333333394" y="-279.0" />
+      <point x="11918.877437234067" y="1404.0" />
+      <point x="8992.7732705674" y="1404.0" />
+      <point x="140.3125" y="389.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.service.StoreService" target="com.dokanne.DokaneeBackend.dto.response.MassageResponse">
+      <point x="173.17857142857156" y="-158.0" />
+      <point x="4815.701841995971" y="4566.0" />
+      <point x="6593.920651647291" y="4566.0" />
+      <point x="-19.33333333333303" y="169.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.controller.ProductController" target="com.dokanne.DokaneeBackend.service.ProductService">
+      <point x="82.5" y="-92.0" />
+      <point x="891.6956516472901" y="7252.0" />
+      <point x="1235.3956516472908" y="7252.0" />
+      <point x="0.0" y="114.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.jwt.repository.RoleRepository" target="com.dokanne.DokaneeBackend.jwt.model.RoleName">
+      <point x="-59.0" y="-28.0" />
+      <point x="8430.9607705674" y="506.0" />
+      <point x="8295.101940898754" y="506.0" />
+      <point x="8295.101940898754" y="211.0" />
+      <point x="8753.632398401529" y="211.0" />
+      <point x="-52.66666666666606" y="93.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.service.ProductService" target="com.dokanne.DokaneeBackend.dto.response.ErrorMassage">
+      <point x="17.200000000000045" y="-114.0" />
+      <point x="46.25" y="92.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.repository.StoreRepository" target="com.dokanne.DokaneeBackend.model.StoreModel">
+      <point x="0.0" y="-50.0" />
+      <point x="3625.2539849806244" y="3318.0" />
+      <point x="3991.2539849806244" y="3318.0" />
+      <point x="-63.0" y="620.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.service.CategoryService" target="com.dokanne.DokaneeBackend.dto.request.CategoryRequest">
+      <point x="160.125" y="-136.0" />
+      <point x="6958.779024232087" y="6528.0" />
+      <point x="7226.7539849806235" y="6528.0" />
+      <point x="-60.0" y="147.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.service.ProfileService" target="com.dokanne.DokaneeBackend.jwt.services.SignUpAndSignInService">
+      <point x="74.66666666666606" y="-114.0" />
+      <point x="8518.846187234067" y="6558.0" />
+      <point x="8866.53125" y="6558.0" />
+      <point x="-90.125" y="180.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.model.ProfileModel" target="com.dokanne.DokaneeBackend.model.StoreIds">
+      <point x="0.0" y="-455.0" />
+      <point x="4887.7539849806235" y="1374.0" />
+      <point x="3670.5995036646877" y="1374.0" />
+      <point x="33.333333333333485" y="125.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.repository.ProfileRepository" target="com.dokanne.DokaneeBackend.model.ProfileModel">
+      <point x="0.0" y="-39.0" />
+      <point x="6341.7539849806235" y="3368.0" />
+      <point x="4915.0664849806235" y="3368.0" />
+      <point x="27.3125" y="455.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.Util.UserUtils" target="com.dokanne.DokaneeBackend.jwt.dto.response.OwnerProfileResponse">
+      <point x="85.77777777777783" y="-147.0" />
+      <point x="1716.0317627584018" y="4496.0" />
+      <point x="2376.2539849806244" y="4496.0" />
+      <point x="-62.0" y="323.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.controller.ProfileController" target="com.dokanne.DokaneeBackend.service.ProfileService">
+      <point x="-85.20000000000073" y="-125.0" />
+      <point x="8936.2607705674" y="7242.0" />
+      <point x="8444.1795205674" y="7242.0" />
+      <point x="0.0" y="114.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.jwt.security.services.UserPrinciple" target="com.dokanne.DokaneeBackend.jwt.model.Role">
+      <point x="0.0" y="-279.0" />
+      <point x="12110.2107705674" y="1424.0" />
+      <point x="12114.828366337351" y="1424.0" />
+      <point x="12114.828366337351" y="516.0" />
+      <point x="8854.584779353909" y="516.0" />
+      <point x="48.285714285713766" y="125.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.dto.response.ProfileResponse.ProfileResponseBuilder" target="com.dokanne.DokaneeBackend.dto.response.ProfileResponse">
+      <point x="0.0" y="-312.0" />
+      <point x="7967.916666666666" y="6538.0" />
+      <point x="7871.837318313957" y="6538.0" />
+      <point x="-191.0" y="477.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.service.CategoryService" target="com.dokanne.DokaneeBackend.dto.response.AllCategoryResponse">
+      <point x="88.95833333333303" y="-136.0" />
+      <point x="6887.61235756542" y="6508.0" />
+      <point x="6978.7539849806235" y="6508.0" />
+      <point x="-56.0" y="125.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.service.EmployeeService" target="com.dokanne.DokaneeBackend.repository.ProfileRepository">
+      <point x="238.5" y="-180.0" />
+      <point x="3233.4295205674007" y="6528.0" />
+      <point x="5769.48735756542" y="6528.0" />
+      <point x="5769.48735756542" y="4536.0" />
+      <point x="6319.337318313957" y="4536.0" />
+      <point x="-22.41666666666697" y="39.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.controller.StoreController" target="com.dokanne.DokaneeBackend.dto.response.StoreInfoResponse">
+      <point x="0.0" y="-103.0" />
+      <point x="5921.98735756542" y="6538.0" />
+      <point x="5973.98735756542" y="6538.0" />
+      <point x="5973.98735756542" y="4496.0" />
+      <point x="5618.087318313957" y="4496.0" />
+      <point x="196.33333333333303" y="444.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.service.ProfileService" target="com.dokanne.DokaneeBackend.model.ProfileModel">
+      <point x="0.0" y="-114.0" />
+      <point x="8444.1795205674" y="6518.0" />
+      <point x="8381.837318313957" y="6518.0" />
+      <point x="8381.837318313957" y="3318.0" />
+      <point x="4969.6914849806235" y="3318.0" />
+      <point x="81.9375" y="455.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.service.EmployeeService" target="com.dokanne.DokaneeBackend.jwt.model.User">
+      <point x="-79.5" y="-180.0" />
+      <point x="2915.4295205674007" y="6428.0" />
+      <point x="2707.7539849806244" y="6428.0" />
+      <point x="2707.7539849806244" y="1414.0" />
+      <point x="8712.1482705674" y="1414.0" />
+      <point x="-140.3125" y="389.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.jwt.controller.AuthController" target="com.dokanne.DokaneeBackend.jwt.dto.response.UserResponse">
+      <point x="-107.42857142857065" y="-147.0" />
+      <point x="10308.15719913883" y="6548.0" />
+      <point x="9836.537359022557" y="6548.0" />
+      <point x="9836.537359022557" y="4526.0" />
+      <point x="9462.682713050799" y="4526.0" />
+      <point x="136.875" y="257.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.jwt.controller.AuthController" target="com.dokanne.DokaneeBackend.jwt.dto.request.SignUpForm">
+      <point x="-53.714285714286234" y="-147.0" />
+      <point x="10361.871484853114" y="6538.0" />
+      <point x="10211.751644736842" y="6538.0" />
+      <point x="10211.751644736842" y="4556.0" />
+      <point x="10120.307713050799" y="4556.0" />
+      <point x="117.0" y="345.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.controller.CategoryController" target="com.dokanne.DokaneeBackend.dto.request.CategoryRequest">
+      <point x="0.0" y="-103.0" />
+      <point x="7382.36235756542" y="7252.0" />
+      <point x="7346.7539849806235" y="7252.0" />
+      <point x="60.0" y="147.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.Util.UserUtils" target="com.dokanne.DokaneeBackend.model.StoreIds">
+      <point x="-85.77777777777737" y="-147.0" />
+      <point x="1544.476207202847" y="4676.0" />
+      <point x="1560.4206516472905" y="4676.0" />
+      <point x="1560.4206516472905" y="1364.0" />
+      <point x="3570.5995036646877" y="1364.0" />
+      <point x="-66.66666666666652" y="125.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.service.CategoryService" target="com.dokanne.DokaneeBackend.model.StoreIds">
+      <point x="-53.375" y="-136.0" />
+      <point x="6745.279024232087" y="6538.0" />
+      <point x="6750.7539849806235" y="6538.0" />
+      <point x="6750.7539849806235" y="1364.0" />
+      <point x="3687.2661703313543" y="1364.0" />
+      <point x="50.0" y="125.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.service.ProfileService" target="com.dokanne.DokaneeBackend.model.StoreIds">
+      <point x="37.33333333333394" y="-114.0" />
+      <point x="8481.512853900735" y="6508.0" />
+      <point x="8392.837318313957" y="6508.0" />
+      <point x="8392.837318313957" y="1354.0" />
+      <point x="3703.932836998021" y="1354.0" />
+      <point x="66.66666666666652" y="125.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.jwt.repository.UserRepository" target="com.dokanne.DokaneeBackend.jwt.model.User">
+      <point x="0.0" y="-72.0" />
+      <point x="10662.751644736843" y="1424.0" />
+      <point x="8880.5232705674" y="1424.0" />
+      <point x="28.0625" y="389.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.Util.UserUtils" target="com.dokanne.DokaneeBackend.jwt.model.Role">
+      <point x="-128.66666666666606" y="-147.0" />
+      <point x="1501.5873183139583" y="4666.0" />
+      <point x="1549.4206516472905" y="4666.0" />
+      <point x="1549.4206516472905" y="516.0" />
+      <point x="8733.870493639624" y="516.0" />
+      <point x="-72.42857142857065" y="125.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.service.StoreService" target="com.dokanne.DokaneeBackend.dto.request.StoreRequest">
+      <point x="119.89285714285688" y="-158.0" />
+      <point x="4762.416127710257" y="4506.0" />
+      <point x="5849.0039849806235" y="4506.0" />
+      <point x="-112.75" y="356.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.jwt.controller.AuthController" target="com.dokanne.DokaneeBackend.jwt.services.ForgetPasswordService">
+      <point x="53.714285714286234" y="-147.0" />
+      <point x="10469.300056281687" y="6558.0" />
+      <point x="10981.685907173458" y="6558.0" />
+      <point x="0.0" y="125.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.controller.ProfileController" target="com.dokanne.DokaneeBackend.jwt.services.SignUpAndSignInService">
+      <point x="0.0" y="-125.0" />
+      <point x="9021.4607705674" y="7252.0" />
+      <point x="9046.78125" y="7252.0" />
+      <point x="90.125" y="180.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.jwt.services.SignUpAndSignInService" target="com.dokanne.DokaneeBackend.jwt.security.jwt.JwtProvider">
+      <point x="341.5263157894733" y="-180.0" />
+      <point x="9298.182565789473" y="4596.0" />
+      <point x="11234.7107705674" y="4596.0" />
+      <point x="-64.0" y="104.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.jwt.services.SignUpAndSignInService" target="com.dokanne.DokaneeBackend.jwt.repository.UserRepository">
+      <point x="303.5789473684217" y="-180.0" />
+      <point x="9260.235197368422" y="4586.0" />
+      <point x="10631.251644736843" y="4586.0" />
+      <point x="-31.5" y="72.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.service.CategoryService" target="com.dokanne.DokaneeBackend.model.SubCategoryModel">
+      <point x="-17.79166666666697" y="-136.0" />
+      <point x="6780.86235756542" y="6538.0" />
+      <point x="6761.7539849806235" y="6538.0" />
+      <point x="6761.7539849806235" y="1384.0" />
+      <point x="6774.5039849806235" y="1384.0" />
+      <point x="-31.25" y="158.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.service.ProductService" target="com.dokanne.DokaneeBackend.Util.UserUtils">
+      <point x="51.59999999999991" y="-114.0" />
+      <point x="1286.9956516472912" y="6478.0" />
+      <point x="1533.7539849806244" y="6478.0" />
+      <point x="-96.5" y="147.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.service.EmployeeService" target="com.dokanne.DokaneeBackend.jwt.services.SignUpAndSignInService">
+      <point x="344.5" y="-180.0" />
+      <point x="3339.4295205674007" y="6548.0" />
+      <point x="8686.28125" y="6548.0" />
+      <point x="-270.375" y="180.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.service.StoreService" target="com.dokanne.DokaneeBackend.repository.ProfileRepository">
+      <point x="146.53571428571468" y="-158.0" />
+      <point x="4789.058984853114" y="4526.0" />
+      <point x="6274.5039849806235" y="4526.0" />
+      <point x="-67.25" y="39.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.service.StoreService" target="com.dokanne.DokaneeBackend.model.StoreIds">
+      <point x="-93.25" y="-158.0" />
+      <point x="4549.2732705674" y="4466.0" />
+      <point x="3791.7539849806244" y="4466.0" />
+      <point x="3791.7539849806244" y="1394.0" />
+      <point x="3637.2661703313543" y="1394.0" />
+      <point x="0.0" y="125.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.Util.UserUtils" target="com.dokanne.DokaneeBackend.repository.ProductRepository">
+      <point x="-171.55555555555566" y="-147.0" />
+      <point x="1458.6984294250688" y="4676.0" />
+      <point x="1320.25" y="4676.0" />
+      <point x="108.75" y="39.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.controller.ProfileController" target="com.dokanne.DokaneeBackend.repository.ProfileRepository">
+      <point x="-170.39999999999964" y="-125.0" />
+      <point x="8851.060770567401" y="7252.0" />
+      <point x="7734.2539849806235" y="7252.0" />
+      <point x="7734.2539849806235" y="4416.0" />
+      <point x="6364.170651647291" y="4416.0" />
+      <point x="22.41666666666697" y="39.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.service.EmployeeService" target="com.dokanne.DokaneeBackend.jwt.repository.UserRepository">
+      <point x="291.5" y="-180.0" />
+      <point x="3286.4295205674007" y="6538.0" />
+      <point x="5780.48735756542" y="6538.0" />
+      <point x="5780.48735756542" y="4576.0" />
+      <point x="10568.251644736843" y="4576.0" />
+      <point x="-94.5" y="72.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.jwt.dto.response.OwnerProfileResponse" target="com.dokanne.DokaneeBackend.model.StoreIds">
+      <point x="0.0" y="-323.0" />
+      <point x="2438.2539849806244" y="1394.0" />
+      <point x="3620.5995036646877" y="1394.0" />
+      <point x="-16.666666666666515" y="125.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.jwt.security.jwt.JwtAuthTokenFilter" target="com.dokanne.DokaneeBackend.jwt.security.services.UserDetailsServiceImpl">
+      <point x="-106.75" y="-82.0" />
+      <point x="12085.435907173458" y="6578.0" />
+      <point x="11601.185907173458" y="6578.0" />
+      <point x="67.0" y="49.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.service.StoreService" target="com.dokanne.DokaneeBackend.jwt.dto.response.OwnerProfileResponse">
+      <point x="-146.53571428571468" y="-158.0" />
+      <point x="4495.987556281685" y="4486.0" />
+      <point x="2624.2539849806244" y="4486.0" />
+      <point x="186.0" y="323.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.service.ProfileService" target="com.dokanne.DokaneeBackend.dto.response.MassageResponse">
+      <point x="-37.33333333333394" y="-114.0" />
+      <point x="8406.846187234067" y="6528.0" />
+      <point x="8370.837318313957" y="6528.0" />
+      <point x="8370.837318313957" y="4396.0" />
+      <point x="6632.587318313957" y="4396.0" />
+      <point x="19.33333333333303" y="169.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.jwt.services.ForgetPasswordService" target="com.dokanne.DokaneeBackend.jwt.model.User">
+      <point x="-85.39999999999964" y="-125.0" />
+      <point x="10896.28590717346" y="4606.0" />
+      <point x="11437.2107705674" y="4606.0" />
+      <point x="11437.2107705674" y="1414.0" />
+      <point x="8936.6482705674" y="1414.0" />
+      <point x="84.1875" y="389.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.service.StoreService" target="com.dokanne.DokaneeBackend.repository.StoreRepository">
+      <point x="-119.89285714285688" y="-158.0" />
+      <point x="4522.630413424543" y="4476.0" />
+      <point x="3703.2539849806244" y="4476.0" />
+      <point x="78.0" y="50.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.service.CategoryService" target="com.dokanne.DokaneeBackend.dto.request.SubCategoryRequest">
+      <point x="195.70833333333303" y="-136.0" />
+      <point x="6994.36235756542" y="6538.0" />
+      <point x="7501.0039849806235" y="6538.0" />
+      <point x="-74.25" y="180.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.jwt.controller.AuthController" target="com.dokanne.DokaneeBackend.jwt.dto.request.GenerateOTPRequest">
+      <point x="161.14285714285688" y="-147.0" />
+      <point x="10576.728627710258" y="6578.0" />
+      <point x="11389.685907173458" y="6578.0" />
+      <point x="11389.685907173458" y="4656.0" />
+      <point x="12147.7107705674" y="4656.0" />
+      <point x="57.0" y="92.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.controller.EmployeeController" target="com.dokanne.DokaneeBackend.dto.request.NewEmployeeRequest">
+      <point x="-90.25" y="-103.0" />
+      <point x="2425.3045205674" y="7252.0" />
+      <point x="1742.779024232088" y="7252.0" />
+      <point x="1742.779024232088" y="6508.0" />
+      <point x="1931.0039849806244" y="6508.0" />
+      <point x="-75.75" y="180.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.jwt.security.WebSecurityConfig" target="com.dokanne.DokaneeBackend.jwt.security.jwt.JwtAuthEntryPoint">
+      <point x="-38.25" y="-115.0" />
+      <point x="11774.4607705674" y="7252.0" />
+      <point x="11718.185907173458" y="7252.0" />
+      <point x="0.0" y="49.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.controller.EmployeeController" target="com.dokanne.DokaneeBackend.service.EmployeeService">
+      <point x="90.25" y="-103.0" />
+      <point x="2605.8045205674" y="7252.0" />
+      <point x="2994.9295205674007" y="7252.0" />
+      <point x="0.0" y="180.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.controller.CategoryController" target="com.dokanne.DokaneeBackend.service.CategoryService">
+      <point x="-107.66666666666697" y="-103.0" />
+      <point x="7274.695690898754" y="7252.0" />
+      <point x="6798.654024232087" y="7252.0" />
+      <point x="0.0" y="136.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.jwt.services.ForgetPasswordService" target="com.dokanne.DokaneeBackend.jwt.dto.request.GenerateOTPRequest2">
+      <point x="85.39999999999964" y="-125.0" />
+      <point x="11067.08590717346" y="4626.0" />
+      <point x="11768.4607705674" y="4626.0" />
+      <point x="-62.75" y="158.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.jwt.services.ForgetPasswordService" target="com.dokanne.DokaneeBackend.jwt.repository.UserRepository">
+      <point x="-170.79999999999927" y="-125.0" />
+      <point x="10810.885907173459" y="4586.0" />
+      <point x="10694.251644736843" y="4586.0" />
+      <point x="31.5" y="72.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.service.ProductService" target="com.dokanne.DokaneeBackend.dto.request.ProductAddRequest">
+      <point x="-154.79999999999995" y="-114.0" />
+      <point x="1080.5956516472907" y="6578.0" />
+      <point x="721.5" y="6578.0" />
+      <point x="240.5" y="851.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.jwt.security.services.UserDetailsServiceImpl" target="com.dokanne.DokaneeBackend.jwt.model.User">
+      <point x="89.33333333333394" y="-49.0" />
+      <point x="11623.519240506794" y="4676.0" />
+      <point x="12407.7107705674" y="4676.0" />
+      <point x="12407.7107705674" y="1394.0" />
+      <point x="9048.8982705674" y="1394.0" />
+      <point x="196.4375" y="389.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.service.ProductService" target="com.dokanne.DokaneeBackend.repository.ProductRepository">
+      <point x="-51.600000000000364" y="-114.0" />
+      <point x="1183.7956516472905" y="6548.0" />
+      <point x="1102.75" y="6548.0" />
+      <point x="-108.75" y="39.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.service.ProfileService" target="com.dokanne.DokaneeBackend.dto.response.ProfileResponse">
+      <point x="-149.33333333333394" y="-114.0" />
+      <point x="8294.846187234067" y="6538.0" />
+      <point x="8062.837318313957" y="6538.0" />
+      <point x="0.0" y="477.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.jwt.controller.AuthController" target="com.dokanne.DokaneeBackend.jwt.services.SignUpAndSignInService">
+      <point x="-161.14285714285688" y="-147.0" />
+      <point x="10254.442913424544" y="6558.0" />
+      <point x="9227.03125" y="6558.0" />
+      <point x="270.375" y="180.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.service.StoreService" target="com.dokanne.DokaneeBackend.model.StoreModel">
+      <point x="-39.964285714285325" y="-158.0" />
+      <point x="4602.558984853114" y="4446.0" />
+      <point x="4185.753984980624" y="4446.0" />
+      <point x="4185.753984980624" y="3318.0" />
+      <point x="4243.253984980624" y="3318.0" />
+      <point x="189.0" y="620.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.jwt.services.SignUpAndSignInService" target="com.dokanne.DokaneeBackend.jwt.dto.request.PassChangeRequest">
+      <point x="189.73684210526335" y="-180.0" />
+      <point x="9146.393092105263" y="4546.0" />
+      <point x="9583.557713050799" y="4546.0" />
+      <point x="-55.25" y="114.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.controller.StoreController" target="com.dokanne.DokaneeBackend.dto.request.StoreRequest">
+      <point x="115.0" y="-103.0" />
+      <point x="6036.98735756542" y="6538.0" />
+      <point x="6241.432836998019" y="6538.0" />
+      <point x="6241.432836998019" y="4506.0" />
+      <point x="6074.5039849806235" y="4506.0" />
+      <point x="112.75" y="356.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.jwt.services.ForgetPasswordService" target="com.dokanne.DokaneeBackend.jwt.dto.request.GenerateOTPRequest1">
+      <point x="0.0" y="-125.0" />
+      <point x="10981.685907173458" y="4616.0" />
+      <point x="11566.7107705674" y="4616.0" />
+      <point x="0.0" y="125.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.Util.UserUtils" target="com.dokanne.DokaneeBackend.model.CategoryModel">
+      <point x="-42.88888888888869" y="-147.0" />
+      <point x="1587.3650960917357" y="4676.0" />
+      <point x="1571.4206516472905" y="4676.0" />
+      <point x="1571.4206516472905" y="3328.0" />
+      <point x="4367.5039849806235" y="3328.0" />
+      <point x="-120.75" y="213.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.jwt.services.SignUpAndSignInService" target="com.dokanne.DokaneeBackend.jwt.dto.response.UserResponse">
+      <point x="151.78947368420995" y="-180.0" />
+      <point x="9108.44572368421" y="4536.0" />
+      <point x="9280.182713050799" y="4536.0" />
+      <point x="-45.625" y="257.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.service.StoreService" target="com.dokanne.DokaneeBackend.jwt.model.Role">
+      <point x="39.964285714285325" y="-158.0" />
+      <point x="4682.487556281685" y="4476.0" />
+      <point x="5116.7539849806235" y="4476.0" />
+      <point x="5116.7539849806235" y="526.0" />
+      <point x="8758.013350782481" y="526.0" />
+      <point x="-48.285714285713766" y="125.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.jwt.services.SignUpAndSignInService" target="com.dokanne.DokaneeBackend.jwt.dto.request.LoginForm">
+      <point x="265.6315789473683" y="-180.0" />
+      <point x="9222.287828947368" y="4566.0" />
+      <point x="10299.307713050799" y="4566.0" />
+      <point x="-42.0" y="125.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.service.ProfileService" target="com.dokanne.DokaneeBackend.jwt.dto.response.UserResponse">
+      <point x="112.0" y="-114.0" />
+      <point x="8556.1795205674" y="6568.0" />
+      <point x="9462.876644736842" y="6568.0" />
+      <point x="9462.876644736842" y="4536.0" />
+      <point x="9371.432713050799" y="4536.0" />
+      <point x="45.625" y="257.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.service.EmployeeService" target="com.dokanne.DokaneeBackend.model.StoreIds">
+      <point x="-238.5" y="-180.0" />
+      <point x="2756.4295205674007" y="6458.0" />
+      <point x="2168.7539849806244" y="6458.0" />
+      <point x="2168.7539849806244" y="1374.0" />
+      <point x="3587.2661703313543" y="1374.0" />
+      <point x="-50.0" y="125.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.service.CategoryService" target="com.dokanne.DokaneeBackend.repository.SubCategoryRepository">
+      <point x="53.375" y="-136.0" />
+      <point x="6852.029024232087" y="6498.0" />
+      <point x="6912.2539849806235" y="6498.0" />
+      <point x="0.0" y="27.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.Util.UserUtils" target="com.dokanne.DokaneeBackend.repository.ProfileRepository">
+      <point x="171.55555555555566" y="-147.0" />
+      <point x="1801.80954053618" y="4516.0" />
+      <point x="6229.670651647291" y="4516.0" />
+      <point x="-112.08333333333303" y="39.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.jwt.security.jwt.JwtAuthTokenFilter" target="com.dokanne.DokaneeBackend.jwt.security.jwt.JwtProvider">
+      <point x="106.75" y="-82.0" />
+      <point x="12298.935907173458" y="4566.0" />
+      <point x="11362.7107705674" y="4566.0" />
+      <point x="64.0" y="104.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.service.EmployeeService" target="com.dokanne.DokaneeBackend.Util.UserUtils">
+      <point x="-344.5" y="-180.0" />
+      <point x="2650.4295205674007" y="6478.0" />
+      <point x="1726.7539849806244" y="6478.0" />
+      <point x="96.5" y="147.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.service.EmployeeService" target="com.dokanne.DokaneeBackend.dto.request.NewEmployeeRequest">
+      <point x="-291.5" y="-180.0" />
+      <point x="2703.4295205674007" y="6468.0" />
+      <point x="2082.5039849806244" y="6468.0" />
+      <point x="75.75" y="180.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.jwt.model.Role" target="com.dokanne.DokaneeBackend.jwt.model.RoleName">
+      <point x="0.0" y="-125.0" />
+      <point x="0.0" y="93.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.service.ProfileService" target="com.dokanne.DokaneeBackend.dto.request.ProfileRequest">
+      <point x="149.33333333333394" y="-114.0" />
+      <point x="8593.512853900735" y="6578.0" />
+      <point x="9538.876644736842" y="6578.0" />
+      <point x="-65.5" y="191.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.service.CategoryService" target="com.dokanne.DokaneeBackend.model.CategoryModel">
+      <point x="-88.95833333333303" y="-136.0" />
+      <point x="6709.695690898754" y="6538.0" />
+      <point x="6739.7539849806235" y="6538.0" />
+      <point x="6739.7539849806235" y="3328.0" />
+      <point x="4609.0039849806235" y="3328.0" />
+      <point x="120.75" y="213.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.jwt.security.WebSecurityConfig" target="com.dokanne.DokaneeBackend.jwt.security.jwt.JwtAuthTokenFilter">
+      <point x="114.75" y="-115.0" />
+      <point x="11927.4607705674" y="7252.0" />
+      <point x="12298.935907173458" y="7252.0" />
+      <point x="106.75" y="82.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.repository.ProductRepository" target="com.dokanne.DokaneeBackend.model.ProductModel">
+      <point x="0.0" y="-39.0" />
+      <point x="1211.5" y="3368.0" />
+      <point x="1330.2123183139574" y="3368.0" />
+      <point x="322.33333333333326" y="917.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.service.StoreService" target="com.dokanne.DokaneeBackend.dto.response.StoreInfoResponse">
+      <point x="66.60714285714312" y="-158.0" />
+      <point x="4709.130413424543" y="4486.0" />
+      <point x="5225.420651647291" y="4486.0" />
+      <point x="-196.33333333333303" y="444.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.controller.ProfileController" target="com.dokanne.DokaneeBackend.dto.request.ProfileRequest">
+      <point x="85.20000000000073" y="-125.0" />
+      <point x="9106.660770567401" y="7242.0" />
+      <point x="9669.876644736842" y="7242.0" />
+      <point x="65.5" y="191.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.jwt.services.SignUpAndSignInService" target="com.dokanne.DokaneeBackend.jwt.model.User">
+      <point x="0.0" y="-180.0" />
+      <point x="8956.65625" y="4296.0" />
+      <point x="8828.213963050799" y="4296.0" />
+      <point x="8828.213963050799" y="1424.0" />
+      <point x="8824.3982705674" y="1424.0" />
+      <point x="-28.0625" y="389.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.jwt.services.SignUpAndSignInService" target="com.dokanne.DokaneeBackend.repository.ProfileRepository">
+      <point x="-341.5263157894733" y="-180.0" />
+      <point x="8615.129934210527" y="4386.0" />
+      <point x="6453.837318313957" y="4386.0" />
+      <point x="112.08333333333303" y="39.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.jwt.services.SignUpAndSignInService" target="com.dokanne.DokaneeBackend.jwt.dto.response.JwtResponse">
+      <point x="-75.89473684210498" y="-180.0" />
+      <point x="8880.761513157895" y="4316.0" />
+      <point x="8604.245213050799" y="4316.0" />
+      <point x="-62.25" y="191.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.jwt.services.SignUpAndSignInService" target="com.dokanne.DokaneeBackend.dto.response.MassageResponse">
+      <point x="-265.6315789473683" y="-180.0" />
+      <point x="8691.024671052632" y="4366.0" />
+      <point x="6709.920651647291" y="4366.0" />
+      <point x="96.66666666666697" y="169.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.repository.SubCategoryRepository" target="com.dokanne.DokaneeBackend.model.SubCategoryModel">
+      <point x="0.0" y="-27.0" />
+      <point x="6912.2539849806235" y="1394.0" />
+      <point x="6899.5039849806235" y="1394.0" />
+      <point x="93.75" y="158.0" />
+    </edge>
+    <edge source="com.dokanne.DokaneeBackend.service.StoreService" target="com.dokanne.DokaneeBackend.model.ProfileModel">
+      <point x="13.321428571428442" y="-158.0" />
+      <point x="4655.844699138828" y="4466.0" />
+      <point x="4860.4414849806235" y="4466.0" />
+      <point x="-27.3125" y="455.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.30000000000000016" x="3751.9999999999986" y="7655.333333333332" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Constructors</Category>
+    <Category>Methods</Category>
+    <Category>Inner Classes</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

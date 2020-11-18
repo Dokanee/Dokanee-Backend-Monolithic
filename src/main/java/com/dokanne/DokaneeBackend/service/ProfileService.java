@@ -3,7 +3,6 @@ package com.dokanne.DokaneeBackend.service;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.dokanne.DokaneeBackend.dto.request.ProfileRequest;
-import com.dokanne.DokaneeBackend.dto.response.MassageResponse;
 import com.dokanne.DokaneeBackend.dto.response.ProfileResponse;
 import com.dokanne.DokaneeBackend.jwt.dto.response.UserResponse;
 import com.dokanne.DokaneeBackend.jwt.services.SignUpAndSignInService;
@@ -23,6 +22,7 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @Service
 @AllArgsConstructor
@@ -31,7 +31,7 @@ public class ProfileService {
     private final SignUpAndSignInService signUpAndSignInService;
     private final ProfileRepository profileRepository;
 
-    public ResponseEntity getUserProfile() {
+    public ResponseEntity<Object> getUserProfile() {
         ResponseEntity<UserResponse> userResEntity = signUpAndSignInService.getLoggedAuthUser();
 
         if (userResEntity.getStatusCodeValue() == 200) {
@@ -41,7 +41,7 @@ public class ProfileService {
 
             HttpHeaders httpHeaders = new HttpHeaders();
             httpHeaders.add("massage", "OK");
-            return new ResponseEntity(new MassageResponse("Ok", ProfileResponse.builder()
+            return new ResponseEntity<Object>(ProfileResponse.builder()
                     .firstName(profileModel.getFirstName())
                     .lastName(profileModel.getLastName())
                     .email(profileModel.getEmail())
@@ -53,7 +53,6 @@ public class ProfileService {
                     .photoLink(profileModel.getPhotoLink())
                     .storeIds(getStoreIdStringFromStoreId(profileModel.getStoreIds()))
                     .build(),
-                    200),
                     httpHeaders,
                     HttpStatus.OK
             );
@@ -61,26 +60,26 @@ public class ProfileService {
         } else if (userResEntity.getStatusCodeValue() == 401) {
             HttpHeaders httpHeaders = new HttpHeaders();
             httpHeaders.add("massage", "UnAuthorized");
-            return new ResponseEntity(new MassageResponse("UnAuthorized", 401), httpHeaders, HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>("UnAuthorized", httpHeaders, HttpStatus.UNAUTHORIZED);
         } else {
-            return new ResponseEntity(new MassageResponse("UnAuthorized", userResEntity.getStatusCodeValue()), userResEntity.getHeaders(), userResEntity.getStatusCode());
+            return new ResponseEntity<>(userResEntity.getBody(), userResEntity.getHeaders(), userResEntity.getStatusCode());
         }
 
     }
 
     public List<String> getStoreIdStringFromStoreId(List<StoreIds> storeIdsList) {
-        List<String> list = new ArrayList();
+        List<String> list = new ArrayList<>();
         for (StoreIds storeIds : storeIdsList) {
             list.add(storeIds.getStoreId());
         }
         return list;
     }
 
-    public ResponseEntity editUserInfo(ProfileRequest profileRequest) {
+    public ResponseEntity<Object> editUserInfo(ProfileRequest profileRequest) {
         ResponseEntity<UserResponse> userResEntity = signUpAndSignInService.getLoggedAuthUser();
 
         if (userResEntity.getStatusCodeValue() == 200) {
-            ProfileModel profileModel = profileRepository.findByUserName(userResEntity.getBody().getUsername());
+            ProfileModel profileModel = profileRepository.findByUserName(Objects.requireNonNull(userResEntity.getBody()).getUsername());
 
             profileModel.setFirstName(profileRequest.getFirstName());
             profileModel.setLastName(profileRequest.getLastName());
@@ -91,19 +90,19 @@ public class ProfileService {
 
             HttpHeaders httpHeaders = new HttpHeaders();
             httpHeaders.add("Massage", "Everything is ok");
-            return new ResponseEntity(new MassageResponse("OK", 200), httpHeaders, HttpStatus.OK);
+            return new ResponseEntity<>("OK", httpHeaders, HttpStatus.OK);
 
         } else if (userResEntity.getStatusCodeValue() == 401) {
             HttpHeaders httpHeaders = new HttpHeaders();
             httpHeaders.add("massage", "UnAuthorized");
-            return new ResponseEntity(new ProfileResponse(), httpHeaders, HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>("Unauthorized", httpHeaders, HttpStatus.UNAUTHORIZED);
         } else {
-            return new ResponseEntity(new ProfileResponse(), userResEntity.getHeaders(), userResEntity.getStatusCode());
+            return new ResponseEntity<Object>(userResEntity.getBody(), userResEntity.getHeaders(), userResEntity.getStatusCode());
         }
 
     }
 
-    public ResponseEntity uploadImage(MultipartFile aFile) {
+    public ResponseEntity<String> uploadImage(MultipartFile aFile) {
         Cloudinary c = new Cloudinary(ObjectUtils.asMap(
                 "cloud_name", "to-let-app",
                 "api_key", "111257839862595",
@@ -127,10 +126,9 @@ public class ProfileService {
 
             profileRepository.save(profileModel);
 
-            return new ResponseEntity("{\"status\":\"OK\"}", HttpStatus.OK);
+            return new ResponseEntity<>("OK", HttpStatus.OK);
         } catch (Exception e) {
-            System.out.println(e);
-            return new ResponseEntity<String>("Wrong", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<String>(e.toString(), HttpStatus.BAD_REQUEST);
         }
     }
 }

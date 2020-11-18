@@ -12,4 +12,5 @@ public interface StoreRepository extends JpaRepository<StoreModel, String> {
     Optional<StoreModel> findBySubDomainName(String subDomainName);
 
     Optional<StoreModel> findByDomainName(String domainName);
+
 }

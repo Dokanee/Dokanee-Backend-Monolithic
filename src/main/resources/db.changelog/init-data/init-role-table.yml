@@ -31,12 +31,12 @@ databaseChangeLog:
               - column:
                   name: name
                   value: USER
-#        - insert:
-#            tableName: roles
-#            columns:
-#              - column:
-#                  name: id
-#                  value: 4
-#              - column:
-#                  name: name
-#                  value: EMPLOYEE
+        - insert:
+            tableName: roles
+            columns:
+              - column:
+                  name: id
+                  value: 4
+              - column:
+                  name: name
+                  value: EMPLOYEE

@@ -11,28 +11,28 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 
 @RestController
-@RequestMapping("/dashboard/store")
+@RequestMapping("/dashboard/store/{storeId}")
 public class CategoryController {
     private final CategoryService categoryService;
 
-    @PostMapping("/category/add")
-    public ResponseEntity addCategory(@RequestBody CategoryRequest categoryRequest) {
-        return categoryService.addCategory(categoryRequest);
+    @PostMapping("/category")
+    public ResponseEntity addCategory(@PathVariable String storeId, @RequestBody CategoryRequest categoryRequest) {
+        return categoryService.addCategory(categoryRequest, storeId);
     }
 
-    @GetMapping("/category/")
-    public ResponseEntity<Object> getCategory(@RequestParam String storeId) {
+    @GetMapping("/category")
+    public ResponseEntity<Object> getCategory(@PathVariable String storeId) {
         return categoryService.getCategory(storeId);
     }
 
     @GetMapping("/category/all")
-    public ResponseEntity getAllCategory(@RequestParam String storeId) {
+    public ResponseEntity getAllCategory(@PathVariable String storeId) {
         return categoryService.getAllCategory(storeId);
     }
 
-    @PostMapping("/subCategory/add")
-    public ResponseEntity addSubCategory(@RequestBody SubCategoryRequest subCategoryRequest) {
-        return categoryService.addSubCategory(subCategoryRequest);
+    @PostMapping("/subCategory")
+    public ResponseEntity addSubCategory(@PathVariable String storeId, @RequestBody SubCategoryRequest subCategoryRequest) {
+        return categoryService.addSubCategory(subCategoryRequest, storeId);
     }
 
 

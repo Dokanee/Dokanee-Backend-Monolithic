@@ -11,23 +11,23 @@ import org.springframework.web.multipart.MultipartFile;
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 
 @RestController
-@RequestMapping("/dashboard")
+@RequestMapping("/dashboard/store/{storeId}")
 public class ProductController {
     private final ProductService productService;
 
-    @PostMapping("/product/add")
-    public ResponseEntity addProduct(@RequestBody ProductAddRequest productAddRequest) {
-        return productService.addProduct(productAddRequest);
+    @PostMapping("/product")
+    public ResponseEntity addProduct(@PathVariable String storeId, @RequestBody ProductAddRequest productAddRequest) {
+        return productService.addProduct(productAddRequest, storeId);
     }
 
     @GetMapping("/product")
-    public ResponseEntity getProductByCategory(@RequestParam(required = true) String categoryId, @RequestParam(required = true) String storeId) {
+    public ResponseEntity getProductByCategory(@RequestParam(required = true) String categoryId, @PathVariable String storeId) {
         return productService.getProductListByCategory(categoryId, storeId);
     }
 
-    @PostMapping(value = "/product/add/image")
+    @PostMapping(value = "/product/image/{productId}")
     public ResponseEntity postImage(@RequestParam(value = "image", required = true) MultipartFile[] aFile,
-                                    @RequestParam(required = true) String productId, @RequestParam(required = true) String storeId) {
+                                    @PathVariable String productId, @PathVariable String storeId) {
         return productService.uploadImage(aFile, productId, storeId);
     }
 

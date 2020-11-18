@@ -102,6 +102,7 @@ public class SignUpAndSignInService {
             userName = userOptional.get().getUsername();
         } else {
             userName = "";
+            //throw new ResponseStatusException(HttpStatus.valueOf(410),"User Not Exists");
         }
 
         Authentication authentication = authenticationManager.authenticate(

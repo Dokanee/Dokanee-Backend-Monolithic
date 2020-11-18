@@ -30,7 +30,7 @@ public class ProfileController {
         return profileService.editUserInfo(profileRequest);
     }
 
-    @RequestMapping(value = "/add/image",method = RequestMethod.POST, consumes = { "multipart/form-data" })
+    @RequestMapping(value = "/image", method = RequestMethod.POST, consumes = {"multipart/form-data"})
     public ResponseEntity postImage(@RequestParam(value = "image", required = true) MultipartFile aFile) {
         return profileService.uploadImage(aFile);
     }

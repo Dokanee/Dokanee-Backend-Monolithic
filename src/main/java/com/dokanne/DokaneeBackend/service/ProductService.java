@@ -4,8 +4,6 @@ import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.dokanne.DokaneeBackend.Util.UserUtils;
 import com.dokanne.DokaneeBackend.dto.request.ProductAddRequest;
-import com.dokanne.DokaneeBackend.dto.response.ErrorMassage;
-import com.dokanne.DokaneeBackend.dto.response.MassageResponse;
 import com.dokanne.DokaneeBackend.model.ProductModel;
 import com.dokanne.DokaneeBackend.repository.ProductRepository;
 import lombok.AllArgsConstructor;
@@ -28,13 +26,13 @@ public class ProductService {
     private final StoreService storeService;
     private final UserUtils userUtils;
 
-    public ResponseEntity addProduct(ProductAddRequest proAddReq) {
+    public ResponseEntity<Object> addProduct(ProductAddRequest proAddReq, String storeId) {
         try {
-            boolean storeIdAuth = userUtils.isStoreIdAuth(proAddReq.getStoreId());
+            boolean storeIdAuth = userUtils.isStoreIdAuth(storeId);
 
             if (storeIdAuth) {
                 ProductModel productModel = new ProductModel(
-                        UUID.randomUUID().toString(), proAddReq.getStoreId(), proAddReq.getCategoryId(), proAddReq.getSubCategoryId(),
+                        UUID.randomUUID().toString(), storeId, proAddReq.getCategoryId(), proAddReq.getSubCategoryId(),
                         proAddReq.getProductName(), proAddReq.getBrand(), proAddReq.getSlug(), proAddReq.getSku(), proAddReq.getSellPrice(),
                         proAddReq.getDiscountPrice(), proAddReq.getQuantity(), proAddReq.getWeight(), proAddReq.getWeightUnit(),
                         proAddReq.getTypes(), proAddReq.getSize(), proAddReq.getColour(), proAddReq.isReturnable(),
@@ -42,24 +40,22 @@ public class ProductService {
                         proAddReq.isFeatured(), proAddReq.getMetaKeywords(), proAddReq.getMetaDescription(), proAddReq.getTag()
                 );
                 productRepository.save(productModel);
-                MassageResponse massageResponse = new MassageResponse(productModel.getProductName() + " is saved Successful with id " + productModel.getProductId(), 201);
-                return new ResponseEntity(massageResponse, HttpStatus.CREATED);
+
+                return new ResponseEntity<>(productModel.getProductName() + " is saved Successful with id " + productModel.getProductId(), HttpStatus.CREATED);
 
             } else {
-                MassageResponse massageResponse = new MassageResponse("StoreId Not Authenticated", 401);
-                return new ResponseEntity(massageResponse, HttpStatus.UNAUTHORIZED);
+                return new ResponseEntity<>("Store is not authenticated", HttpStatus.UNAUTHORIZED);
 
             }
 
         } catch (Exception e) {
-            ErrorMassage errorMassage = new ErrorMassage(e.toString());
-            return new ResponseEntity(errorMassage, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(e.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
 
     }
 
-    public ResponseEntity getProductListByCategory(String categoryId, String storeId) {
+    public ResponseEntity<Object> getProductListByCategory(String categoryId, String storeId) {
 
         boolean storeIdAuth = userUtils.isStoreIdAuth(storeId);
 
@@ -69,16 +65,15 @@ public class ProductService {
 
             if (productModelListOptional.isPresent()) {
                 List<ProductModel> productModelList = productModelListOptional.get();
-                MassageResponse massageResponse = new MassageResponse("Products found",productModelList, 200);
-                return new ResponseEntity(massageResponse, HttpStatus.OK);
+
+                return new ResponseEntity<>(productModelList, HttpStatus.OK);
             } else {
-                MassageResponse massageResponse = new MassageResponse("Products not found", 204);
-                return new ResponseEntity(massageResponse, HttpStatus.NO_CONTENT);
+
+                return new ResponseEntity<>("Products not found", HttpStatus.BAD_REQUEST);
             }
 
         } else {
-            MassageResponse massageResponse = new MassageResponse("StoreId and CategoryId is not matched", 401);
-            return new ResponseEntity(massageResponse, HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>("Store is not authenticated", HttpStatus.UNAUTHORIZED);
         }
 
     }
@@ -96,6 +91,11 @@ public class ProductService {
 
             try {
                 Optional<ProductModel> productModelOptional = productRepository.findById(productId);
+
+                if (aFile.length < 1) {
+                    return new ResponseEntity<>("No File Found", HttpStatus.BAD_REQUEST);
+                }
+
                 for (MultipartFile mpFile : aFile) {
                     File f = Files.createTempFile("temp", mpFile.getOriginalFilename()).toFile();
                     mpFile.transferTo(f);
@@ -105,7 +105,6 @@ public class ProductService {
 
                     photoLinksList.add(url);
                 }
-
                 ProductModel productModel = productModelOptional.get();
                 productModel.setImageLink(photoLinksList);
 
@@ -113,15 +112,13 @@ public class ProductService {
                 productRepository.save(productModel);
 
 
-                return new ResponseEntity("{\"status\":\"OK\"}", HttpStatus.OK);
+                return new ResponseEntity<>("OK", HttpStatus.OK);
             } catch (Exception e) {
-                System.out.println(e);
-                return new ResponseEntity<String>("Wrong", HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>("Upload failed\n" + e.toString(), HttpStatus.BAD_REQUEST);
             }
         }
         else {
-            MassageResponse massageResponse = new MassageResponse("Not Authenticated to Perform this Operation", 401);
-            return new ResponseEntity(massageResponse, HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>("Not Authenticated to Perform this Operation", HttpStatus.UNAUTHORIZED);
         }
     }
 
