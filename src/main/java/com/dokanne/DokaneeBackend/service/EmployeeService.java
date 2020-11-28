@@ -76,7 +76,7 @@ public class EmployeeService {
 
         boolean storeAuth = userUtils.isStoreIdAuth(storeId);
 
-        if (profileModelOptional.isPresent() || !storeAuth) {
+        if (profileModelOptional.isPresent() && storeAuth) {
             ProfileModel profileModel = profileModelOptional.get();
             StoreModel storeModel = storeRepository.findById(storeId).get();
 
