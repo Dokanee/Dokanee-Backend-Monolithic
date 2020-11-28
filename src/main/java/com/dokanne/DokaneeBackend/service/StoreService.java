@@ -6,7 +6,6 @@ import com.dokanne.DokaneeBackend.dto.response.StoreInfoResponse;
 import com.dokanne.DokaneeBackend.jwt.dto.response.OwnerProfileResponse;
 import com.dokanne.DokaneeBackend.jwt.model.Role;
 import com.dokanne.DokaneeBackend.model.ProfileModel;
-import com.dokanne.DokaneeBackend.model.StoreIds;
 import com.dokanne.DokaneeBackend.model.StoreModel;
 import com.dokanne.DokaneeBackend.repository.ProfileRepository;
 import com.dokanne.DokaneeBackend.repository.StoreRepository;
@@ -79,10 +78,10 @@ public class StoreService {
 
         ProfileModel profileModel = profileRepository.findById(getAuthUserInfo().getOwnerId()).get();
 
-        List<StoreIds> storeIdsList = profileModel.getStoreIds();
-        StoreIds storeIds = new StoreIds();
-        storeIds.setStoreId(id);
-        storeIdsList.add(storeIds);
+        List<String> storeIdsList = profileModel.getStoreIds();
+//        StoreIds storeIds = new StoreIds();
+//        storeIds.setStoreId(id);
+        storeIdsList.add(id);
         profileModel.setStoreIds(storeIdsList);
 
         profileRepository.save(profileModel);

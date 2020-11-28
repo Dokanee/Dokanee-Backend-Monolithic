@@ -46,7 +46,8 @@ public class ProfileModel {
 
     boolean isVerified;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    List<StoreIds> storeIds;
+    @ElementCollection
+    @CollectionTable
+    List<String> storeIds;
 
 }

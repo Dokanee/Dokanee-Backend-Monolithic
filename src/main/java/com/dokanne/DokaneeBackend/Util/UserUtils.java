@@ -25,7 +25,7 @@ public class UserUtils {
     private final ProductRepository productRepository;
 
     public boolean isStoreIdAuth(String storeId) {
-        List<String> storeList = getStoreStringIds(getAuthUserInfo().getStoreIds());
+        List<String> storeList = getAuthUserInfo().getStoreIds();
         return storeList.contains(storeId);
     }
 
@@ -79,7 +79,7 @@ public class UserUtils {
     }
 
     public boolean authProduct(String id, String productId) {
-        List<String> storeList = getStoreStringIds(getAuthUserInfo().getStoreIds());
+        List<String> storeList = getAuthUserInfo().getStoreIds();
         if(storeList.contains(id)) {
             return productRepository.findByStoreIdAndProductId(id, productId).isPresent();
         }

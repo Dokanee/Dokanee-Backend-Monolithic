@@ -26,8 +26,8 @@ public class StoreController {
         return storeService.getStoreInfo();
     }
 
-    @PutMapping("/store")
-    public ResponseEntity editStoreInfo(@RequestParam String storeId, @RequestBody StoreRequest storeRequest) {
+    @PutMapping("/store/{storeId}")
+    public ResponseEntity editStoreInfo(@PathVariable String storeId, @RequestBody StoreRequest storeRequest) {
         return storeService.editStore(storeId, storeRequest);
     }
 

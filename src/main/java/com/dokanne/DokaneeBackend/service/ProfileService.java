@@ -51,7 +51,7 @@ public class ProfileService {
                     .address(profileModel.getAddress())
                     .userName(profileModel.getUserName())
                     .photoLink(profileModel.getPhotoLink())
-                    .storeIds(getStoreIdStringFromStoreId(profileModel.getStoreIds()))
+                    .storeIds(profileModel.getStoreIds())
                     .build(),
                     httpHeaders,
                     HttpStatus.OK

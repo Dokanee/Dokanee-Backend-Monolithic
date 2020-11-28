@@ -29,7 +29,7 @@ public class CategoryService {
 
 
     public ResponseEntity<String> addCategory(CategoryRequest categoryRequest, String storeId) {
-        List<String> storeList = getStoreStringIds(storeService.getAuthUserInfo().getStoreIds());
+        List<String> storeList = storeService.getAuthUserInfo().getStoreIds();
         boolean storeIdAuth = storeList.contains(storeId);
 
         if (storeIdAuth) {
@@ -49,7 +49,7 @@ public class CategoryService {
     }
 
     public ResponseEntity<String> addSubCategory(SubCategoryRequest subCategoryRequest, String storeId) {
-        List<String> storeList = getStoreStringIds(storeService.getAuthUserInfo().getStoreIds());
+        List<String> storeList = storeService.getAuthUserInfo().getStoreIds();
         boolean storeIdAuth = storeList.contains(storeId);
 
         if (storeIdAuth) {
@@ -80,7 +80,7 @@ public class CategoryService {
     }
 
     public ResponseEntity<Object> getCategory(String storeId) {
-        List<String> storeList = getStoreStringIds(storeService.getAuthUserInfo().getStoreIds());
+        List<String> storeList = storeService.getAuthUserInfo().getStoreIds();
         boolean storeIdAuth = storeList.contains(storeId);
 
         if (storeIdAuth) {
@@ -103,7 +103,7 @@ public class CategoryService {
     }
 
     public ResponseEntity<Object> getAllCategory(String storeId) {
-        List<String> storeList = getStoreStringIds(storeService.getAuthUserInfo().getStoreIds());
+        List<String> storeList = storeService.getAuthUserInfo().getStoreIds();
         boolean storeIdAuth = storeList.contains(storeId);
 
         if (storeIdAuth) {

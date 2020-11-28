@@ -2,11 +2,11 @@ package com.dokanne.DokaneeBackend.service;
 
 import com.dokanne.DokaneeBackend.Util.UserUtils;
 import com.dokanne.DokaneeBackend.dto.request.NewEmployeeRequest;
+import com.dokanne.DokaneeBackend.dto.response.AllEmployeeResponse;
 import com.dokanne.DokaneeBackend.jwt.model.User;
 import com.dokanne.DokaneeBackend.jwt.repository.UserRepository;
 import com.dokanne.DokaneeBackend.jwt.services.SignUpAndSignInService;
 import com.dokanne.DokaneeBackend.model.ProfileModel;
-import com.dokanne.DokaneeBackend.model.StoreIds;
 import com.dokanne.DokaneeBackend.model.StoreModel;
 import com.dokanne.DokaneeBackend.repository.ProfileRepository;
 import com.dokanne.DokaneeBackend.repository.StoreRepository;
@@ -34,28 +34,28 @@ public class EmployeeService {
     private final SignUpAndSignInService signUpAndSignInService;
 
     public ResponseEntity getEmployeeList(String storeId) {
+        boolean storeAuth = userUtils.isStoreIdAuth(storeId);
 
-//        List<StoreIds> storeIdList = new ArrayList<>();
-//        StoreIds storeIds = new StoreIds();
-//        storeIds.setStoreId(storeId);
-//        storeIds.setId((long) 1);
-//
-//        storeIdList.add(storeIds);
-//
-//        Optional<List<ProfileModel>> optionalProfileModelList = profileRepository.findByStoreIds(storeIdList);
-//
-//        if(optionalProfileModelList.isPresent()){
-//            List<ProfileModel> profileModels = optionalProfileModelList.get();
-//
-//            for (ProfileModel profileModel: profileModels){
-//                System.out.println(profileModel.getFirstName() + " "+profileModel.getLastName());
-//            }
-//
-//        }
-//        else {
-//
-//        }
-        return new ResponseEntity("We are working on this :D ", HttpStatus.OK);
+        if (storeAuth) {
+            Optional<List<ProfileModel>> optionalProfileModelList = profileRepository.findByStoreIdFromProfile(storeId);
+
+            if (optionalProfileModelList.isPresent()) {
+                List<ProfileModel> profileModels = optionalProfileModelList.get();
+
+                List<AllEmployeeResponse> allEmployeeResponseList = new ArrayList<>();
+                for (ProfileModel profileModel : profileModels) {
+                    AllEmployeeResponse allEmployeeResponse = new AllEmployeeResponse(profileModel.getFirstName() + " " + profileModel.getLastName(), profileModel.getEmail(), profileModel.getPhone(), profileModel.getPhotoLink());
+                    allEmployeeResponseList.add(allEmployeeResponse);
+                }
+
+                return new ResponseEntity(allEmployeeResponseList, HttpStatus.OK);
+            } else {
+                return new ResponseEntity("No Employee Is found on this Store Id", HttpStatus.FORBIDDEN);
+            }
+
+        } else {
+            return new ResponseEntity("UnAuthorized", HttpStatus.UNAUTHORIZED);
+        }
 
     }
 
@@ -72,19 +72,21 @@ public class EmployeeService {
     public ResponseEntity addEmployeeViaEmail(String email, String storeId) throws IOException, MessagingException {
         Optional<ProfileModel> profileModelOptional = profileRepository.findByEmail(email);
 
+        //System.out.println(profileModelOptional.get().getEmail());
+
         boolean storeAuth = userUtils.isStoreIdAuth(storeId);
 
-        if (profileModelOptional.isPresent() && storeAuth) {
+        if (profileModelOptional.isPresent() || !storeAuth) {
             ProfileModel profileModel = profileModelOptional.get();
             StoreModel storeModel = storeRepository.findById(storeId).get();
 
 
-            List<StoreIds> storeIdsList = profileModel.getStoreIds();
+            List<String> storeIdsList = profileModel.getStoreIds();
 
-            StoreIds storeIds = new StoreIds();
-            storeIds.setStoreId(storeId);
+//            StoreIds storeIds = new StoreIds();
+//            storeIds.setStoreId(storeId);
 
-            storeIdsList.add(storeIds);
+            storeIdsList.add(storeId);
 
             profileModel.setStoreIds(storeIdsList);
 
@@ -386,10 +388,10 @@ public class EmployeeService {
             System.out.println("1");
             ProfileModel profileModel = new ProfileModel(newId.toString(), "", "", newEmployeeRequest.getEmail(), newEmployeeRequest.getPhoneNo(), "", newEmployeeRequest.getNid(), "", (newEmployeeRequest.getEmail() + newEmployeeRequest.getPhoneNo()));
 
-            List<StoreIds> storeIdsList = new ArrayList<>();
-            StoreIds storeIds = new StoreIds();
-            storeIds.setStoreId(storeId);
-            storeIdsList.add(storeIds);
+            List<String> storeIdsList = new ArrayList<>();
+//            StoreIds storeIds = new StoreIds();
+//            storeIds.setStoreId(storeId);
+            storeIdsList.add(storeId);
 
             profileModel.setStoreIds(storeIdsList);
             profileRepository.save(profileModel);
