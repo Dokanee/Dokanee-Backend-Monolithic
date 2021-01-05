@@ -1,6 +1,7 @@
 package com.dokanne.DokaneeBackend.controller;
 
 import com.dokanne.DokaneeBackend.dto.request.StoreRequest;
+import com.dokanne.DokaneeBackend.model.StoreModel;
 import com.dokanne.DokaneeBackend.service.StoreService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -40,6 +41,11 @@ public class StoreController {
         }
 
         return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
+    }
+
+    @GetMapping("/store/info")
+    public ResponseEntity<StoreModel> getStoreInfoBySubDomain(@RequestParam String subDomain) {
+        return storeService.getStoreInfoBySubDomain(subDomain);
     }
 
 

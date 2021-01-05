@@ -155,5 +155,11 @@ public class StoreService {
             return new ResponseEntity<>(new MassageResponse("No store found on that ID", 406), HttpStatus.NOT_ACCEPTABLE);
         }
     }
+
+    public ResponseEntity<StoreModel> getStoreInfoBySubDomain(String subDomain) {
+        StoreModel storeModel = storeRepository.findBySubDomainName(subDomain).get();
+
+        return new ResponseEntity<>(storeModel, HttpStatus.OK);
+    }
 }
 

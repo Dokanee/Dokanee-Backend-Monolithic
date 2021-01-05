@@ -4,10 +4,14 @@ import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.dokanne.DokaneeBackend.Util.UserUtils;
 import com.dokanne.DokaneeBackend.dto.request.ProductAddRequest;
+import com.dokanne.DokaneeBackend.dto.response.ProductsResponse;
 import com.dokanne.DokaneeBackend.model.ProductModel;
 import com.dokanne.DokaneeBackend.repository.ProductRepository;
 import lombok.AllArgsConstructor;
 import org.cloudinary.json.JSONObject;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -116,11 +120,61 @@ public class ProductService {
             } catch (Exception e) {
                 return new ResponseEntity<>("Upload failed\n" + e.toString(), HttpStatus.BAD_REQUEST);
             }
-        }
-        else {
+        } else {
             return new ResponseEntity<>("Not Authenticated to Perform this Operation", HttpStatus.UNAUTHORIZED);
         }
     }
 
 
+    public ResponseEntity editProduct(ProductAddRequest proAddReq, String id, String storeId) {
+        try {
+            boolean storeIdAuth = userUtils.isStoreIdAuth(storeId);
+
+            if (storeIdAuth) {
+                ProductModel productModel = productRepository.findById(id).get();
+//            ProductModel productModel = new ProductModel(
+//                    UUID.randomUUID().toString(), storeId, proAddReq.getCategoryId(), proAddReq.getSubCategoryId(),
+//                    proAddReq.getProductName(), proAddReq.getBrand(), proAddReq.getSlug(), proAddReq.getSku(), proAddReq.getSellPrice(),
+//                    proAddReq.getDiscountPrice(), proAddReq.getQuantity(), proAddReq.getWeight(), proAddReq.getWeightUnit(),
+//                    proAddReq.getTypes(), proAddReq.getSize(), proAddReq.getColour(), proAddReq.isReturnable(),
+//                    proAddReq.getAllowMaxQtyToBuy(), proAddReq.getShortDescription(), proAddReq.getDescription(), proAddReq.isInStock(),
+//                    proAddReq.isFeatured(), proAddReq.getMetaKeywords(), proAddReq.getMetaDescription(), proAddReq.getTag()
+//            );
+                productModel.setCategoryId(proAddReq.getCategoryId());
+                productModel.setSubCategoryId(proAddReq.getSubCategoryId());
+                productModel.setProductName(proAddReq.getProductName());
+                productModel.setBrand(proAddReq.getBrand());
+                productModel.setSellPrice(proAddReq.getSellPrice());
+                productModel.setDiscountPrice(proAddReq.getDiscountPrice());
+                productModel.setQuantity(proAddReq.getQuantity());
+
+                productRepository.save(productModel);
+
+                return new ResponseEntity<>(productModel.getProductName() + " is saved Successful with id " + productModel.getProductId(), HttpStatus.CREATED);
+
+            } else {
+                return new ResponseEntity<>("Store is not authenticated", HttpStatus.UNAUTHORIZED);
+
+            }
+
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public ResponseEntity getAllProducts(int pageNo, int pageSize, String storeId) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+
+        Page<ProductModel> productModelPage = productRepository.findAll(pageable);
+
+        ProductsResponse productsResponse = new ProductsResponse();
+
+        productsResponse.setPageSize(pageSize);
+        productsResponse.setPageNo(pageNo);
+        productsResponse.setTotal(productModelPage.getTotalPages());
+        productsResponse.setProductModelList(productModelPage.getContent());
+
+        return new ResponseEntity(productsResponse, HttpStatus.OK);
+
+    }
 }
