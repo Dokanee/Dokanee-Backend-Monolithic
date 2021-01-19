@@ -13,7 +13,8 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-import java.util.Collections;
+import java.util.ArrayList;
+import java.util.List;
 
 @Configuration
 @EnableSwagger2
@@ -24,6 +25,29 @@ public class SpringFoxConfig {
             .name("Authorization")
             .modelRef(new ModelRef("string"))
             .build();
+    Parameter storeIdHeader = new ParameterBuilder()
+            .parameterType("header")
+            .name("storeId")
+            .modelRef(new ModelRef("string"))
+            .build();
+
+    private List<Parameter> operationParameters() {
+        List<Parameter> headers = new ArrayList<>();
+        Parameter authHeader = new ParameterBuilder()
+                .parameterType("header")
+                .name("Authorization")
+                .modelRef(new ModelRef("string"))
+                .build();
+        Parameter storeIdHeader = new ParameterBuilder()
+                .parameterType("header")
+                .name("storeId")
+                .modelRef(new ModelRef("string"))
+                .build();
+
+        headers.add(authHeader);
+        headers.add(storeIdHeader);
+        return headers;
+    }
 
     @Bean
     public Docket api() {
@@ -34,7 +58,8 @@ public class SpringFoxConfig {
                 .paths(Predicates.not(PathSelectors.regex("/error.*")))
                 .build()
                 .apiInfo(metaData())
-                .globalOperationParameters(Collections.singletonList(authHeader));
+//                .globalOperationParameters(Collections.singletonList(authHeader,storeIdHeader));
+                .globalOperationParameters(operationParameters());
     }
 
     private ApiInfo metaData() {

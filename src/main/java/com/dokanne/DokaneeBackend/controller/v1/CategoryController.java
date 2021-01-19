@@ -1,4 +1,4 @@
-package com.dokanne.DokaneeBackend.controller;
+package com.dokanne.DokaneeBackend.controller.v1;
 
 import com.dokanne.DokaneeBackend.dto.request.CategoryRequest;
 import com.dokanne.DokaneeBackend.dto.request.SubCategoryRequest;

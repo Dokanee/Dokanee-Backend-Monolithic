@@ -1,4 +1,4 @@
-package com.dokanne.DokaneeBackend.controller;
+package com.dokanne.DokaneeBackend.controller.v1;
 
 import com.dokanne.DokaneeBackend.dto.request.ProfileRequest;
 import com.dokanne.DokaneeBackend.jwt.dto.request.PassChangeRequest;

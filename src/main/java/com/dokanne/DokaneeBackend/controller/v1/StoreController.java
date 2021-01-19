@@ -1,4 +1,4 @@
-package com.dokanne.DokaneeBackend.controller;
+package com.dokanne.DokaneeBackend.controller.v1;
 
 import com.dokanne.DokaneeBackend.dto.request.StoreRequest;
 import com.dokanne.DokaneeBackend.model.StoreModel;

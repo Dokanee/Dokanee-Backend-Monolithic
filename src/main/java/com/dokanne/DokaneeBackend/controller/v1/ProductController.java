@@ -1,4 +1,4 @@
-package com.dokanne.DokaneeBackend.controller;
+package com.dokanne.DokaneeBackend.controller.v1;
 
 import com.dokanne.DokaneeBackend.dto.request.ProductAddRequest;
 import com.dokanne.DokaneeBackend.service.ProductService;
@@ -30,6 +30,7 @@ public class ProductController {
     public ResponseEntity getProductByCategory(@RequestParam(required = true) String categoryId, @PathVariable String storeId) {
         return productService.getProductListByCategory(categoryId, storeId);
     }
+
 
     @PostMapping(value = "/product/image/{productId}")
     public ResponseEntity postImage(@RequestParam(value = "image", required = true) MultipartFile[] aFile,
