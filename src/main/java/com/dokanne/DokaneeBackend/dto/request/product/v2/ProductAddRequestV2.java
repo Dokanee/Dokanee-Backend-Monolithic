@@ -20,8 +20,6 @@ public class ProductAddRequestV2 {
 
     private String dokaneeCategory;
 
-    private String shopId;
-
     private String slug;
 
     private String size;
@@ -34,13 +32,13 @@ public class ProductAddRequestV2 {
 
     private String isFeatured;
 
-    private String currentPrice;
+    private Integer currentPrice;
 
-    private String buyingPrice;
+    private Integer buyingPrice;
 
-    private String regularPrice;
+    private Integer regularPrice;
 
-    private String vat;
+    private Integer vat;
 
     private String sku;
 

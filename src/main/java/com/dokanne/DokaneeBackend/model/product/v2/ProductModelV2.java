@@ -1,13 +1,12 @@
 package com.dokanne.DokaneeBackend.model.product.v2;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
 
+@Builder
+@Data
 @Getter
 @Setter
 @AllArgsConstructor
@@ -27,7 +26,7 @@ public class ProductModelV2 {
 
     private String dokaneeCategory;
 
-    private String shopId;
+    private String storeId;
 
     private String slug;
 
@@ -41,13 +40,13 @@ public class ProductModelV2 {
 
     private String isFeatured;
 
-    private String currentPrice;
+    private Integer currentPrice;
 
-    private String buyingPrice;
+    private Integer buyingPrice;
 
-    private String regularPrice;
+    private Integer regularPrice;
 
-    private String vat;
+    private Integer vat;
 
     private String sku;
 

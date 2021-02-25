@@ -4,6 +4,7 @@ import com.dokanne.DokaneeBackend.Util.UserUtils;
 import com.dokanne.DokaneeBackend.dto.request.product.v2.ProductAddRequestV2;
 import com.dokanne.DokaneeBackend.dto.response.MessageIdResponse;
 import com.dokanne.DokaneeBackend.dto.response.ProductResponse;
+import com.dokanne.DokaneeBackend.dto.response.v2.ProductPageResponseV2;
 import com.dokanne.DokaneeBackend.model.CategoryModel;
 import com.dokanne.DokaneeBackend.model.ProductModel;
 import com.dokanne.DokaneeBackend.model.product.v2.ProductModelV2;
@@ -12,9 +13,7 @@ import com.dokanne.DokaneeBackend.repository.v2.ProductRepositoryV1_1;
 import com.dokanne.DokaneeBackend.repository.v2.ProductRepositoryV2;
 import com.dokanne.DokaneeBackend.service.StoreService;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -78,7 +77,7 @@ public class ProductServiceV2 {
             List<String> images = new ArrayList<>();
 
             ProductModelV2 productModelV2 = new ProductModelV2(productId, addRequestV2.getProductName(), addRequestV2.getCategoryId(),
-                    addRequestV2.getSubCategoryId(), addRequestV2.getDokaneeCategory(), addRequestV2.getShopId(), addRequestV2.getSlug(),
+                    addRequestV2.getSubCategoryId(), addRequestV2.getDokaneeCategory(), storeId, addRequestV2.getSlug(),
                     addRequestV2.getSize(), addRequestV2.getColor(), addRequestV2.getQuantity(), addRequestV2.getInStock(), addRequestV2.getIsFeatured(),
                     addRequestV2.getCurrentPrice(), addRequestV2.getBuyingPrice(), addRequestV2.getRegularPrice(), addRequestV2.getVat(), addRequestV2.getSku(),
                     addRequestV2.getMetaTag(), images, addRequestV2.getDescription());
@@ -92,4 +91,43 @@ public class ProductServiceV2 {
         }
     }
 
+    public ResponseEntity<ProductPageResponseV2> getProductList(int pageNo, int pageSize, String storeId, String categoryId, String subCategoryId, String productName, String price) {
+
+        ProductModelV2 example = ProductModelV2.builder()
+                .storeId(storeId)
+                .categoryId(categoryId)
+                .subCategoryId(subCategoryId)
+                .productName(productName)
+                .build();
+
+
+        Pageable pageable;
+        if (price != null) {
+            Sort sort;
+            if (price.toLowerCase().equals("asc")) {
+                sort = Sort.by("regularPrice").ascending();
+            } else {
+                sort = Sort.by("regularPrice").descending();
+            }
+            pageable = PageRequest.of(pageNo, pageSize, sort);
+        } else {
+            pageable = PageRequest.of(pageNo, pageSize);
+        }
+
+
+        ExampleMatcher matcher = ExampleMatcher
+                .matchingAll()
+                .withMatcher("productName", ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase());
+
+        Page<ProductModelV2> productModelV2List = productRepositoryV2.findAll(Example.of(example, matcher), pageable);
+
+
+        ProductPageResponseV2 responseV2 = new ProductPageResponseV2(pageNo, pageSize,
+                productModelV2List.isLast(), productModelV2List.getTotalElements(),
+                productModelV2List.getTotalPages(), productModelV2List.getContent());
+
+
+        return new ResponseEntity<>(responseV2, HttpStatus.OK);
+
+    }
 }
