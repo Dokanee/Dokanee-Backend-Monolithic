@@ -1,4 +1,4 @@
-package com.dokanne.DokaneeBackend.model;
+package com.dokanne.DokaneeBackend.model.product.v1;
 
 import lombok.*;
 

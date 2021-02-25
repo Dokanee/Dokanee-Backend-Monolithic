@@ -12,7 +12,7 @@ import com.dokanne.DokaneeBackend.jwt.model.User;
 import com.dokanne.DokaneeBackend.jwt.repository.RoleRepository;
 import com.dokanne.DokaneeBackend.jwt.repository.UserRepository;
 import com.dokanne.DokaneeBackend.jwt.security.jwt.JwtProvider;
-import com.dokanne.DokaneeBackend.model.ProfileModel;
+import com.dokanne.DokaneeBackend.model.product.v1.ProfileModel;
 import com.dokanne.DokaneeBackend.repository.ProfileRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

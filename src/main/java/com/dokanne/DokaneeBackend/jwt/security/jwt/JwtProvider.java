@@ -69,10 +69,26 @@ public class JwtProvider {
         return false;
     }
 
+    public String getUserNameFromJwt(String token) {
+        token = token.split("\\s+")[1];
+        return Jwts.parser()
+                .setSigningKey(jwtSecret)
+                .parseClaimsJws(token)
+                .getBody().getSubject();
+    }
+
     public String getUserNameFromJwtToken(String token) {
         return Jwts.parser()
                 .setSigningKey(jwtSecret)
                 .parseClaimsJws(token)
                 .getBody().getSubject();
+    }
+
+    public String getRolesFromJwt(String token) {
+        token = token.split("\\s+")[1];
+        return Jwts.parser()
+                .setSigningKey(jwtSecret)
+                .parseClaimsJws(token)
+                .getBody().get("scopes").toString();
     }
 }

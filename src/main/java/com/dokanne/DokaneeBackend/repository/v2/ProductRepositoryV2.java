@@ -1,14 +1,7 @@
 package com.dokanne.DokaneeBackend.repository.v2;
 
-import com.dokanne.DokaneeBackend.model.ProductModel;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.repository.PagingAndSortingRepository;
-import org.springframework.stereotype.Repository;
+import com.dokanne.DokaneeBackend.model.product.v2.ProductModelV2;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-@Repository
-public interface ProductRepositoryV2 extends PagingAndSortingRepository<ProductModel, String> {
-
-    Page<ProductModel> findAllByStoreIdAndCategoryId(String storeId, String categoryId, Pageable pageable);
-
+public interface ProductRepositoryV2 extends JpaRepository<ProductModelV2, String> {
 }

@@ -7,7 +7,6 @@ import com.dokanne.DokaneeBackend.jwt.security.services.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -73,21 +72,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors().and().csrf().disable().
                 authorizeRequests()
                 .antMatchers("/**").permitAll()
-                .antMatchers("/store/**").permitAll()
-                .antMatchers("/").access("hasAuthority('SUPER_ADMIN')")
-                .antMatchers("/api/auth/user/edit").access("hasAnyAuthority('USER','OWNER')")
-                .antMatchers(HttpMethod.GET, "/api/auth/areas").permitAll()
-                .antMatchers(HttpMethod.POST, "/api/auth/areas").access("hasAuthority('SUPER_ADMIN')")
-                .antMatchers("/api/auth/**").permitAll()
-                .antMatchers("/public/**").permitAll()
-                .antMatchers("/user").permitAll()
-                .antMatchers("/v2/**").permitAll()
-                .antMatchers("/swagger-resources/**").permitAll()
-                .antMatchers("/webjars/springfox-swagger-ui/**").permitAll()
-                .antMatchers("/swagger-ui.html").permitAll()
-                .antMatchers("/faculty/**").access("hasAuthority('FACULTY')")
-
-//                .antMatchers("/api/auth/serverCheck").authenticated()
+//                .antMatchers("/v2/**").permitAll()
+//                .antMatchers("/swagger-resources/**").permitAll()
+//                .antMatchers("/webjars/springfox-swagger-ui/**").permitAll()
+//                .antMatchers("/swagger-ui.html").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
