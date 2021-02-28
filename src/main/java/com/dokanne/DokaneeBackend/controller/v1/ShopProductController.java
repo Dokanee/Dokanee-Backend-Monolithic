@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 
 @RestController
-@RequestMapping("/v1/shop/products")
+@RequestMapping("/v1/shop/{storeId}/products")
 public class ShopProductController {
 
     private final ShopProductService shopProductService;
 
-    @GetMapping("/")
-    public ResponseEntity<ShopProductListResponse> getProductList(@RequestHeader String storeId,
+    @GetMapping
+    public ResponseEntity<ShopProductListResponse> getProductList(@PathVariable String storeId,
                                                                   @RequestParam(defaultValue = "0") int pageNo,
                                                                   @RequestParam(defaultValue = "20") int pageSize,
                                                                   @RequestParam(required = false) String categoryId,
