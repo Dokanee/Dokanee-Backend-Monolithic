@@ -40,12 +40,16 @@ public class CategoryService {
             Optional<StoreModel> storeModelOptional = storeRepository.findById(storeId);
 
             if (storeModelOptional.isPresent()) {
+                String categorySlug = categoryRequest.getCategoryName().toLowerCase();
+                categorySlug = categorySlug.replace(" ", "-");
+                categorySlug = categorySlug + "-" + storeId.substring(0, 7);
+
                 CategoryModel categoryModel = new CategoryModel();
                 categoryModel.setCategoryId(UUID.randomUUID().toString());
                 categoryModel.setStoreId(storeId);
                 categoryModel.setSubDomain(storeModelOptional.get().getSubDomainName());
                 categoryModel.setCategoryName(categoryRequest.getCategoryName());
-                categoryModel.setSlug(categoryRequest.getSlug());
+                categoryModel.setSlug(categorySlug);
 
                 categoryRepository.save(categoryModel);
 
@@ -65,8 +69,12 @@ public class CategoryService {
         boolean storeIdAuth = storeList.contains(storeId);
 
         if (storeIdAuth) {
+            String subCategorySlug = subCategoryRequest.getSubCategoryName().toLowerCase();
+            subCategorySlug = subCategorySlug.replace(" ", "-");
+            subCategorySlug = subCategorySlug + "-" + storeId.substring(0, 7);
+
             SubCategoryModel subCategoryModel = new SubCategoryModel(UUID.randomUUID().toString(),
-                    subCategoryRequest.getSubCategoryName(), subCategoryRequest.getSlug());
+                    subCategoryRequest.getSubCategoryName(), subCategorySlug);
 
             Optional<CategoryModel> categoryModelOptional = categoryRepository.findById(subCategoryRequest.getCategoryId());
 
