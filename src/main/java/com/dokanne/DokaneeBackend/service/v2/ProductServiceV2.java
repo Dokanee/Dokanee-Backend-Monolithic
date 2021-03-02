@@ -74,7 +74,8 @@ public class ProductServiceV2 {
             String productId = UUID.randomUUID().toString();
             List<String> images = new ArrayList<>();
 
-            String productSlug = addRequestV2.getProductName().split("\\s+")[0] + productId.substring(9);
+            String productSlug = addRequestV2.getProductName().toLowerCase().replace(" ", "-");
+            productSlug = productSlug + "-" + storeId.substring(0, 7) + "-" + productId.substring(0, 7);
 
             ProductModelV2 productModelV2 = new ProductModelV2(productId, addRequestV2.getProductName(), addRequestV2.getCategoryId(), addRequestV2.getCategorySlug(),
                     addRequestV2.getSubCategoryId(), addRequestV2.getSubCategorySlug(), addRequestV2.getDokaneeCategory(), storeId, addRequestV2.getSubDomain(), productSlug,
