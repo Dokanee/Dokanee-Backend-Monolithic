@@ -16,11 +16,17 @@ public class ProductAddRequestV2 {
 
     private String categoryId;
 
+    private String categorySlug;
+
     private String subCategoryId;
+
+    private String subCategorySlug;
 
     private String dokaneeCategory;
 
-    private String slug;
+    private String storeId;
+
+    private String subDomain;
 
     private String size;
 

@@ -11,7 +11,6 @@ import com.dokanne.DokaneeBackend.model.product.v2.ProductModelV2;
 import com.dokanne.DokaneeBackend.repository.CategoryRepository;
 import com.dokanne.DokaneeBackend.repository.v2.ProductRepositoryV1_1;
 import com.dokanne.DokaneeBackend.repository.v2.ProductRepositoryV2;
-import com.dokanne.DokaneeBackend.service.StoreService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
@@ -30,7 +29,6 @@ public class ProductServiceV2 {
 
     private final ProductRepositoryV1_1 productRepositoryV11;
     private final CategoryRepository categoryRepository;
-    private final StoreService storeService;
     private final UserUtils userUtils;
     private final ProductRepositoryV2 productRepositoryV2;
 
@@ -76,8 +74,10 @@ public class ProductServiceV2 {
             String productId = UUID.randomUUID().toString();
             List<String> images = new ArrayList<>();
 
-            ProductModelV2 productModelV2 = new ProductModelV2(productId, addRequestV2.getProductName(), addRequestV2.getCategoryId(),
-                    addRequestV2.getSubCategoryId(), addRequestV2.getDokaneeCategory(), storeId, addRequestV2.getSlug(),
+            String productSlug = addRequestV2.getProductName().split("\\s+")[0] + productId.substring(9);
+
+            ProductModelV2 productModelV2 = new ProductModelV2(productId, addRequestV2.getProductName(), addRequestV2.getCategoryId(), addRequestV2.getCategorySlug(),
+                    addRequestV2.getSubCategoryId(), addRequestV2.getSubCategorySlug(), addRequestV2.getDokaneeCategory(), storeId, addRequestV2.getSubDomain(), productSlug,
                     addRequestV2.getSize(), addRequestV2.getColor(), addRequestV2.getQuantity(), addRequestV2.getInStock(), addRequestV2.getIsFeatured(),
                     addRequestV2.getCurrentPrice(), addRequestV2.getBuyingPrice(), addRequestV2.getRegularPrice(), addRequestV2.getVat(), addRequestV2.getSku(),
                     addRequestV2.getMetaTag(), images, addRequestV2.getDescription());

@@ -19,6 +19,8 @@ public class CategoryModel {
 
     String storeId;
 
+    String subDomain;
+
     String categoryName;
 
     String slug;

@@ -5,13 +5,16 @@ import com.dokanne.DokaneeBackend.dto.request.SubCategoryRequest;
 import com.dokanne.DokaneeBackend.dto.response.AllCategoryResponse;
 import com.dokanne.DokaneeBackend.model.CategoryModel;
 import com.dokanne.DokaneeBackend.model.StoreIds;
+import com.dokanne.DokaneeBackend.model.StoreModel;
 import com.dokanne.DokaneeBackend.model.SubCategoryModel;
 import com.dokanne.DokaneeBackend.repository.CategoryRepository;
+import com.dokanne.DokaneeBackend.repository.StoreRepository;
 import com.dokanne.DokaneeBackend.repository.SubCategoryRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +29,7 @@ public class CategoryService {
     private final CategoryRepository categoryRepository;
     private final SubCategoryRepository subCategoryRepository;
     private final StoreService storeService;
+    private final StoreRepository storeRepository;
 
 
     public ResponseEntity<String> addCategory(CategoryRequest categoryRequest, String storeId) {
@@ -33,17 +37,25 @@ public class CategoryService {
         boolean storeIdAuth = storeList.contains(storeId);
 
         if (storeIdAuth) {
-            CategoryModel categoryModel = new CategoryModel();
-            categoryModel.setCategoryId(UUID.randomUUID().toString());
-            categoryModel.setStoreId(storeId);
-            categoryModel.setCategoryName(categoryRequest.getCategoryName());
-            categoryModel.setSlug(categoryRequest.getSlug());
+            Optional<StoreModel> storeModelOptional = storeRepository.findById(storeId);
 
-            categoryRepository.save(categoryModel);
+            if (storeModelOptional.isPresent()) {
+                CategoryModel categoryModel = new CategoryModel();
+                categoryModel.setCategoryId(UUID.randomUUID().toString());
+                categoryModel.setStoreId(storeId);
+                categoryModel.setSubDomain(storeModelOptional.get().getSubDomainName());
+                categoryModel.setCategoryName(categoryRequest.getCategoryName());
+                categoryModel.setSlug(categoryRequest.getSlug());
 
-            return new ResponseEntity<>("Created " + categoryRequest.getCategoryName(), HttpStatus.CREATED);
+                categoryRepository.save(categoryModel);
+
+                return new ResponseEntity<>("Created " + categoryRequest.getCategoryName(), HttpStatus.CREATED);
+            } else {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Store Not Found");
+            }
+
         } else {
-            return new ResponseEntity<>("Not Permitted To Create Category", HttpStatus.UNAUTHORIZED);
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Not Permitted To Create Category");
         }
 
     }
