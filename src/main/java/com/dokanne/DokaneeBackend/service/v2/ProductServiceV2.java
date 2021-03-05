@@ -1,7 +1,10 @@
 package com.dokanne.DokaneeBackend.service.v2;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import com.dokanne.DokaneeBackend.Util.UserUtils;
 import com.dokanne.DokaneeBackend.dto.request.product.v2.ProductAddRequestV2;
+import com.dokanne.DokaneeBackend.dto.response.ApiResponse;
 import com.dokanne.DokaneeBackend.dto.response.MessageIdResponse;
 import com.dokanne.DokaneeBackend.dto.response.ProductResponse;
 import com.dokanne.DokaneeBackend.dto.response.v2.ProductPageResponseV2;
@@ -12,16 +15,17 @@ import com.dokanne.DokaneeBackend.repository.CategoryRepository;
 import com.dokanne.DokaneeBackend.repository.v2.ProductRepositoryV1_1;
 import com.dokanne.DokaneeBackend.repository.v2.ProductRepositoryV2;
 import lombok.AllArgsConstructor;
+import org.cloudinary.json.JSONObject;
 import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.io.File;
+import java.nio.file.Files;
+import java.util.*;
 
 @AllArgsConstructor
 @Service
@@ -130,5 +134,88 @@ public class ProductServiceV2 {
 
         return new ResponseEntity<>(responseV2, HttpStatus.OK);
 
+    }
+
+
+    public ResponseEntity<ApiResponse<ProductPageResponseV2>> getProductListTest(int pageNo, int pageSize, String storeId, String categoryId, String subCategoryId, String productName, String price) {
+
+        ProductModelV2 example = ProductModelV2.builder()
+                .storeId(storeId)
+                .categoryId(categoryId)
+                .subCategoryId(subCategoryId)
+                .productName(productName)
+                .build();
+
+
+        Pageable pageable;
+        if (price != null) {
+            Sort sort;
+            if (price.toLowerCase().equals("asc")) {
+                sort = Sort.by("regularPrice").ascending();
+            } else {
+                sort = Sort.by("regularPrice").descending();
+            }
+            pageable = PageRequest.of(pageNo, pageSize, sort);
+        } else {
+            pageable = PageRequest.of(pageNo, pageSize);
+        }
+
+
+        ExampleMatcher matcher = ExampleMatcher
+                .matchingAll()
+                .withMatcher("productName", ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase());
+
+        Page<ProductModelV2> productModelV2List = productRepositoryV2.findAll(Example.of(example, matcher), pageable);
+
+
+        ProductPageResponseV2 responseV2 = new ProductPageResponseV2(pageNo, pageSize,
+                productModelV2List.isLast(), productModelV2List.getTotalElements(),
+                productModelV2List.getTotalPages(), productModelV2List.getContent());
+
+
+        return new ResponseEntity<>(new ApiResponse<>(200, "OK", responseV2), HttpStatus.OK);
+
+    }
+
+    public ResponseEntity uploadImage(MultipartFile[] aFile, String productId, String storeId) {
+        boolean authProduct = userUtils.authProductV2(storeId, productId);
+
+        if (authProduct) {
+            List<String> photoLinksList = new ArrayList<>();
+            Cloudinary c = new Cloudinary(ObjectUtils.asMap(
+                    "cloud_name", "to-let-app",
+                    "api_key", "111257839862595",
+                    "api_secret", "7H1QY2G1W6FVQQ3envantRuJz4c"));
+
+            try {
+                Optional<ProductModelV2> productModelOptional = productRepositoryV2.findById(productId);
+
+                if (aFile.length < 1) {
+                    return new ResponseEntity<>("No File Found", HttpStatus.BAD_REQUEST);
+                }
+
+                for (MultipartFile mpFile : aFile) {
+                    File f = Files.createTempFile("temp", mpFile.getOriginalFilename()).toFile();
+                    mpFile.transferTo(f);
+                    Map response = c.uploader().upload(f, ObjectUtils.emptyMap());
+                    JSONObject json = new JSONObject(response);
+                    String url = json.getString("url");
+
+                    photoLinksList.add(url);
+                }
+                ProductModelV2 productModelV2 = productModelOptional.get();
+                productModelV2.setImages(photoLinksList);
+
+
+                productRepositoryV2.save(productModelV2);
+
+
+                return new ResponseEntity<>("OK", HttpStatus.OK);
+            } catch (Exception e) {
+                return new ResponseEntity<>("Upload failed\n" + e.toString(), HttpStatus.BAD_REQUEST);
+            }
+        } else {
+            return new ResponseEntity<>("You are Not Authenticated to Perform this Operation", HttpStatus.UNAUTHORIZED);
+        }
     }
 }

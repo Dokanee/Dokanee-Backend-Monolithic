@@ -1,12 +1,14 @@
 package com.dokanne.DokaneeBackend.controller.v2;
 
 import com.dokanne.DokaneeBackend.dto.request.product.v2.ProductAddRequestV2;
+import com.dokanne.DokaneeBackend.dto.response.ApiResponse;
 import com.dokanne.DokaneeBackend.dto.response.MessageIdResponse;
 import com.dokanne.DokaneeBackend.dto.response.v2.ProductPageResponseV2;
 import com.dokanne.DokaneeBackend.service.v2.ProductServiceV2;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @AllArgsConstructor
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -33,6 +35,24 @@ public class ProductControllerV2 {
                                                                 @RequestParam(required = false) String priceSort
     ) {
         return productServiceV2.getProductList(pageNo, pageSize, storeId, categoryId, subCategoryId, productName, priceSort);
+    }
+
+    @GetMapping("/test")
+    public ResponseEntity<ApiResponse<ProductPageResponseV2>> getProductListTest(@RequestHeader String storeId,
+                                                                                 @RequestParam(defaultValue = "0") int pageNo,
+                                                                                 @RequestParam(defaultValue = "20") int pageSize,
+                                                                                 @RequestParam(required = false) String categoryId,
+                                                                                 @RequestParam(required = false) String subCategoryId,
+                                                                                 @RequestParam(required = false) String productName,
+                                                                                 @RequestParam(required = false) String priceSort
+    ) {
+        return productServiceV2.getProductListTest(pageNo, pageSize, storeId, categoryId, subCategoryId, productName, priceSort);
+    }
+
+    @PostMapping(value = "/product/image/{productId}")
+    public ResponseEntity postImage(@RequestParam(value = "image", required = true) MultipartFile[] aFile,
+                                    @PathVariable String productId, @RequestHeader String storeId) {
+        return productServiceV2.uploadImage(aFile, productId, storeId);
     }
 
 //, @RequestHeader(name = "Authorization") String token

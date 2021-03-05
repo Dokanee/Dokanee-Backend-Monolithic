@@ -8,4 +8,6 @@ import java.util.Optional;
 public interface ProductRepositoryV2 extends JpaRepository<ProductModelV2, String> {
 
     Optional<ProductModelV2> getAllByStoreId(String storeId);
+
+    Optional<ProductModelV2> findByStoreIdAndId(String storeId, String productId);
 }

@@ -8,6 +8,7 @@ import com.dokanne.DokaneeBackend.model.product.v1.ProfileModel;
 import com.dokanne.DokaneeBackend.repository.CategoryRepository;
 import com.dokanne.DokaneeBackend.repository.ProductRepository;
 import com.dokanne.DokaneeBackend.repository.ProfileRepository;
+import com.dokanne.DokaneeBackend.repository.v2.ProductRepositoryV2;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,6 +24,7 @@ public class UserUtils {
     private final ProfileRepository opRepo;
     private final CategoryRepository categoryRepository;
     private final ProductRepository productRepository;
+    private final ProductRepositoryV2 productRepositoryV2;
 
     public boolean isStoreIdAuth(String storeId) {
         List<String> storeList = getAuthUserInfo().getStoreIds();
@@ -78,14 +80,25 @@ public class UserUtils {
         return roles;
     }
 
-    public boolean authProduct(String id, String productId) {
+    public boolean authProduct(String storeId, String productId) {
         List<String> storeList = getAuthUserInfo().getStoreIds();
-        if(storeList.contains(id)) {
-            return productRepository.findByStoreIdAndProductId(id, productId).isPresent();
-        }
-        else {
+
+        if (storeList.contains(storeId)) {
+            return productRepository.findByStoreIdAndProductId(storeId, productId).isPresent();
+        } else {
+            System.out.println(2);
             return false;
         }
 
+    }
+
+    public boolean authProductV2(String storeId, String productId) {
+        List<String> storeList = getAuthUserInfo().getStoreIds();
+
+        if (storeList.contains(storeId)) {
+            return productRepositoryV2.findByStoreIdAndId(storeId, productId).isPresent();
+        } else {
+            return false;
+        }
     }
 }
