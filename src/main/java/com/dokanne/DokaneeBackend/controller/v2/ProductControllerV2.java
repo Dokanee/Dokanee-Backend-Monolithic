@@ -49,7 +49,7 @@ public class ProductControllerV2 {
         return productServiceV2.getProductListTest(pageNo, pageSize, storeId, categoryId, subCategoryId, productName, priceSort);
     }
 
-    @PostMapping(value = "/product/image/{productId}")
+    @PostMapping(value = "/{productId}/image")
     public ResponseEntity postImage(@RequestParam(value = "image", required = true) MultipartFile[] aFile,
                                     @PathVariable String productId, @RequestHeader String storeId) {
         return productServiceV2.uploadImage(aFile, productId, storeId);
