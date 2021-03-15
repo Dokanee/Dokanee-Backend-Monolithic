@@ -82,10 +82,10 @@ public class ProductServiceV2 {
             String productSlug = addRequestV2.getProductName().toLowerCase().replace(" ", "-");
             productSlug = productSlug + "-" + storeId.substring(0, 7) + "-" + productId.substring(0, 7);
 
-            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+            long timestamp = new Timestamp(System.currentTimeMillis()).getTime();
 
             ProductModelV2 productModelV2 = new ProductModelV2(productId, addRequestV2.getProductName(),
-                    timestamp.toString(), addRequestV2.getBadge(), addRequestV2.getCategoryId(),
+                    String.valueOf(timestamp), addRequestV2.getBadge(), addRequestV2.getCategoryId(),
                     addRequestV2.getCategorySlug(), addRequestV2.getSubCategoryId(), addRequestV2.getSubCategorySlug(),
                     addRequestV2.getDokaneeCategory(), storeId, addRequestV2.getSubDomain(), productSlug, addRequestV2.getSize(),
                     addRequestV2.getColor(), addRequestV2.getQuantity(), addRequestV2.getInStock(), addRequestV2.getIsFeatured(),
