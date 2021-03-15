@@ -9,9 +9,6 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ApiResponse<T> {
-    int statusCode;
-    String message;
-
-    T data;
+public class IdResponse {
+    String id;
 }

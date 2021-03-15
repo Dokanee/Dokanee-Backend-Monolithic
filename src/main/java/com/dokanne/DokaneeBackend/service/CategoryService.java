@@ -1,12 +1,12 @@
 package com.dokanne.DokaneeBackend.service;
 
+import com.dokanne.DokaneeBackend.dto.ApiResponse;
 import com.dokanne.DokaneeBackend.dto.request.CategoryRequest;
-import com.dokanne.DokaneeBackend.dto.request.SubCategoryRequest;
 import com.dokanne.DokaneeBackend.dto.response.AllCategoryResponse;
+import com.dokanne.DokaneeBackend.dto.response.IdResponse;
 import com.dokanne.DokaneeBackend.model.CategoryModel;
 import com.dokanne.DokaneeBackend.model.StoreIds;
 import com.dokanne.DokaneeBackend.model.StoreModel;
-import com.dokanne.DokaneeBackend.model.SubCategoryModel;
 import com.dokanne.DokaneeBackend.repository.CategoryRepository;
 import com.dokanne.DokaneeBackend.repository.StoreRepository;
 import com.dokanne.DokaneeBackend.repository.SubCategoryRepository;
@@ -47,6 +47,7 @@ public class CategoryService {
 
                 CategoryModel categoryModel = new CategoryModel();
                 categoryModel.setCategoryId(categoryId);
+                categoryModel.setCategoryIcon(categoryRequest.getCategoryIcon());
                 categoryModel.setStoreId(storeId);
                 categoryModel.setSubDomain(storeModelOptional.get().getSubDomainName());
                 categoryModel.setCategoryName(categoryRequest.getCategoryName());
@@ -65,51 +66,15 @@ public class CategoryService {
 
     }
 
-    public ResponseEntity<String> addSubCategory(SubCategoryRequest subCategoryRequest, String storeId) {
-        List<String> storeList = storeService.getAuthUserInfo().getStoreIds();
-        boolean storeIdAuth = storeList.contains(storeId);
-
-        if (storeIdAuth) {
-            String subCategoryId = UUID.randomUUID().toString();
-            String subCategorySlug = subCategoryRequest.getSubCategoryName().toLowerCase();
-            subCategorySlug = subCategorySlug.replace(" ", "-");
-            subCategorySlug = subCategorySlug + "-" + storeId.substring(0, 3) + "-" + subCategoryId.substring(0, 3);
-
-            SubCategoryModel subCategoryModel = new SubCategoryModel(subCategoryId,
-                    subCategoryRequest.getSubCategoryName(), subCategorySlug);
-
-            Optional<CategoryModel> categoryModelOptional = categoryRepository.findById(subCategoryRequest.getCategoryId());
-
-            if (categoryModelOptional.isPresent()) {
-                CategoryModel categoryModel = categoryModelOptional.get();
-
-                List<SubCategoryModel> subCategoryModelList = categoryModel.getSubCategoryModels();
-                subCategoryModelList.add(subCategoryModel);
-
-                categoryRepository.save(categoryModel);
-
-                subCategoryRepository.save(subCategoryModel);
-
-                return new ResponseEntity<>("Created " + subCategoryRequest.getSubCategoryName(), HttpStatus.CREATED);
-            } else {
-                return new ResponseEntity<>("Category id isn't found", HttpStatus.BAD_REQUEST);
-            }
-
-        } else {
-            return new ResponseEntity<>("Store Not Authenticated ", HttpStatus.UNAUTHORIZED);
-        }
-
-    }
-
-    public ResponseEntity<Object> getCategory(String storeId) {
+    public ResponseEntity<List<CategoryModel>> getCategory(String storeId) {
         List<String> storeList = storeService.getAuthUserInfo().getStoreIds();
         boolean storeIdAuth = storeList.contains(storeId);
 
         if (storeIdAuth) {
             List<CategoryModel> categoryModelList = categoryRepository.findAllByStoreId(storeId);
-            return new ResponseEntity<Object>(categoryModelList, HttpStatus.OK);
+            return new ResponseEntity<>(categoryModelList, HttpStatus.OK);
         } else {
-            return new ResponseEntity<Object>("Store is not Authenticated", HttpStatus.UNAUTHORIZED);
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Store is Not Authenticated");
         }
 
 
@@ -124,7 +89,7 @@ public class CategoryService {
         return storeIdsString;
     }
 
-    public ResponseEntity<Object> getAllCategory(String storeId) {
+    public ResponseEntity<List<AllCategoryResponse>> getAllCategory(String storeId) {
         List<String> storeList = storeService.getAuthUserInfo().getStoreIds();
         boolean storeIdAuth = storeList.contains(storeId);
 
@@ -134,15 +99,73 @@ public class CategoryService {
             List<AllCategoryResponse> categoryList = new ArrayList<>();
 
             for (CategoryModel categoryModel : categoryModels) {
-                AllCategoryResponse allCategoryResponse = new AllCategoryResponse(categoryModel.getCategoryId(), categoryModel.getCategoryName());
+                AllCategoryResponse allCategoryResponse = new AllCategoryResponse(categoryModel.getCategoryId(), categoryModel.getCategoryIcon(), categoryModel.getCategoryName());
                 categoryList.add(allCategoryResponse);
             }
 
-            return new ResponseEntity<Object>(categoryList, HttpStatus.OK);
+            return new ResponseEntity<>(categoryList, HttpStatus.OK);
         } else {
-            return new ResponseEntity<Object>("Store is Not Authenticated", HttpStatus.UNAUTHORIZED);
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Store is Not Authenticated");
         }
 
     }
 
+    public ResponseEntity<ApiResponse<IdResponse>> editCategory(CategoryRequest categoryRequest, String storeId, String categoryId) {
+        List<String> storeList = storeService.getAuthUserInfo().getStoreIds();
+        boolean storeIdAuth = storeList.contains(storeId);
+
+        if (storeIdAuth) {
+            Optional<CategoryModel> categoryModelOptional = categoryRepository.findById(categoryId);
+
+            if (categoryModelOptional.isPresent()) {
+                CategoryModel categoryModel = categoryModelOptional.get();
+
+                if (categoryModel.getStoreId().equals(storeId)) {
+                    categoryModel.setCategoryName(categoryRequest.getCategoryName());
+                    categoryModel.setCategoryIcon(categoryRequest.getCategoryIcon());
+
+                    categoryRepository.save(categoryModel);
+
+                    return new ResponseEntity<>(new ApiResponse<>(200, "Category Edit Successful",
+                            new IdResponse(categoryModel.getCategoryId())), HttpStatus.OK);
+                } else {
+                    throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "You Are Not Permitted To Edit This Category");
+                }
+
+            } else {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Category Not Found");
+            }
+
+        } else {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "You Are Not Permitted To Do This Operation. Your are not Authorized on this store.");
+        }
+    }
+
+    public ResponseEntity<ApiResponse<IdResponse>> deleteCategory(String storeId, String categoryId) {
+        List<String> storeList = storeService.getAuthUserInfo().getStoreIds();
+        boolean storeIdAuth = storeList.contains(storeId);
+
+        if (storeIdAuth) {
+            Optional<CategoryModel> categoryModelOptional = categoryRepository.findById(categoryId);
+
+            if (categoryModelOptional.isPresent()) {
+                CategoryModel categoryModel = categoryModelOptional.get();
+
+                if (categoryModel.getStoreId().equals(storeId)) {
+                    categoryRepository.deleteById(categoryId);
+
+                    return new ResponseEntity<>(new ApiResponse<>(200, "Category Deleted Successful",
+                            new IdResponse(categoryModel.getCategoryId())), HttpStatus.OK);
+                } else {
+                    throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "You Are Not Permitted To Delete This Category");
+                }
+
+            } else {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Category Not Found");
+            }
+
+        } else {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "You Are Not Permitted To Do This Operation. Your are not Authorized on this store.");
+        }
+    }
 }

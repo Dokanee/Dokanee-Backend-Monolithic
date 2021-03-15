@@ -20,6 +20,10 @@ public class ProductModelV2 {
 
     private String productName;
 
+    private String creationTime;
+
+    private String badge;
+
     private String categoryId;
 
     private String categorySlug;
@@ -52,7 +56,7 @@ public class ProductModelV2 {
 
     private Integer regularPrice;
 
-    private Integer vat;
+    private Double vat;
 
     private String sku;
 

@@ -12,6 +12,10 @@ import java.util.List;
 public class ShopProductModelResponse {
     private String productName;
 
+    private String creationTime;
+
+    private String badge;
+
     private String categorySlug;
 
     private String subCategorySlug;
@@ -34,7 +38,7 @@ public class ShopProductModelResponse {
 
     private Integer regularPrice;
 
-    private Integer vat;
+    private Double vat;
 
     private String sku;
 

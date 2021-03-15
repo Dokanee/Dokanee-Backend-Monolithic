@@ -9,7 +9,7 @@ import lombok.*;
 @Getter
 @Setter
 
-public class MassageResponse {
+public class MessageResponse {
     @NonNull
     String massage;
 

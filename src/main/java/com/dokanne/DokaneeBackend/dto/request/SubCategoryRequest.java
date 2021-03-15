@@ -11,5 +11,8 @@ import lombok.Setter;
 @NoArgsConstructor
 public class SubCategoryRequest {
     String subCategoryName;
+
+    String subCategoryIcon;
+
     String categoryId;
 }

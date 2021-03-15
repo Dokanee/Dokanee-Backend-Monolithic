@@ -1,7 +1,7 @@
 package com.dokanne.DokaneeBackend.service;
 
 import com.dokanne.DokaneeBackend.dto.request.StoreRequest;
-import com.dokanne.DokaneeBackend.dto.response.MassageResponse;
+import com.dokanne.DokaneeBackend.dto.response.MessageResponse;
 import com.dokanne.DokaneeBackend.dto.response.StoreInfoResponse;
 import com.dokanne.DokaneeBackend.jwt.dto.response.OwnerProfileResponse;
 import com.dokanne.DokaneeBackend.jwt.model.Role;
@@ -132,7 +132,7 @@ public class StoreService {
         }
     }
 
-    public ResponseEntity<MassageResponse> editStore(String storeId, StoreRequest storeRequest) {
+    public ResponseEntity<MessageResponse> editStore(String storeId, StoreRequest storeRequest) {
         Optional<StoreModel> storeModelOptional = storeRepository.findById(storeId);
 
         if (storeModelOptional.isPresent()) {
@@ -149,10 +149,10 @@ public class StoreService {
 
             storeRepository.save(storeModel);
 
-            return new ResponseEntity<>(new MassageResponse("Info Saved Successfully", storeModel, 200), HttpStatus.OK);
+            return new ResponseEntity<>(new MessageResponse("Info Saved Successfully", storeModel, 200), HttpStatus.OK);
 
         } else {
-            return new ResponseEntity<>(new MassageResponse("No store found on that ID", 406), HttpStatus.NOT_ACCEPTABLE);
+            return new ResponseEntity<>(new MessageResponse("No store found on that ID", 406), HttpStatus.NOT_ACCEPTABLE);
         }
     }
 

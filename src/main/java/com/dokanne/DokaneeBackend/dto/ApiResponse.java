@@ -1,4 +1,4 @@
-package com.dokanne.DokaneeBackend.dto.request;
+package com.dokanne.DokaneeBackend.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,9 +9,9 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CategoryRequest {
+public class ApiResponse<T> {
+    int statusCode;
+    String message;
 
-    String categoryIcon;
-
-    String categoryName;
+    T data;
 }

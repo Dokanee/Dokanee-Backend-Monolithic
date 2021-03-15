@@ -12,5 +12,8 @@ import lombok.Setter;
 
 public class AllCategoryResponse {
     String id;
+
+    String categoryIcon;
+
     String name;
 }

@@ -1,7 +1,7 @@
 package com.dokanne.DokaneeBackend.controller.v2;
 
+import com.dokanne.DokaneeBackend.dto.ApiResponse;
 import com.dokanne.DokaneeBackend.dto.request.product.v2.ProductAddRequestV2;
-import com.dokanne.DokaneeBackend.dto.response.ApiResponse;
 import com.dokanne.DokaneeBackend.dto.response.MessageIdResponse;
 import com.dokanne.DokaneeBackend.dto.response.v2.ProductPageResponseV2;
 import com.dokanne.DokaneeBackend.service.v2.ProductServiceV2;
@@ -9,6 +9,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @AllArgsConstructor
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -50,8 +52,8 @@ public class ProductControllerV2 {
     }
 
     @PostMapping(value = "/{productId}/image")
-    public ResponseEntity postImage(@RequestParam(value = "image", required = true) MultipartFile[] aFile,
-                                    @PathVariable String productId, @RequestHeader String storeId) {
+    public ResponseEntity<ApiResponse<List<String>>> postImage(@RequestParam(value = "image", required = true) MultipartFile[] aFile,
+                                                               @PathVariable String productId, @RequestHeader String storeId) {
         return productServiceV2.uploadImage(aFile, productId, storeId);
     }
 

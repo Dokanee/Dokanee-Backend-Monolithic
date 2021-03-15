@@ -3,8 +3,8 @@ package com.dokanne.DokaneeBackend.service.v2;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.dokanne.DokaneeBackend.Util.UserUtils;
+import com.dokanne.DokaneeBackend.dto.ApiResponse;
 import com.dokanne.DokaneeBackend.dto.request.product.v2.ProductAddRequestV2;
-import com.dokanne.DokaneeBackend.dto.response.ApiResponse;
 import com.dokanne.DokaneeBackend.dto.response.MessageIdResponse;
 import com.dokanne.DokaneeBackend.dto.response.ProductResponse;
 import com.dokanne.DokaneeBackend.dto.response.v2.ProductPageResponseV2;
@@ -25,6 +25,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.io.File;
 import java.nio.file.Files;
+import java.sql.Timestamp;
 import java.util.*;
 
 @AllArgsConstructor
@@ -81,11 +82,15 @@ public class ProductServiceV2 {
             String productSlug = addRequestV2.getProductName().toLowerCase().replace(" ", "-");
             productSlug = productSlug + "-" + storeId.substring(0, 7) + "-" + productId.substring(0, 7);
 
-            ProductModelV2 productModelV2 = new ProductModelV2(productId, addRequestV2.getProductName(), addRequestV2.getCategoryId(), addRequestV2.getCategorySlug(),
-                    addRequestV2.getSubCategoryId(), addRequestV2.getSubCategorySlug(), addRequestV2.getDokaneeCategory(), storeId, addRequestV2.getSubDomain(), productSlug,
-                    addRequestV2.getSize(), addRequestV2.getColor(), addRequestV2.getQuantity(), addRequestV2.getInStock(), addRequestV2.getIsFeatured(),
-                    addRequestV2.getCurrentPrice(), addRequestV2.getBuyingPrice(), addRequestV2.getRegularPrice(), addRequestV2.getVat(), addRequestV2.getSku(),
-                    addRequestV2.getMetaTag(), images, addRequestV2.getDescription());
+            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+
+            ProductModelV2 productModelV2 = new ProductModelV2(productId, addRequestV2.getProductName(),
+                    timestamp.toString(), addRequestV2.getBadge(), addRequestV2.getCategoryId(),
+                    addRequestV2.getCategorySlug(), addRequestV2.getSubCategoryId(), addRequestV2.getSubCategorySlug(),
+                    addRequestV2.getDokaneeCategory(), storeId, addRequestV2.getSubDomain(), productSlug, addRequestV2.getSize(),
+                    addRequestV2.getColor(), addRequestV2.getQuantity(), addRequestV2.getInStock(), addRequestV2.getIsFeatured(),
+                    addRequestV2.getCurrentPrice(), addRequestV2.getBuyingPrice(), addRequestV2.getRegularPrice(),
+                    addRequestV2.getVat(), addRequestV2.getSku(), addRequestV2.getMetaTag(), images, addRequestV2.getDescription());
 
             productRepositoryV2.save(productModelV2);
 
@@ -96,7 +101,8 @@ public class ProductServiceV2 {
         }
     }
 
-    public ResponseEntity<ProductPageResponseV2> getProductList(int pageNo, int pageSize, String storeId, String categoryId, String subCategoryId, String productName, String price) {
+    public ResponseEntity<ProductPageResponseV2> getProductList(int pageNo, int pageSize, String storeId, String categoryId,
+                                                                String subCategoryId, String productName, String price) {
 
         ProductModelV2 example = ProductModelV2.builder()
                 .storeId(storeId)
@@ -177,7 +183,7 @@ public class ProductServiceV2 {
 
     }
 
-    public ResponseEntity uploadImage(MultipartFile[] aFile, String productId, String storeId) {
+    public ResponseEntity<ApiResponse<List<String>>> uploadImage(MultipartFile[] aFile, String productId, String storeId) {
         boolean authProduct = userUtils.authProductV2(storeId, productId);
 
         if (authProduct) {
@@ -191,7 +197,7 @@ public class ProductServiceV2 {
                 Optional<ProductModelV2> productModelOptional = productRepositoryV2.findById(productId);
 
                 if (aFile.length < 1) {
-                    return new ResponseEntity<>("No File Found", HttpStatus.BAD_REQUEST);
+                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No File Found");
                 }
 
                 for (MultipartFile mpFile : aFile) {
@@ -206,16 +212,14 @@ public class ProductServiceV2 {
                 ProductModelV2 productModelV2 = productModelOptional.get();
                 productModelV2.setImages(photoLinksList);
 
-
                 productRepositoryV2.save(productModelV2);
 
-
-                return new ResponseEntity<>("OK", HttpStatus.OK);
+                return new ResponseEntity<>(new ApiResponse<>(200, "Image Upload Successful", photoLinksList), HttpStatus.OK);
             } catch (Exception e) {
-                return new ResponseEntity<>("Upload failed\n" + e.toString(), HttpStatus.BAD_REQUEST);
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Upload failed\n " + e.toString());
             }
         } else {
-            return new ResponseEntity<>("You are Not Authenticated to Perform this Operation", HttpStatus.UNAUTHORIZED);
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "You are Not Authenticated to Perform this Operation");
         }
     }
 }

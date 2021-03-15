@@ -17,6 +17,8 @@ public class CategoryModel {
     @Id
     String categoryId;
 
+    String categoryIcon;
+
     String storeId;
 
     String subDomain;

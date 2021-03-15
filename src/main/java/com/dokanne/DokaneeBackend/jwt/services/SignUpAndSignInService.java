@@ -1,6 +1,6 @@
 package com.dokanne.DokaneeBackend.jwt.services;
 
-import com.dokanne.DokaneeBackend.dto.response.MassageResponse;
+import com.dokanne.DokaneeBackend.dto.response.MessageResponse;
 import com.dokanne.DokaneeBackend.jwt.dto.request.LoginForm;
 import com.dokanne.DokaneeBackend.jwt.dto.request.PassChangeRequest;
 import com.dokanne.DokaneeBackend.jwt.dto.request.SignUpForm;
@@ -182,22 +182,22 @@ public class SignUpAndSignInService {
 
         if(userOptional.isPresent()){
             User user = userOptional.get();
-            if(encoder.matches(passChangeRequest.getOldPass(), user.getPassword())){
+            if(encoder.matches(passChangeRequest.getOldPass(), user.getPassword())) {
                 user.setPassword(encoder.encode(passChangeRequest.getNewPass()));
 
                 userRepository.save(user);
 
-                MassageResponse massageResponse = new MassageResponse("Pass Changed Successful",200);
-                return new ResponseEntity(massageResponse,HttpStatus.OK);
+                MessageResponse messageResponse = new MessageResponse("Pass Changed Successful", 200);
+                return new ResponseEntity(messageResponse, HttpStatus.OK);
             }
             else {
-                MassageResponse massageResponse = new MassageResponse("Old Pass Not Matched",400);
-                return new ResponseEntity(massageResponse,HttpStatus.BAD_REQUEST);
+                MessageResponse messageResponse = new MessageResponse("Old Pass Not Matched", 400);
+                return new ResponseEntity(messageResponse, HttpStatus.BAD_REQUEST);
             }
         }
         else {
-            MassageResponse massageResponse = new MassageResponse("No User Found",204);
-            return new ResponseEntity(massageResponse,HttpStatus.NO_CONTENT);
+            MessageResponse messageResponse = new MessageResponse("No User Found", 204);
+            return new ResponseEntity(messageResponse, HttpStatus.NO_CONTENT);
         }
     }
 

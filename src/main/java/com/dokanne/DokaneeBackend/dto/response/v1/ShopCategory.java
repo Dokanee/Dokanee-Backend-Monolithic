@@ -17,6 +17,8 @@ public class ShopCategory {
 
     String slug;
 
+    String categoryIcon;
+
     List<ShopSubCategory> subCategoryList;
 
 }

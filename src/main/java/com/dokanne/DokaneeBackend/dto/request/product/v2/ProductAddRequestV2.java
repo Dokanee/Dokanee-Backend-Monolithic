@@ -14,6 +14,8 @@ public class ProductAddRequestV2 {
 
     private String productName;
 
+    private String badge;
+
     private String categoryId;
 
     private String categorySlug;
@@ -44,7 +46,7 @@ public class ProductAddRequestV2 {
 
     private Integer regularPrice;
 
-    private Integer vat;
+    private Double vat;
 
     private String sku;
 

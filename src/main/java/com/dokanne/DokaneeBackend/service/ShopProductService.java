@@ -60,12 +60,13 @@ public class ShopProductService {
 
         for (ProductModelV2 productModelV2 : productModelV2List) {
             ShopProductModelResponse shopProductModelResponse = new ShopProductModelResponse(productModelV2.getProductName(),
-                    productModelV2.getCategorySlug(), productModelV2.getSubCategorySlug(), productModelV2.getDokaneeCategory(),
-                    productModelV2.getSubDomain(), productModelV2.getSlug(), productModelV2.getSize(), productModelV2.getColor(),
-                    productModelV2.getInStock(), productModelV2.getIsFeatured(), productModelV2.getCurrentPrice(),
-                    productModelV2.getRegularPrice(), productModelV2.getVat(), productModelV2.getSku(), productModelV2.getMetaTag(),
-                    productModelV2.getImages(), productModelV2.getDescription()
-            );
+                    productModelV2.getCreationTime(), productModelV2.getBadge(), productModelV2.getCategorySlug(),
+                    productModelV2.getSubCategorySlug(), productModelV2.getDokaneeCategory(), productModelV2.getSubDomain(),
+                    productModelV2.getSlug(), productModelV2.getSize(), productModelV2.getColor(), productModelV2.getInStock(),
+                    productModelV2.getIsFeatured(), productModelV2.getCurrentPrice(), productModelV2.getRegularPrice(),
+                    productModelV2.getVat(), productModelV2.getSku(), productModelV2.getMetaTag(), productModelV2.getImages(),
+                    productModelV2.getDescription());
+
             shopProductModelResponseList.add(shopProductModelResponse);
         }
 
@@ -94,12 +95,12 @@ public class ShopProductService {
                 List<ShopSubCategory> shopSubCategories = new ArrayList<>();
                 for (SubCategoryModel subCategoryModel : categoryModel.getSubCategoryModels()) {
                     ShopSubCategory shopSubCategory = new ShopSubCategory(subCategoryModel.getSubCategoryName(),
-                            subCategoryModel.getSlug());
+                            subCategoryModel.getSubCategoryIcon(), subCategoryModel.getSlug());
                     shopSubCategories.add(shopSubCategory);
                 }
 
                 ShopCategory shopCategory = new ShopCategory(categoryModel.getCategoryName(),
-                        categoryModel.getSlug(), shopSubCategories);
+                        categoryModel.getSlug(), categoryModel.getCategoryIcon(), shopSubCategories);
 
                 shopCategories.add(shopCategory);
             }
