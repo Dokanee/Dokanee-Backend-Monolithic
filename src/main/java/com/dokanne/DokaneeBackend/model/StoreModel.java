@@ -2,10 +2,8 @@ package com.dokanne.DokaneeBackend.model;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 @RequiredArgsConstructor
 @NoArgsConstructor
@@ -49,9 +47,9 @@ public class StoreModel {
     @NonNull
     private String storeCategory;
 
-    private String templateId;
-
-    private String storeImage;
+    @ElementCollection
+    @CollectionTable
+    private List<String> storeImages;
 
     private boolean havePhysicalStore;
 

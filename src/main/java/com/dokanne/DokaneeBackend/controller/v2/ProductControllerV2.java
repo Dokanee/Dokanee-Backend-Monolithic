@@ -2,6 +2,7 @@ package com.dokanne.DokaneeBackend.controller.v2;
 
 import com.dokanne.DokaneeBackend.dto.ApiResponse;
 import com.dokanne.DokaneeBackend.dto.request.product.v2.ProductAddRequestV2;
+import com.dokanne.DokaneeBackend.dto.response.IdResponse;
 import com.dokanne.DokaneeBackend.dto.response.MessageIdResponse;
 import com.dokanne.DokaneeBackend.dto.response.v2.ProductPageResponseV2;
 import com.dokanne.DokaneeBackend.service.v2.ProductServiceV2;
@@ -28,27 +29,26 @@ public class ProductControllerV2 {
     }
 
     @GetMapping("/")
-    public ResponseEntity<ProductPageResponseV2> getProductList(@RequestHeader String storeId,
-                                                                @RequestParam(defaultValue = "0") int pageNo,
-                                                                @RequestParam(defaultValue = "20") int pageSize,
-                                                                @RequestParam(required = false) String categoryId,
-                                                                @RequestParam(required = false) String subCategoryId,
-                                                                @RequestParam(required = false) String productName,
-                                                                @RequestParam(required = false) String priceSort
+    public ResponseEntity<ApiResponse<ProductPageResponseV2>> getProductList(@RequestHeader String storeId,
+                                                                             @RequestParam(defaultValue = "0") int pageNo,
+                                                                             @RequestParam(defaultValue = "20") int pageSize,
+                                                                             @RequestParam(required = false) String categoryId,
+                                                                             @RequestParam(required = false) String subCategoryId,
+                                                                             @RequestParam(required = false) String productName,
+                                                                             @RequestParam(required = false) String priceSort
     ) {
         return productServiceV2.getProductList(pageNo, pageSize, storeId, categoryId, subCategoryId, productName, priceSort);
     }
 
-    @GetMapping("/test")
-    public ResponseEntity<ApiResponse<ProductPageResponseV2>> getProductListTest(@RequestHeader String storeId,
-                                                                                 @RequestParam(defaultValue = "0") int pageNo,
-                                                                                 @RequestParam(defaultValue = "20") int pageSize,
-                                                                                 @RequestParam(required = false) String categoryId,
-                                                                                 @RequestParam(required = false) String subCategoryId,
-                                                                                 @RequestParam(required = false) String productName,
-                                                                                 @RequestParam(required = false) String priceSort
-    ) {
-        return productServiceV2.getProductListTest(pageNo, pageSize, storeId, categoryId, subCategoryId, productName, priceSort);
+    @PutMapping("/{productId}")
+    public ResponseEntity<ApiResponse<IdResponse>> editProduct(@RequestBody ProductAddRequestV2 productAddRequestV2,
+                                                               @RequestHeader String storeId, @PathVariable String productId) {
+        return productServiceV2.editProduct(productAddRequestV2, storeId, productId);
+    }
+
+    @DeleteMapping("/{productId}")
+    public ResponseEntity<ApiResponse<IdResponse>> deleteProduct(@RequestHeader String storeId, @PathVariable String productId) {
+        return productServiceV2.deleteProduct(storeId, productId);
     }
 
     @PostMapping(value = "/{productId}/image")
@@ -57,16 +57,5 @@ public class ProductControllerV2 {
         return productServiceV2.uploadImage(aFile, productId, storeId);
     }
 
-//, @RequestHeader(name = "Authorization") String token
 
-//    @GetMapping("/product")
-//    public ResponseEntity<ProductResponse> getProductByCategory(
-//            @RequestParam(required = true) String categoryId,
-//            @RequestHeader String storeId,
-//            @RequestParam(defaultValue = "0", required = false) int pageNo,
-//            @RequestParam(defaultValue = "100000", required = false) int pageSize
-//    ) {
-//
-//        return productServiceV2.getProductByCategory(categoryId, storeId, pageNo, pageSize);
-//    }
 }

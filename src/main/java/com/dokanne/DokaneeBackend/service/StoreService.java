@@ -1,6 +1,5 @@
 package com.dokanne.DokaneeBackend.service;
 
-import com.dokanne.DokaneeBackend.Util.UserUtils;
 import com.dokanne.DokaneeBackend.dto.ApiResponse;
 import com.dokanne.DokaneeBackend.dto.request.StoreRequest;
 import com.dokanne.DokaneeBackend.dto.response.IdResponse;
@@ -8,16 +7,17 @@ import com.dokanne.DokaneeBackend.dto.response.StoreInfoResponse;
 import com.dokanne.DokaneeBackend.jwt.dto.response.OwnerProfileResponse;
 import com.dokanne.DokaneeBackend.jwt.model.Role;
 import com.dokanne.DokaneeBackend.model.StoreModel;
+import com.dokanne.DokaneeBackend.model.TemplateModel;
 import com.dokanne.DokaneeBackend.model.product.v1.ProfileModel;
 import com.dokanne.DokaneeBackend.repository.ProfileRepository;
 import com.dokanne.DokaneeBackend.repository.StoreRepository;
+import com.dokanne.DokaneeBackend.repository.TemplateRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.*;
@@ -26,10 +26,10 @@ import java.util.*;
 @Service
 public class StoreService {
 
-
     private final ProfileRepository profileRepository;
     private final StoreRepository storeRepository;
     private final ProfileRepository opRepo;
+    private final TemplateRepository templateRepository;
 
     public OwnerProfileResponse getAuthUserInfo() {
 
@@ -92,6 +92,14 @@ public class StoreService {
 
         profileRepository.save(profileModel);
 
+        TemplateModel templateModel = TemplateModel.builder()
+                .id(UUID.randomUUID().toString())
+                .storeId(id)
+                .subDomain(storeModel.getSubDomainName())
+                .build();
+
+        templateRepository.save(templateModel);
+
         return new ResponseEntity<>(new ApiResponse<>(201, "Store Create Successful",
                 new IdResponse(storeModel.getStoreId())), HttpStatus.CREATED);
     }
@@ -110,12 +118,12 @@ public class StoreService {
                     storeModel.getStoreInfo(), storeModel.getStoreLogo(), storeModel.getFacebookLink(), storeModel.getYoutubeLink(),
                     storeModel.getGoogleMapLink(), storeModel.getOwnerName(), storeModel.getDomainName(), storeModel.getSubDomainName(),
                     storeModel.getStoreCategory(), storeModel.isHavePhysicalStore(), storeModel.getAddress(),
-                    storeModel.getUpzila(), storeModel.getZila(), storeModel.getDivision());
+                    storeModel.getUpzila(), storeModel.getZila(), storeModel.getDivision(), storeModel.getStoreImages());
 
             storeInfoResponseList.add(storeInfoResponse);
 
         }
-        return new ResponseEntity<>(new ApiResponse<>(200, "Ok.\nStore Found", storeInfoResponseList), HttpStatus.OK);
+        return new ResponseEntity<>(new ApiResponse<>(200, "Store Found", storeInfoResponseList), HttpStatus.OK);
 
     }
 
@@ -210,59 +218,6 @@ public class StoreService {
         }
     }
 
-    public ResponseEntity<ApiResponse<String>> uploadStoreLogo(MultipartFile aFile, String storeId) {
-        List<String> storeList = getAuthUserInfo().getStoreIds();
-        boolean storeIdAuth = storeList.contains(storeId);
 
-        if (storeIdAuth) {
-            Optional<StoreModel> storeModelOptional = storeRepository.findById(storeId);
-
-            if (storeModelOptional.isPresent()) {
-                StoreModel storeModel = storeModelOptional.get();
-                MultipartFile[] multipartFiles = new MultipartFile[1];
-                multipartFiles[0] = aFile;
-                List<String> logoLinks = new ArrayList<>();
-
-                try {
-                    logoLinks = UserUtils.uploadImage(multipartFiles);
-                } catch (Exception e) {
-                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.toString());
-                }
-
-                storeModel.setStoreLogo(logoLinks.get(0));
-                storeRepository.save(storeModel);
-
-                return new ResponseEntity<>(new ApiResponse<>(200, "Store Logo Upload SuccessFull Successful",
-                        logoLinks.get(0)), HttpStatus.OK);
-            } else {
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No Store Found");
-            }
-        } else {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "You Are Not Permitted To Do This Operation. Your are not Authorized on this store.");
-        }
-    }
-
-    public ResponseEntity<ApiResponse<String>> deleteStoreLogo(String storeId) {
-        List<String> storeList = getAuthUserInfo().getStoreIds();
-        boolean storeIdAuth = storeList.contains(storeId);
-
-        if (storeIdAuth) {
-            Optional<StoreModel> storeModelOptional = storeRepository.findById(storeId);
-
-            if (storeModelOptional.isPresent()) {
-                StoreModel storeModel = storeModelOptional.get();
-                storeModel.setStoreLogo(null);
-
-                storeRepository.save(storeModel);
-
-                return new ResponseEntity<>(new ApiResponse<>(200, "Store Logo Delete SuccessFull Successful",
-                        null), HttpStatus.OK);
-            } else {
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No Store Found");
-            }
-        } else {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "You Are Not Permitted To Do This Operation. Your are not Authorized on this store.");
-        }
-    }
 }
 

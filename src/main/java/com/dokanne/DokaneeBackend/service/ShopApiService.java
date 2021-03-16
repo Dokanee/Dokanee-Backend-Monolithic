@@ -1,12 +1,17 @@
 package com.dokanne.DokaneeBackend.service;
 
+import com.dokanne.DokaneeBackend.dto.ApiResponse;
+import com.dokanne.DokaneeBackend.dto.response.shopResponse.ShopStoreResponse;
+import com.dokanne.DokaneeBackend.dto.response.shopResponse.ShopTemplateResponse;
 import com.dokanne.DokaneeBackend.dto.response.v1.*;
 import com.dokanne.DokaneeBackend.model.CategoryModel;
 import com.dokanne.DokaneeBackend.model.StoreModel;
 import com.dokanne.DokaneeBackend.model.SubCategoryModel;
+import com.dokanne.DokaneeBackend.model.TemplateModel;
 import com.dokanne.DokaneeBackend.model.product.v2.ProductModelV2;
 import com.dokanne.DokaneeBackend.repository.CategoryRepository;
 import com.dokanne.DokaneeBackend.repository.StoreRepository;
+import com.dokanne.DokaneeBackend.repository.TemplateRepository;
 import com.dokanne.DokaneeBackend.repository.v2.ProductRepositoryV2;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.*;
@@ -21,11 +26,12 @@ import java.util.Optional;
 
 @AllArgsConstructor
 @Service
-public class ShopProductService {
+public class ShopApiService {
 
     private final CategoryRepository categoryRepository;
     private final StoreRepository storeRepository;
     private final ProductRepositoryV2 productRepositoryV2;
+    private final TemplateRepository templateRepository;
 
     public ResponseEntity<ShopProductListResponse> getProductList(int pageNo, int pageSize, String subDomain, String categorySlug, String subCategorySlug, String productName, String priceSort) {
         ProductModelV2 example = ProductModelV2.builder()
@@ -111,6 +117,39 @@ public class ShopProductService {
         } else {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Store Not Found");
         }
+    }
 
+    public ResponseEntity<ApiResponse<ShopTemplateResponse>> getTemplateInfo(String subDomain) {
+        Optional<TemplateModel> templateModelOptional = templateRepository.findBySubDomain(subDomain);
+
+        if (templateModelOptional.isPresent()) {
+            TemplateModel templateModel = templateModelOptional.get();
+
+            ShopTemplateResponse shopTemplateResponse = new ShopTemplateResponse(templateModel.getSubDomain(), templateModel.getTemplateId(),
+                    templateModel.getPrimaryColor(), templateModel.getSecondaryColor(), templateModel.getSliderImages());
+
+            return new ResponseEntity<>(new ApiResponse<>(200, "Template Info Found", shopTemplateResponse), HttpStatus.OK);
+        } else {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No Store Found");
+        }
+    }
+
+    public ResponseEntity<ApiResponse<ShopStoreResponse>> getStoreInfo(String subDomain) {
+        Optional<StoreModel> storeModelOptional = storeRepository.findBySubDomainName(subDomain);
+
+        if (storeModelOptional.isPresent()) {
+            StoreModel storeModel = storeModelOptional.get();
+
+            ShopStoreResponse shopStoreResponse = new ShopStoreResponse(storeModel.getStoreName(), storeModel.getStoreInfo(),
+                    storeModel.getOwnerName(), storeModel.getStoreLogo(), storeModel.getFacebookLink(), storeModel.getYoutubeLink(),
+                    storeModel.getGoogleMapLink(), storeModel.getDomainName(), storeModel.getSubDomainName(), storeModel.getStoreCategory(),
+                    storeModel.getStoreImages(), storeModel.isHavePhysicalStore(), storeModel.isApproved(), storeModel.isVerified(),
+                    storeModel.getAddress(), storeModel.getUpzila(), storeModel.getZila(), storeModel.getDivision());
+
+
+            return new ResponseEntity<>(new ApiResponse<>(200, "Template Info Found", shopStoreResponse), HttpStatus.OK);
+        } else {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No Store Found");
+        }
     }
 }

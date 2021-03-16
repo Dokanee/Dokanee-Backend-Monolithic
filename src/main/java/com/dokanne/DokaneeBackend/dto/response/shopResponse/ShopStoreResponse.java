@@ -1,22 +1,23 @@
-package com.dokanne.DokaneeBackend.dto.response;
+package com.dokanne.DokaneeBackend.dto.response.shopResponse;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
-@AllArgsConstructor
-
-
-public class StoreInfoResponse {
-    private String storeId;
+public class ShopStoreResponse {
 
     private String storeName;
 
     private String storeInfo;
+
+    private String ownerName;
 
     private String storeLogo;
 
@@ -26,15 +27,19 @@ public class StoreInfoResponse {
 
     private String googleMapLink;
 
-    private String ownerName;
-
     private String domainName;
 
     private String subDomainName;
 
     private String storeCategory;
 
+    private List<String> storeImages;
+
     private boolean havePhysicalStore;
+
+    private boolean isApproved;
+
+    private boolean isVerified;
 
     private String address;
 
@@ -43,6 +48,4 @@ public class StoreInfoResponse {
     private String zila;
 
     private String division;
-
-    private List<String> storeImages;
 }

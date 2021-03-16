@@ -5,6 +5,7 @@ import com.dokanne.DokaneeBackend.dto.request.StoreRequest;
 import com.dokanne.DokaneeBackend.dto.response.IdResponse;
 import com.dokanne.DokaneeBackend.dto.response.StoreInfoResponse;
 import com.dokanne.DokaneeBackend.model.StoreModel;
+import com.dokanne.DokaneeBackend.service.StoreImageService;
 import com.dokanne.DokaneeBackend.service.StoreService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -22,6 +23,7 @@ import java.util.List;
 public class StoreController {
 
     private final StoreService storeService;
+    private final StoreImageService storeImageService;
 
     @PostMapping("/store")
     public ResponseEntity<ApiResponse<IdResponse>> createStore(@RequestBody StoreRequest storeRequest) {
@@ -41,12 +43,12 @@ public class StoreController {
     @PostMapping("/store/logo/{storeId}")
     public ResponseEntity<ApiResponse<String>> uploadStoreLogo(@RequestParam(value = "image", required = true)
                                                                        MultipartFile aFile, @PathVariable String storeId) {
-        return storeService.uploadStoreLogo(aFile, storeId);
+        return storeImageService.uploadStoreLogo(aFile, storeId);
     }
 
     @DeleteMapping("/store/logo/{storeId}")
     public ResponseEntity<ApiResponse<String>> deleteStoreLogo(@PathVariable String storeId) {
-        return storeService.deleteStoreLogo(storeId);
+        return storeImageService.deleteStoreLogo(storeId);
     }
 
     @DeleteMapping("/store/{storeId}")
@@ -70,5 +72,15 @@ public class StoreController {
         return storeService.getStoreInfoBySubDomain(subDomain);
     }
 
+    @PostMapping("/store/{storeId}/image/")
+    public ResponseEntity<ApiResponse<List<String>>> uploadStoreImage(@PathVariable String storeId,
+                                                                      @RequestParam(value = "image", required = true) MultipartFile[] aFile) {
+        return storeImageService.uploadStoreImages(storeId, aFile);
+    }
+
+    @DeleteMapping("/store/{storeId}/image/")
+    public ResponseEntity<ApiResponse<List<String>>> deleteStoreImage(@PathVariable String storeId, @RequestBody List<String> imageUrls) {
+        return storeImageService.deleteStoreImage(storeId, imageUrls);
+    }
 
 }
