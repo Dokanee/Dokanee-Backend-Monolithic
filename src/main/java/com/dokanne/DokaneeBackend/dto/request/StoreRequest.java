@@ -18,6 +18,12 @@ public class StoreRequest {
 
     private String subDomainName;
 
+    private String facebookLink;
+
+    private String youtubeLink;
+
+    private String googleMapLink;
+
     private String storeCategory;
 
     private boolean havePhysicalStore;

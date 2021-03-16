@@ -30,6 +30,17 @@ public class StoreModel {
     @NonNull
     private String ownerName;
 
+    private String storeLogo;
+
+    @NonNull
+    private String facebookLink;
+
+    @NonNull
+    private String youtubeLink;
+
+    @NonNull
+    private String googleMapLink;
+
     @Column(unique = true)
     private String domainName;
     @Column(unique = true)

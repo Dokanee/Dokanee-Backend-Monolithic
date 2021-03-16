@@ -16,6 +16,14 @@ public class StoreInfoResponse {
 
     private String storeInfo;
 
+    private String storeLogo;
+
+    private String facebookLink;
+
+    private String youtubeLink;
+
+    private String googleMapLink;
+
     private String ownerName;
 
     private String domainName;
