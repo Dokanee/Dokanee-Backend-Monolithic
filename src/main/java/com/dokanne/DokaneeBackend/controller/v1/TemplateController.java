@@ -31,7 +31,8 @@ public class TemplateController {
     }
 
     @PutMapping
-    public ResponseEntity<ApiResponse<IdResponse>> updateTemplateInfo(@PathVariable String storeId, @RequestBody TemplateRequest templateRequest) {
+    public ResponseEntity<ApiResponse<IdResponse>> updateTemplateInfo(@PathVariable String storeId,
+                                                                      @RequestBody TemplateRequest templateRequest) {
         return templateService.editTemplate(storeId, templateRequest);
     }
 

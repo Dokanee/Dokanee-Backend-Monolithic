@@ -72,7 +72,6 @@ public class TemplateService {
                 TemplateModel templateModel = templateModelOptional.get();
                 templateModel.setPrimaryColor(templateRequest.getPrimaryColor());
                 templateModel.setSecondaryColor(templateRequest.getSecondaryColor());
-                templateModel.setTemplateId(templateRequest.getTemplateId());
 
                 templateRepository.save(templateModel);
 

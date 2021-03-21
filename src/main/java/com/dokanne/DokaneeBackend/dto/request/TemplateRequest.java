@@ -12,8 +12,6 @@ import lombok.Setter;
 
 public class TemplateRequest {
 
-    private String templateId;
-
     private String primaryColor;
 
     private String secondaryColor;
