@@ -73,11 +73,6 @@ public class StoreService {
     public ResponseEntity<ApiResponse<IdResponse>> createStore(StoreRequest storeRequest) {
 
         String id = UUID.randomUUID().toString();
-//        StoreModel storeModel = new StoreModel(id, getAuthUserInfo().getOwnerId(), storeRequest.getStoreName(),
-//                storeRequest.getStoreInfo(), (getAuthUserInfo().getFirstName() + " " + getAuthUserInfo().getLastName()),
-//                storeRequest.getFacebookLink(), storeRequest.getYoutubeLink(), storeRequest.getGoogleMapLink(),
-//                storeRequest.getSubDomainName(), storeRequest.getStoreCategory(), storeRequest.getAddress(),
-//                storeRequest.getUpzila(), storeRequest.getZila(), storeRequest.getDivision());
 
         StoreModel storeModel = StoreModel.builder()
                 .storeId(id).ownerId(getAuthUserInfo().getOwnerId()).storeName(storeRequest.getStoreName())
@@ -88,9 +83,6 @@ public class StoreService {
                 .storeCategory(storeRequest.getStoreCategory()).address(storeRequest.getAddress())
                 .upzila(storeRequest.getUpzila()).zila(storeRequest.getZila()).division(storeRequest.getDivision())
                 .build();
-
-
-
 
         storeModel.setHavePhysicalStore(storeRequest.isHavePhysicalStore());
 

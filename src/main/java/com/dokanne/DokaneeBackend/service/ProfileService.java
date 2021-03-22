@@ -1,27 +1,24 @@
 package com.dokanne.DokaneeBackend.service;
 
-import com.cloudinary.Cloudinary;
-import com.cloudinary.utils.ObjectUtils;
+import com.dokanne.DokaneeBackend.Util.UserUtils;
+import com.dokanne.DokaneeBackend.dto.ApiResponse;
 import com.dokanne.DokaneeBackend.dto.request.ProfileRequest;
 import com.dokanne.DokaneeBackend.dto.response.ProfileResponse;
 import com.dokanne.DokaneeBackend.jwt.dto.response.UserResponse;
+import com.dokanne.DokaneeBackend.jwt.security.jwt.JwtProvider;
 import com.dokanne.DokaneeBackend.jwt.services.SignUpAndSignInService;
 import com.dokanne.DokaneeBackend.model.StoreIds;
 import com.dokanne.DokaneeBackend.model.product.v1.ProfileModel;
 import com.dokanne.DokaneeBackend.repository.ProfileRepository;
 import lombok.AllArgsConstructor;
-import org.cloudinary.json.JSONObject;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 @Service
@@ -30,6 +27,7 @@ public class ProfileService {
 
     private final SignUpAndSignInService signUpAndSignInService;
     private final ProfileRepository profileRepository;
+    private final JwtProvider jwtProvider;
 
     public ResponseEntity<Object> getUserProfile() {
         ResponseEntity<UserResponse> userResEntity = signUpAndSignInService.getLoggedAuthUser();
@@ -102,33 +100,19 @@ public class ProfileService {
 
     }
 
-    public ResponseEntity<String> uploadImage(MultipartFile aFile) {
-        Cloudinary c = new Cloudinary(ObjectUtils.asMap(
-                "cloud_name", "to-let-app",
-                "api_key", "111257839862595",
-                "api_secret", "7H1QY2G1W6FVQQ3envantRuJz4c"));
+    public ResponseEntity<ApiResponse<String>> uploadImage(MultipartFile aFile, String token) throws Exception {
+        String userName = jwtProvider.getUserNameFromJwt(token);
 
-        try {
-            ProfileModel profileModel = profileRepository.findByUserName(signUpAndSignInService.getLoggedAuthUser().getBody().getUsername());
+        ProfileModel profileModel = profileRepository.findByUserName(userName);
+        MultipartFile[] mp = new MultipartFile[1];
+        mp[0] = aFile;
 
-            System.out.println(1);
-            File f = Files.createTempFile("temp", aFile.getOriginalFilename()).toFile();
-            System.out.println(2);
-            aFile.transferTo(f);
-            System.out.println(3);
-            Map response = c.uploader().upload(f, ObjectUtils.emptyMap());
-            System.out.println(4);
-            JSONObject json = new JSONObject(response);
-            System.out.println(5);
-            String url = json.getString("url");
-            System.out.println(6);
-            profileModel.setPhotoLink(url);
+        List<String> urls = UserUtils.uploadImage(mp);
+        profileModel.setPhotoLink(urls.get(0));
+        profileRepository.save(profileModel);
 
-            profileRepository.save(profileModel);
+        return new ResponseEntity<>(new ApiResponse<>(201, "Image Upload Successful", urls.get(0)), HttpStatus.OK);
 
-            return new ResponseEntity<>("OK", HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<String>(e.toString(), HttpStatus.BAD_REQUEST);
-        }
     }
 }
+

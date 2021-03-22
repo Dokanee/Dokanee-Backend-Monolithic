@@ -6,12 +6,15 @@ import com.dokanne.DokaneeBackend.dto.response.ShopStoreInfoResponse;
 import com.dokanne.DokaneeBackend.dto.response.shopResponse.ShopStoreResponse;
 import com.dokanne.DokaneeBackend.dto.response.shopResponse.ShopTemplateResponse;
 import com.dokanne.DokaneeBackend.dto.response.v1.*;
+import com.dokanne.DokaneeBackend.jwt.repository.UserRepository;
 import com.dokanne.DokaneeBackend.model.CategoryModel;
 import com.dokanne.DokaneeBackend.model.StoreModel;
 import com.dokanne.DokaneeBackend.model.SubCategoryModel;
 import com.dokanne.DokaneeBackend.model.TemplateModel;
+import com.dokanne.DokaneeBackend.model.product.v1.ProfileModel;
 import com.dokanne.DokaneeBackend.model.product.v2.ProductModelV2;
 import com.dokanne.DokaneeBackend.repository.CategoryRepository;
+import com.dokanne.DokaneeBackend.repository.ProfileRepository;
 import com.dokanne.DokaneeBackend.repository.StoreRepository;
 import com.dokanne.DokaneeBackend.repository.TemplateRepository;
 import com.dokanne.DokaneeBackend.repository.v2.ProductRepositoryV2;
@@ -34,6 +37,8 @@ public class ShopApiService {
     private final StoreRepository storeRepository;
     private final ProductRepositoryV2 productRepositoryV2;
     private final TemplateRepository templateRepository;
+    private final UserRepository userRepository;
+    private final ProfileRepository profileRepository;
 
     public ResponseEntity<ShopProductListResponse> getProductList(int pageNo, int pageSize, String subDomain, String categorySlug, String subCategorySlug, String productName, String priceSort) {
         ProductModelV2 example = ProductModelV2.builder()
@@ -142,14 +147,27 @@ public class ShopApiService {
         if (storeModelOptional.isPresent()) {
             StoreModel storeModel = storeModelOptional.get();
 
-            ShopStoreResponse shopStoreResponse = new ShopStoreResponse(storeModel.getStoreName(), storeModel.getStoreInfo(),
-                    storeModel.getOwnerName(), storeModel.getStoreLogo(), storeModel.getFacebookLink(), storeModel.getYoutubeLink(),
-                    storeModel.getGoogleMapLink(), storeModel.getDomainName(), storeModel.getSubDomainName(), storeModel.getStoreCategory(),
-                    storeModel.getStoreImages(), storeModel.isHavePhysicalStore(), storeModel.isApproved(), storeModel.isVerified(),
-                    storeModel.getAddress(), storeModel.getUpzila(), storeModel.getZila(), storeModel.getDivision());
+            Optional<ProfileModel> profileModelOptional = profileRepository.findById(storeModel.getOwnerId());
+
+            if (profileModelOptional.isPresent()) {
+                ProfileModel profileModel = profileModelOptional.get();
 
 
-            return new ResponseEntity<>(new ApiResponse<>(200, "Template Info Found", shopStoreResponse), HttpStatus.OK);
+                ShopStoreResponse shopStoreResponse = new ShopStoreResponse(storeModel.getStoreName(), storeModel.getStoreInfo(),
+                        storeModel.getOwnerName(), profileModel.getPhotoLink(), profileModel.getPhone(), profileModel.getEmail(),
+                        storeModel.getStoreLogo(), storeModel.getFacebookLink(), storeModel.getYoutubeLink(),
+                        storeModel.getGoogleMapLink(), storeModel.getDomainName(), storeModel.getSubDomainName(),
+                        storeModel.getStoreCategory(), storeModel.getStoreImages(), storeModel.isHavePhysicalStore(),
+                        storeModel.isApproved(), storeModel.isVerified(), storeModel.getAddress(), storeModel.getUpzila(),
+                        storeModel.getZila(), storeModel.getDivision());
+
+
+                return new ResponseEntity<>(new ApiResponse<>(200, "Template Info Found", shopStoreResponse), HttpStatus.OK);
+            } else {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Profile Not Found");
+            }
+
+
         } else {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No Store Found");
         }
@@ -163,19 +181,16 @@ public class ShopApiService {
                 .zila(zila)
                 .build();
 
-        System.out.println(example.getStoreName());
-        System.out.println(example.getStoreCategory());
-        System.out.println(example.getZila());
-
         Pageable pageable = PageRequest.of(pageNo, pageSize);
 
         ExampleMatcher matcher = ExampleMatcher
                 .matchingAll()
+                .withIgnorePaths("havePhysicalStore")
+                .withIgnorePaths("isApproved")
+                .withIgnorePaths("isApproved")
                 .withMatcher("storeName", ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase());
 
-//        Page<StoreModel> storeModelPage = storeRepository.findAll(Example.of(example, matcher), pageable);
         Page<StoreModel> storeModelPage = storeRepository.findAll(Example.of(example, matcher), pageable);
-        System.out.println(storeModelPage.getTotalElements());
 
         List<ShopStoreInfoResponse> shopStoreInfoResponseList = new ArrayList<>();
 

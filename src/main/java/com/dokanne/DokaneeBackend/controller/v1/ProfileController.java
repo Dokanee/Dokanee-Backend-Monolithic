@@ -1,5 +1,6 @@
 package com.dokanne.DokaneeBackend.controller.v1;
 
+import com.dokanne.DokaneeBackend.dto.ApiResponse;
 import com.dokanne.DokaneeBackend.dto.request.ProfileRequest;
 import com.dokanne.DokaneeBackend.jwt.dto.request.PassChangeRequest;
 import com.dokanne.DokaneeBackend.jwt.services.SignUpAndSignInService;
@@ -31,8 +32,9 @@ public class ProfileController {
     }
 
     @RequestMapping(value = "/image", method = RequestMethod.POST, consumes = {"multipart/form-data"})
-    public ResponseEntity postImage(@RequestParam(value = "image", required = true) MultipartFile aFile) {
-        return profileService.uploadImage(aFile);
+    public ResponseEntity<ApiResponse<String>> postImage(@RequestParam(value = "image", required = true) MultipartFile aFile,
+                                                         @RequestHeader(name = "Authorization", required = true) String token) throws Exception {
+        return profileService.uploadImage(aFile, token);
     }
 
     @PostMapping("/changePass")

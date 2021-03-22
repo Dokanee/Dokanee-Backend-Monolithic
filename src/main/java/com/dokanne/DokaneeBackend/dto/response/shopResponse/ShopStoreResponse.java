@@ -19,6 +19,12 @@ public class ShopStoreResponse {
 
     private String ownerName;
 
+    private String ownerPhotoLink;
+
+    private String ownerPhone;
+
+    private String ownerEmail;
+
     private String storeLogo;
 
     private String facebookLink;
