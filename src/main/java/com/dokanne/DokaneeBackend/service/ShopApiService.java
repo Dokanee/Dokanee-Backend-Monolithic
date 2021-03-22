@@ -1,6 +1,8 @@
 package com.dokanne.DokaneeBackend.service;
 
 import com.dokanne.DokaneeBackend.dto.ApiResponse;
+import com.dokanne.DokaneeBackend.dto.response.PaginationResponse;
+import com.dokanne.DokaneeBackend.dto.response.ShopStoreInfoResponse;
 import com.dokanne.DokaneeBackend.dto.response.shopResponse.ShopStoreResponse;
 import com.dokanne.DokaneeBackend.dto.response.shopResponse.ShopTemplateResponse;
 import com.dokanne.DokaneeBackend.dto.response.v1.*;
@@ -151,5 +153,49 @@ public class ShopApiService {
         } else {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No Store Found");
         }
+    }
+
+    public ResponseEntity<ApiResponse<PaginationResponse<List<ShopStoreInfoResponse>>>> getAllStore(int pageNo, int pageSize, String storeName, String storeCategory, String upzila, String zila) {
+        StoreModel example = StoreModel.builder()
+                .storeName(storeName)
+                .storeCategory(storeCategory)
+                .upzila(upzila)
+                .zila(zila)
+                .build();
+
+        System.out.println(example.getStoreName());
+        System.out.println(example.getStoreCategory());
+        System.out.println(example.getZila());
+
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+
+        ExampleMatcher matcher = ExampleMatcher
+                .matchingAll()
+                .withMatcher("storeName", ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase());
+
+//        Page<StoreModel> storeModelPage = storeRepository.findAll(Example.of(example, matcher), pageable);
+        Page<StoreModel> storeModelPage = storeRepository.findAll(Example.of(example, matcher), pageable);
+        System.out.println(storeModelPage.getTotalElements());
+
+        List<ShopStoreInfoResponse> shopStoreInfoResponseList = new ArrayList<>();
+
+        for (StoreModel storeModel : storeModelPage.getContent()) {
+            ShopStoreInfoResponse shopStoreInfoResponse = new ShopStoreInfoResponse(storeModel.getStoreName(), storeModel.getStoreLogo(),
+                    storeModel.getDomainName(), storeModel.getSubDomainName(), storeModel.getOwnerName(), storeModel.getStoreCategory(),
+                    storeModel.getAddress(), storeModel.getUpzila(), storeModel.getZila());
+
+            shopStoreInfoResponseList.add(shopStoreInfoResponse);
+        }
+
+        PaginationResponse<List<ShopStoreInfoResponse>> paginationResponse = new PaginationResponse<>(pageNo, pageSize,
+                storeModelPage.getTotalElements(), storeModelPage.getTotalPages(), storeModelPage.isLast(), shopStoreInfoResponseList);
+
+        if(storeModelPage.isEmpty()){
+            return new ResponseEntity<>(new ApiResponse<>(200, "No Store Found", paginationResponse), HttpStatus.OK);
+        }
+        else {
+            return new ResponseEntity<>(new ApiResponse<>(200, "Store Found", paginationResponse), HttpStatus.OK);
+        }
+
     }
 }

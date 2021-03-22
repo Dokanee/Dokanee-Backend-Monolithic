@@ -73,11 +73,25 @@ public class StoreService {
     public ResponseEntity<ApiResponse<IdResponse>> createStore(StoreRequest storeRequest) {
 
         String id = UUID.randomUUID().toString();
-        StoreModel storeModel = new StoreModel(id, getAuthUserInfo().getOwnerId(), storeRequest.getStoreName(),
-                storeRequest.getStoreInfo(), (getAuthUserInfo().getFirstName() + " " + getAuthUserInfo().getLastName()),
-                storeRequest.getFacebookLink(), storeRequest.getYoutubeLink(), storeRequest.getGoogleMapLink(),
-                storeRequest.getSubDomainName(), storeRequest.getStoreCategory(), storeRequest.getAddress(),
-                storeRequest.getUpzila(), storeRequest.getZila(), storeRequest.getDivision());
+//        StoreModel storeModel = new StoreModel(id, getAuthUserInfo().getOwnerId(), storeRequest.getStoreName(),
+//                storeRequest.getStoreInfo(), (getAuthUserInfo().getFirstName() + " " + getAuthUserInfo().getLastName()),
+//                storeRequest.getFacebookLink(), storeRequest.getYoutubeLink(), storeRequest.getGoogleMapLink(),
+//                storeRequest.getSubDomainName(), storeRequest.getStoreCategory(), storeRequest.getAddress(),
+//                storeRequest.getUpzila(), storeRequest.getZila(), storeRequest.getDivision());
+
+        StoreModel storeModel = StoreModel.builder()
+                .storeId(id).ownerId(getAuthUserInfo().getOwnerId()).storeName(storeRequest.getStoreName())
+                .storeInfo(storeRequest.getStoreInfo())
+                .ownerName(getAuthUserInfo().getFirstName() + " " + getAuthUserInfo().getLastName())
+                .facebookLink(storeRequest.getFacebookLink()).youtubeLink(storeRequest.getYoutubeLink())
+                .googleMapLink(storeRequest.getGoogleMapLink()).subDomainName(storeRequest.getSubDomainName())
+                .storeCategory(storeRequest.getStoreCategory()).address(storeRequest.getAddress())
+                .upzila(storeRequest.getUpzila()).zila(storeRequest.getZila()).division(storeRequest.getDivision())
+                .build();
+
+
+
+
         storeModel.setHavePhysicalStore(storeRequest.isHavePhysicalStore());
 
         storeRepository.save(storeModel);
@@ -110,7 +124,7 @@ public class StoreService {
         List<StoreInfoResponse> storeInfoResponseList = new ArrayList<>();
 
         if (storeModelListOptional.isEmpty()) {
-            return new ResponseEntity<>(new ApiResponse<>(204, "No Store Found", storeInfoResponseList), HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(new ApiResponse<>(200, "No Store Found", storeInfoResponseList), HttpStatus.OK);
         }
 
         for (StoreModel storeModel : storeModelListOptional) {

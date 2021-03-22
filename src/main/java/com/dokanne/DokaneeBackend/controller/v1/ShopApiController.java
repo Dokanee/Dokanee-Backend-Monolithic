@@ -1,6 +1,8 @@
 package com.dokanne.DokaneeBackend.controller.v1;
 
 import com.dokanne.DokaneeBackend.dto.ApiResponse;
+import com.dokanne.DokaneeBackend.dto.response.PaginationResponse;
+import com.dokanne.DokaneeBackend.dto.response.ShopStoreInfoResponse;
 import com.dokanne.DokaneeBackend.dto.response.shopResponse.ShopStoreResponse;
 import com.dokanne.DokaneeBackend.dto.response.shopResponse.ShopTemplateResponse;
 import com.dokanne.DokaneeBackend.dto.response.v1.ShopCategoryListResponse;
@@ -10,16 +12,18 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @AllArgsConstructor
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 
 @RestController
-@RequestMapping("/v1/shop/{subDomain}")
+@RequestMapping("/v1/shop")
 public class ShopApiController {
 
     private final ShopApiService shopApiService;
 
-    @GetMapping("/products")
+    @GetMapping("/{subDomain}/products")
     public ResponseEntity<ShopProductListResponse> getProductList(@PathVariable String subDomain,
                                                                   @RequestParam(defaultValue = "0") int pageNo,
                                                                   @RequestParam(defaultValue = "20") int pageSize,
@@ -31,19 +35,29 @@ public class ShopApiController {
         return shopApiService.getProductList(pageNo, pageSize, subDomain, categorySlug, subCategorySlug, productName, priceSort);
     }
 
-    @GetMapping("/categories")
+    @GetMapping("/{subDomain}/categories")
     public ResponseEntity<ShopCategoryListResponse> getCategoryList(@PathVariable String subDomain) {
         return shopApiService.getCategoryList(subDomain);
     }
 
-    @GetMapping("/template")
+    @GetMapping("/{subDomain}/template")
     public ResponseEntity<ApiResponse<ShopTemplateResponse>> getTemplateInfo(@PathVariable String subDomain) {
         return shopApiService.getTemplateInfo(subDomain);
     }
 
-    @GetMapping
+    @GetMapping("/{subDomain}")
     public ResponseEntity<ApiResponse<ShopStoreResponse>> getStoreInfo(@PathVariable String subDomain) {
         return shopApiService.getStoreInfo(subDomain);
+    }
+
+    @GetMapping
+    public ResponseEntity<ApiResponse<PaginationResponse<List<ShopStoreInfoResponse>>>> getAllStore(@RequestParam(defaultValue = "0") int pageNo,
+                                                                                                    @RequestParam(defaultValue = "20") int pageSize,
+                                                                                                    @RequestParam(required = false) String storeName,
+                                                                                                    @RequestParam(required = false) String storeCategory,
+                                                                                                    @RequestParam(required = false) String upzila,
+                                                                                                    @RequestParam(required = false) String zila) {
+        return shopApiService.getAllStore(pageNo, pageSize, storeName, storeCategory, upzila, zila);
     }
 
 }
