@@ -101,6 +101,7 @@ public class StoreImageService {
                 }
 
                 storeImageModel.addAll(imageLinks);
+                storeModel.setStoreImages(storeImageModel);
 
                 storeRepository.save(storeModel);
 
@@ -127,6 +128,7 @@ public class StoreImageService {
                 List<String> storeImageModel = storeModel.getStoreImages();
 
                 storeImageModel.removeAll(imageUrls);
+                storeModel.setStoreImages(storeImageModel);
 
                 storeRepository.save(storeModel);
 
