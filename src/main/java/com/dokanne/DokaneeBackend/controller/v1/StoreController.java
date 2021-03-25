@@ -52,7 +52,7 @@ public class StoreController {
     }
 
     @DeleteMapping("/store/{storeId}")
-    public ResponseEntity<ApiResponse<IdResponse>> deleteStoreInfo(@PathVariable String storeId) {
+    public ResponseEntity<ApiResponse<IdResponse>> deleteStore(@PathVariable String storeId) {
         return storeService.deleteStore(storeId);
     }
 

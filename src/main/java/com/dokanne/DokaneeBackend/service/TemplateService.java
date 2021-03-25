@@ -29,6 +29,12 @@ public class TemplateService {
 
     public String createTemplate(String storeId) {
         StoreModel storeModel = storeRepository.findById(storeId).get();
+
+        Optional<TemplateModel> template = templateRepository.findByStoreId(storeId);
+        if (template.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Template of this store is already available");
+        }
+
         String id = UUID.randomUUID().toString();
         TemplateModel templateModel = TemplateModel.builder()
                 .id(id)

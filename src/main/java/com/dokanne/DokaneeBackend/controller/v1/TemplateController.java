@@ -20,10 +20,10 @@ import java.util.List;
 public class TemplateController {
     private final TemplateService templateService;
 
-    //@PostMapping
-    //public String addTemplate(@PathVariable String storeId) {
-    //    return templateService.createTemplate(storeId);
-    //}
+    @PostMapping
+    public String addTemplate(@PathVariable String storeId) {
+        return templateService.createTemplate(storeId);
+    }
 
     @GetMapping
     public ResponseEntity<ApiResponse<TemplateModel>> getTemplateInfo(@PathVariable String storeId) {
