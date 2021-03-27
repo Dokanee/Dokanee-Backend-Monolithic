@@ -57,8 +57,8 @@ public class ShopApiController {
                                                                                                     @RequestParam(required = false) String storeCategory,
                                                                                                     @RequestParam(required = false) String upzila,
                                                                                                     @RequestParam(required = false) String zila,
-                                                                                                    @RequestParam(required = false) int nameSort,
-                                                                                                    @RequestParam(required = false) int creationTimeSort) {
+                                                                                                    @RequestParam(defaultValue = "0", required = false) int nameSort,
+                                                                                                    @RequestParam(defaultValue = "0", required = false) int creationTimeSort) {
         return shopApiService.getAllStore(pageNo, pageSize, storeName, storeCategory, upzila, zila, nameSort, creationTimeSort);
     }
 
