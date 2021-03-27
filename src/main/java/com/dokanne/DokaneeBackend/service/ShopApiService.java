@@ -173,7 +173,10 @@ public class ShopApiService {
         }
     }
 
-    public ResponseEntity<ApiResponse<PaginationResponse<List<ShopStoreInfoResponse>>>> getAllStore(int pageNo, int pageSize, String storeName, String storeCategory, String upzila, String zila) {
+    public ResponseEntity<ApiResponse<PaginationResponse<List<ShopStoreInfoResponse>>>>
+    getAllStore(int pageNo, int pageSize, String storeName, String storeCategory,
+                String upzila, String zila, int nameSort, int creationTimeSort) {
+
         StoreModel example = StoreModel.builder()
                 .storeName(storeName)
                 .storeCategory(storeCategory)
@@ -181,7 +184,22 @@ public class ShopApiService {
                 .zila(zila)
                 .build();
 
-        Pageable pageable = PageRequest.of(pageNo, pageSize);
+
+        List<Sort.Order> orders = new ArrayList<>();
+
+        if (nameSort == 1) {
+            orders.add(new Sort.Order(Sort.Direction.ASC, "storeName"));
+        } else if (nameSort == 2) {
+            orders.add(new Sort.Order(Sort.Direction.DESC, "storeName"));
+        }
+
+        if (creationTimeSort == 1) {
+            orders.add(new Sort.Order(Sort.Direction.ASC, "storeId"));
+        } else if (creationTimeSort == 2) {
+            orders.add(new Sort.Order(Sort.Direction.DESC, "storeId"));
+        }
+
+        Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.by(orders));
 
         ExampleMatcher matcher = ExampleMatcher
                 .matchingAll()
@@ -205,10 +223,9 @@ public class ShopApiService {
         PaginationResponse<List<ShopStoreInfoResponse>> paginationResponse = new PaginationResponse<>(pageNo, pageSize,
                 storeModelPage.getTotalElements(), storeModelPage.getTotalPages(), storeModelPage.isLast(), shopStoreInfoResponseList);
 
-        if(storeModelPage.isEmpty()){
+        if (storeModelPage.isEmpty()) {
             return new ResponseEntity<>(new ApiResponse<>(200, "No Store Found", paginationResponse), HttpStatus.OK);
-        }
-        else {
+        } else {
             return new ResponseEntity<>(new ApiResponse<>(200, "Store Found", paginationResponse), HttpStatus.OK);
         }
 
