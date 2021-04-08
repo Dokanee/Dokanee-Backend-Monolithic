@@ -31,4 +31,6 @@ public class TemplateModel {
     @ElementCollection
     @CollectionTable
     private List<String> sliderImages;
+
+//    private String templateId;
 }

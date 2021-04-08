@@ -16,4 +16,6 @@ public class TemplateRequest {
 
     private String secondaryColor;
 
+    private String templateId;
+
 }
