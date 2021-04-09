@@ -102,7 +102,7 @@ public class StoreService {
                 .id(UUID.randomUUID().toString())
                 .storeId(id)
                 .subDomain(storeModel.getSubDomainName())
-                .templateId("1")
+                .templateId(storeRequest.getTemplateId())
                 .build();
 
         templateRepository.save(templateModel);

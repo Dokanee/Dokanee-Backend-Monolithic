@@ -35,4 +35,6 @@ public class StoreRequest {
     private String zila;
 
     private String division;
+
+    private String templateId;
 }
