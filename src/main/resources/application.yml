@@ -142,9 +142,9 @@ logging:
 spring:
   profiles: pgsql
   datasource:
-    url: ${DB_URL:jdbc:postgresql://localhost:5432/Dokanee-backend-Monolithic}
-    username: ${DB_USERNAME:postgres}
-    password: ${DB_PASSWORD:postgres}
+    url: ${DB_URL:jdbc:postgresql://dpg-cnaql1nsc6pc73fgbr7g-a.singapore-postgres.render.com/dokanee_backend_monolithic}
+    username: ${DB_USERNAME:admin}
+    password: ${DB_PASSWORD:r4jQucBFpiOJ5GpmcenHTs3E5i32Ul9x}
 
 ---
 
