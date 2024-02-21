@@ -144,7 +144,7 @@ spring:
   datasource:
     url: ${DB_URL:jdbc:postgresql://localhost:5432/Dokanee-backend-Monolithic}
     username: ${DB_USERNAME:postgres}
-    password: ${DB_PASSWORD:12211221}
+    password: ${DB_PASSWORD:postgres}
 
 ---
 
